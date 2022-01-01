@@ -38,13 +38,13 @@ const AddExpense = ({ navigation }) => {
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
-    const [invoiceType, setInvoiceType] = useState()
+    const [invoiceType, setInvoiceType] = useState('Income')
 
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
             txn.executeSql(        
                 'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_date) VALUES (?, ?, ?, ?, ?)',
-                [ title, description, invoiceType, amount, date ],
+                [ title, description, invoiceType, eval(amount), date ],
                 (tx, results) => {               
                     console.log('Results', results.rowsAffected);
                     if(results.rowsAffected > 0) {
@@ -159,9 +159,9 @@ const AddExpense = ({ navigation }) => {
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice Type</Text>
                         <Picker 
                             selectedValue={invoiceType} 
-                            onValueChange={(itemValue, itemIndex) =>
-                                setInvoiceType(itemValue)
-                            }
+                            onValueChange={(itemValue, itemIndex) => {
+                                setInvoiceType(itemValue + "")
+                            }}
                             style={{ color: '#555', fontSize: 20 }}>
                             <Picker.Item label="Income" style={{ color: '#fff', fontSize: 20  }} value="Income" />
                             <Picker.Item label="Expenses" style={{ color: '#fff', fontSize: 20 }} value="Expenses" />
