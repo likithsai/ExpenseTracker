@@ -1,0 +1,22 @@
+    user table
+    ----------
+    1. user_id
+    2. user_name
+    3. user_email
+    4. user_created_date
+
+    category table
+    --------------
+    1. category_id
+    2. category_name
+    3. category_created_date
+
+    expense table
+    -------------
+    1. expense_id
+    2. expense_name
+    3. expense_amount
+    4. expense_category
+    5. expense_desc
+    6. expense_user_id
+    7. expense_created_date
