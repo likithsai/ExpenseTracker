@@ -79,10 +79,17 @@ const List = (props) => {
                             refRBSheet.current.open()
                         }}>
                             <View style={{ width: '75%' }}>
-                                <Text style={styles.listItemText}>{item.expense_name}</Text>
-                                <Text numberOfLines={2} style={styles.listItemSubText}>{item.expense_desc}</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '75%' }}>
+                                    <View>
+                                        <Icon name={ item.expense_type === 'credit' ? 'add-circle' : 'remove-circle' } size={35} color={ item.expense_type === 'credit' ? '#11998e' : 'red' } style={{ marginRight: 20 }} />
+                                    </View>
+                                    <View>
+                                        <Text style={styles.listItemText}>{item.expense_name}</Text>
+                                        <Text numberOfLines={2} style={styles.listItemSubText}>{item.expense_desc}</Text>
+                                    </View>
+                                </View>
                             </View>
-                            <View>
+                            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
                                 <Text style={ item.expense_type === 'credit' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>$ {item.expense_amt}</Text>
                             </View>
                         </TouchableOpacity>
