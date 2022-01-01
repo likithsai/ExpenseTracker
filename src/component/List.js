@@ -74,7 +74,7 @@ const List = (props) => {
                     )
                 }}
                 renderItem={({item}) => ( 
-                        <TouchableOpacity style={styles.listItems} onPress={() => {
+                        <TouchableOpacity style={styles.listItems} onLongPress={() => {
                             setSelectedItem(item)
                             refRBSheet.current.open()
                         }}>

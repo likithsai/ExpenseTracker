@@ -11,7 +11,6 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
 });
 
-
 const dateFormatter = (date) => {
     const monthNames = [
         "January", "February", "March", "April", "May", "June",
@@ -164,11 +163,14 @@ const AddExpense = ({ navigation }) => {
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1, width: '100%' }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice Type</Text>
-                        <Picker selectedValue={invoiceType} onValueChange={(itemValue, itemIndex) =>
+                        <Picker 
+                            selectedValue={invoiceType} 
+                            onValueChange={(itemValue, itemIndex) =>
                                 setInvoiceType(itemValue)
-                            }>
-                            <Picker.Item label="Income" value="Income" />
-                            <Picker.Item label="Expenses" value="Expenses" />
+                            }
+                            style={{ color: '#555', fontSize: 20 }}>
+                            <Picker.Item label="Income" style={{ color: '#fff', fontSize: 20  }} value="Income" />
+                            <Picker.Item label="Expenses" style={{ color: '#fff', fontSize: 20 }} value="Expenses" />
                         </Picker>
                         <View style={{ marginTop: 10 }}>
                             {/* <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Amount</Text> */}

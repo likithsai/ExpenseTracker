@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native link && react-native run-android",
-    "installReleaseAPK": "react-native run-android --reset-cache --variant=release",
+    "installReleaseAPK": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "start": "react-native start --reset-cache",
     "test": "jest",
