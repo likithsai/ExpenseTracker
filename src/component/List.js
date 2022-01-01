@@ -79,7 +79,7 @@ const List = (props) => {
                             refRBSheet.current.open()
                         }}>
                             <View style={{ width: '75%' }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '75%' }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '75%' }}>
                                     <View>
                                         <Icon name={ item.expense_type === 'credit' ? 'add-circle' : 'remove-circle' } size={35} color={ item.expense_type === 'credit' ? '#11998e' : 'red' } style={{ marginRight: 20 }} />
                                     </View>
