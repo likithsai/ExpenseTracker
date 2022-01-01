@@ -14,24 +14,24 @@ const dateFormatter = (date) => {
 }
 
 const Header = (props) => {
-    const [showDatePicker, setShowDatePicker] = useState(false)
-    const [selectedData, setSelectedDate] = useState(dateFormatter(new Date()))
+    // const [showDatePicker, setShowDatePicker] = useState(false)
+    // const [selectedData, setSelectedDate] = useState(dateFormatter(new Date()))
     const refRBSheet = useRef();
 
-    const openDatePicker = () => {
-        setShowDatePicker(true)
-    }
+    // const openDatePicker = () => {
+    //     setShowDatePicker(true)
+    // }
 
-    const onCancel = () => {
-        // You should close the modal in here
-        setShowDatePicker(false)
-    }
+    // const onCancel = () => {
+    //     // You should close the modal in here
+    //     setShowDatePicker(false)
+    // }
 
-    const onConfirm = ( date ) => {
-        // You should close the modal in here
-        setShowDatePicker(false)
-        setSelectedDate(dateFormatter(date))
-    }
+    // const onConfirm = ( date ) => {
+    //     // You should close the modal in here
+    //     setShowDatePicker(false)
+    //     setSelectedDate(dateFormatter(date))
+    // }
     
     return (
         <>
@@ -71,19 +71,6 @@ const Header = (props) => {
                 </View>
         </RBSheet>
 
-        <DatePicker
-            isVisible={showDatePicker}
-            mode={'single'}
-            colorOptions={{
-                headerColor: '#11998e',
-                weekDaysColor: '#11998e',
-                selectedDateColor: '#11998e',
-                selectedDateBackgroundColor: '#11998e',
-                confirmButtonColor: '#11998e'
-            }}
-            onCancel={onCancel}
-            onConfirm={onConfirm}
-        />
         <View style={styles.boxBorder}>
             <View style={styles.headerContainer}>
                 <TouchableOpacity onPress={() => refRBSheet.current.open()}>
@@ -92,7 +79,7 @@ const Header = (props) => {
                 <View style={[styles.headerBarContent]}>
                     <Text style={styles.headerTitle}>{props.headerTitle}</Text>
                 </View>
-                <TouchableOpacity onPress={openDatePicker}>
+                <TouchableOpacity onPress={props.onRightIconPressed}>
                     <Icon name="calendar" size={30} color='#666' />
                 </TouchableOpacity>
             </View>
@@ -100,7 +87,7 @@ const Header = (props) => {
                 <View style={[styles.boxBorder, { backgroundColor: '#11998e', paddingTop: 25, paddingBottom: 30, paddingHorizontal: 20, elevation: 5 }]}>
                     <View style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         {/* <Text style={{ fontWeight: '900', color: '#ff0' }}>DATE : </Text> */}
-                        <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 16 }}>{selectedData}</Text>
+                        <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 16 }}>{props.dateText}</Text>
                     </View>
                     <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <TouchableOpacity style={{ flexDirection: 'column', alignItems: 'center', borderRightColor: '#ccc' }}>

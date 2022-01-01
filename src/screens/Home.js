@@ -3,18 +3,47 @@ import { StyleSheet, View, SafeAreaView, StatusBar, Vibration } from 'react-nati
 import Header from '../component/Header'
 import List from '../component/List'
 import { openDatabase } from 'react-native-sqlite-storage';
+import DatePicker from 'react-native-neat-date-picker'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
 });
 
+const dateFormatter = (date) => {
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    return monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
+}
+
 const ExpenseTracker = ({ navigation }) => {
+    const [showDatePicker, setShowDatePicker] = useState(false)
+    const [selectedData, setSelectedDate] = useState(dateFormatter(new Date()))
     const [DATA, setDATA] = useState([])
+
+    const openDatePicker = () => {
+        setShowDatePicker(true)
+    }
+
+    const onCancel = () => {
+        // You should close the modal in here
+        setShowDatePicker(false)
+    }
+
+    const onConfirm = ( date ) => {
+        // You should close the modal in here
+        setShowDatePicker(false)
+        setSelectedDate(dateFormatter(date))
+        // selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ?", [dateFormatter(date)])
+    }
 
     // Setup database
     useEffect(() => {
-        selectDataFromDatabase("SELECT * FROM tbl_expense", [])
-    }, [DATA])
+        console.log(selectedData)
+        selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
+    }, [selectedData])
 
     const selectDataFromDatabase = (query, param) => {
         db.transaction(tx => {
@@ -23,6 +52,7 @@ const ExpenseTracker = ({ navigation }) => {
                 for (let i = 0; i < results.rows.length; ++i) {
                     temp.push(results.rows.item(i))
                 }
+                // console.log(temp)
                 setDATA(temp)
             });
         });
@@ -36,8 +66,27 @@ const ExpenseTracker = ({ navigation }) => {
                 animated={true}
                 backgroundColor="rgba(255, 255, 255, 0.7)" />
 
+        <DatePicker
+            isVisible={showDatePicker}
+            mode={'single'}
+            colorOptions={{
+                headerColor: '#11998e',
+                weekDaysColor: '#11998e',
+                selectedDateColor: '#11998e',
+                selectedDateBackgroundColor: '#11998e',
+                confirmButtonColor: '#11998e'
+            }}
+            onCancel={onCancel}
+            onConfirm={onConfirm}
+        />
+
             <View style={styles.container}>
                 <Header headerTitle="Expense Tracker"
+                    onRightIconPressed = {() => {
+                        Vibration.vibrate(50)
+                        openDatePicker()
+                    }}
+                    dateText = {selectedData}
                     onAddExpensesClicked = {() => {
                         Vibration.vibrate(50)
                         navigation.navigate('AddExpenses', {})
