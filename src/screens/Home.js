@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, SafeAreaView, StatusBar, ScrollView } from 'react-native'
+import { StyleSheet, View, SafeAreaView, StatusBar, Vibration } from 'react-native'
 import Header from '../component/Header'
 import List from '../component/List'
 import { openDatabase } from 'react-native-sqlite-storage';
@@ -39,6 +39,7 @@ const ExpenseTracker = ({ navigation }) => {
             <View style={styles.container}>
                 <Header headerTitle="Expense Tracker"
                     onAddExpensesClicked = {() => {
+                        Vibration.vibrate(50)
                         navigation.navigate('AddExpenses', {})
                     }}/>
                     <View style={styles.scrollView}>

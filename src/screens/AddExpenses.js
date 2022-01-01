@@ -124,9 +124,11 @@ const AddExpense = ({ navigation }) => {
         <View style={{ flex: 1 }}>
             <HeaderComp headerTitle="Add Expenses"
                 onBackPressed = {() => {
+                    Vibration.vibrate(50)
                     navigation.pop()
                 }}
                 onSucessPressed = {() => {
+                    Vibration.vibrate(50)
                     insertDataToDatabase()
                 }} 
             />
@@ -201,7 +203,10 @@ const AddExpense = ({ navigation }) => {
                     </View>
                 </Card>
 
-                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }} onPress={openDatePicker}>
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }} onPress={() => {
+                    Vibration.vibrate(50)
+                    openDatePicker()
+                }}>
                     <View>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Date</Text>
                         <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 10 }}>{date}</Text>
