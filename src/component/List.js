@@ -84,7 +84,7 @@ const List = (props) => {
                                         <Icon name={ item.expense_type === 'credit' ? 'add-circle' : 'remove-circle' } size={35} color={ item.expense_type === 'credit' ? '#11998e' : 'red' } style={{ marginRight: 20 }} />
                                     </View>
                                     <View>
-                                        <Text style={styles.listItemText}>{item.expense_name}</Text>
+                                        <Text numberOfLines={1} style={styles.listItemText}>{item.expense_name}</Text>
                                         <Text numberOfLines={2} style={styles.listItemSubText}>{item.expense_desc}</Text>
                                     </View>
                                 </View>
