@@ -6,19 +6,11 @@ import DatePicker from 'react-native-neat-date-picker'
 import Icon from 'react-native-ionicons';
 import { openDatabase } from 'react-native-sqlite-storage';
 import {Picker} from '@react-native-picker/picker';
+import Utils from '../utils/Utils'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
 });
-
-const dateFormatter = (date) => {
-    const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-
-    return monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
-}
 
 const AddExpense = ({ navigation }) => {
     const calcButtons = [
@@ -45,7 +37,7 @@ const AddExpense = ({ navigation }) => {
     const [ showDatePicker, setShowDatePicker] = useState(false)
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
-    const [ date, setDate] = useState(dateFormatter(new Date()))
+    const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
     const [invoiceType, setInvoiceType] = useState()
 
     const insertDataToDatabase = () => {
@@ -75,7 +67,7 @@ const AddExpense = ({ navigation }) => {
     const onConfirm = ( date ) => {
         // You should close the modal in here
         setShowDatePicker(false)
-        setDate(dateFormatter(date))
+        setDate(Utils.dateFormatter(date))
     }
 
     const handlePress = (item) => {

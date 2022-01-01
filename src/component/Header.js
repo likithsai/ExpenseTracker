@@ -1,38 +1,11 @@
 import React, { useState, useRef } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Vibration } from 'react-native'
 import Icon from 'react-native-ionicons';
-import DatePicker from 'react-native-neat-date-picker'
 import RBSheet from "react-native-raw-bottom-sheet";
 
-const dateFormatter = (date) => {
-    const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-
-    return monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
-}
-
 const Header = (props) => {
-    // const [showDatePicker, setShowDatePicker] = useState(false)
-    // const [selectedData, setSelectedDate] = useState(dateFormatter(new Date()))
     const refRBSheet = useRef();
 
-    // const openDatePicker = () => {
-    //     setShowDatePicker(true)
-    // }
-
-    // const onCancel = () => {
-    //     // You should close the modal in here
-    //     setShowDatePicker(false)
-    // }
-
-    // const onConfirm = ( date ) => {
-    //     // You should close the modal in here
-    //     setShowDatePicker(false)
-    //     setSelectedDate(dateFormatter(date))
-    // }
-    
     return (
         <>
         <RBSheet

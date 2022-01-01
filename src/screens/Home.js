@@ -4,23 +4,15 @@ import Header from '../component/Header'
 import List from '../component/List'
 import { openDatabase } from 'react-native-sqlite-storage';
 import DatePicker from 'react-native-neat-date-picker'
+import Utils from '../utils/Utils';
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
 });
 
-const dateFormatter = (date) => {
-    const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-
-    return monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
-}
-
 const ExpenseTracker = ({ navigation }) => {
     const [showDatePicker, setShowDatePicker] = useState(false)
-    const [selectedData, setSelectedDate] = useState(dateFormatter(new Date()))
+    const [selectedData, setSelectedDate] = useState(Utils.dateFormatter(new Date()))
     const [DATA, setDATA] = useState([])
 
     const openDatePicker = () => {
@@ -28,15 +20,12 @@ const ExpenseTracker = ({ navigation }) => {
     }
 
     const onCancel = () => {
-        // You should close the modal in here
         setShowDatePicker(false)
     }
 
     const onConfirm = ( date ) => {
-        // You should close the modal in here
         setShowDatePicker(false)
-        setSelectedDate(dateFormatter(date))
-        // selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ?", [dateFormatter(date)])
+        setSelectedDate(Utils.dateFormatter(date))
     }
 
     // Setup database
