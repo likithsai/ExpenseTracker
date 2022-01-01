@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, ToastAndroid } from 'react-native'
+import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
 import DatePicker from 'react-native-neat-date-picker'
@@ -187,7 +187,12 @@ const AddExpense = ({ navigation }) => {
                                 keyExtractor={(item, index) => item.id }
                                 renderItem={({item}) => {
                                     return(
-                                        <TouchableOpacity onPress={() => {handlePress(item)}} style={{ flex: 1, margin: 5, backgroundColor: '#ddd', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
+                                        <TouchableOpacity 
+                                            onPress={() => {
+                                                Vibration.vibrate(50)
+                                                handlePress(item)
+                                            }} 
+                                            style={{ flex: 1, margin: 5, backgroundColor: '#ddd', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
                                             <Text style={{ fontSize: 20, color: '#666' }}>{item.key}</Text>
                                         </TouchableOpacity>
                                     )
