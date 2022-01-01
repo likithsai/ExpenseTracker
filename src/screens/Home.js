@@ -55,19 +55,20 @@ const ExpenseTracker = ({ navigation }) => {
                 animated={true}
                 backgroundColor="rgba(255, 255, 255, 0.7)" />
 
-        <DatePicker
-            isVisible={showDatePicker}
-            mode={'single'}
-            colorOptions={{
-                headerColor: '#11998e',
-                weekDaysColor: '#11998e',
-                selectedDateColor: '#11998e',
-                selectedDateBackgroundColor: '#11998e',
-                confirmButtonColor: '#11998e'
-            }}
-            onCancel={onCancel}
-            onConfirm={onConfirm}
-        />
+            <DatePicker
+                isVisible={showDatePicker}
+                mode={'single'}
+                maxDate={new Date()}
+                colorOptions={{
+                    headerColor: '#11998e',
+                    weekDaysColor: '#11998e',
+                    selectedDateColor: '#11998e',
+                    selectedDateBackgroundColor: '#11998e',
+                    confirmButtonColor: '#11998e'
+                }}
+                onCancel={onCancel}
+                onConfirm={onConfirm}
+            />
 
             <View style={styles.container}>
                 <Header headerTitle="Expense Tracker"
