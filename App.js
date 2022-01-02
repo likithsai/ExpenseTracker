@@ -19,7 +19,7 @@ const ExpenseTracker = () => {
                   expense_id INTEGER PRIMARY KEY AUTOINCREMENT, 
                   expense_name VARCHAR(20) DEFAULT NULL, 
                   expense_desc VARCHAR(500) DEFAULT NULL, 
-                  expense_type VARCHAR(10) DEFAULT NULL, 
+                  expense_type VARCHAR(20) DEFAULT NULL, 
                   expense_amt DECIMAL(6.3) DEFAULT NULL, 
                   expense_date TIMESTAMP DEFAULT NULL, 
                   expense_created_date timestamp default CURRENT_TIMESTAMP

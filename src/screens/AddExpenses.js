@@ -7,6 +7,7 @@ import Icon from 'react-native-ionicons';
 import { openDatabase } from 'react-native-sqlite-storage';
 import {Picker} from '@react-native-picker/picker';
 import Utils from '../utils/Utils'
+import Dropdown from '../component/Dropdown'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
@@ -38,7 +39,7 @@ const AddExpense = ({ navigation }) => {
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
-    const [invoiceType, setInvoiceType] = useState('Income')
+    const [invoiceType, setInvoiceType] = useState()
 
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
@@ -158,15 +159,29 @@ const AddExpense = ({ navigation }) => {
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1, width: '100%' }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice Type</Text>
-                        <Picker 
+
+                        {/* <Picker 
                             selectedValue={invoiceType} 
                             onValueChange={(itemValue, itemIndex) => {
-                                setInvoiceType(itemValue + "")
+                                setInvoiceType(itemValue)
                             }}
                             style={{ color: '#555', fontSize: 20 }}>
                             <Picker.Item label="Income" style={{ color: '#fff', fontSize: 20  }} value="Income" />
                             <Picker.Item label="Expenses" style={{ color: '#fff', fontSize: 20 }} value="Expenses" />
-                        </Picker>
+                        </Picker> */}
+
+                        <Dropdown 
+                            placeholderText = "Please Select Invoice Type"
+                            modalTitle = "Select Invoice Type"
+                            itemColor = '#555'
+                            modalItemBackgroundColor = "#11998e"
+                            modalItemTextColor = "#fff"
+                            modalItems = {[
+                                { itemName: 'Income', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'add-circle' }, 
+                                { itemName: 'Expense', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'remove-circle' }
+                            ]}
+                        />
+
                         <View style={{ marginTop: 10 }}>
                             {/* <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Amount</Text> */}
                             <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice amount</Text>
