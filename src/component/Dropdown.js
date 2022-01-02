@@ -26,6 +26,7 @@ const Dropdown = (props) => {
                             {
                                 props.modalItems.map(item => (
                                         <TouchableOpacity 
+                                            key={item.itemKey}
                                             onPress={() => {
                                                 setSelectedItem(item)
                                                 setModalVisible(false)
