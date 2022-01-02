@@ -45,7 +45,8 @@ const AddExpense = ({ navigation }) => {
         db.transaction(function(txn) {
             txn.executeSql(        
                 'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_date) VALUES (?, ?, ?, ?, ?)',
-                [ title, description, invoiceType, eval(amount), date ],
+                // [ title, description, invoiceType, eval(amount), date ],
+                [ title, description, 'credit', eval(amount), date ],
                 (tx, results) => {               
                     console.log('Results', results.rowsAffected);
                     if(results.rowsAffected > 0) {
@@ -177,8 +178,8 @@ const AddExpense = ({ navigation }) => {
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
                             modalItems = {[
-                                { itemName: 'Income', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'add-circle' }, 
-                                { itemName: 'Expense', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'remove-circle' }
+                                { itemKey: '1', itemName: 'Income', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'add-circle' }, 
+                                { itemKey: '2', itemName: 'Expense', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'remove-circle' }
                             ]}
                         />
 

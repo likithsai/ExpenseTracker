@@ -47,13 +47,13 @@ const Header = (props) => {
         <View style={styles.boxBorder}>
             <View style={styles.headerContainer}>
                 <TouchableOpacity onPress={() => refRBSheet.current.open()}>
-                    <Icon name="menu" size={30} color='#666' />
+                    <Icon name="menu" size={30} color='#fff' />
                 </TouchableOpacity>
                 <View style={[styles.headerBarContent]}>
                     <Text style={styles.headerTitle}>{props.headerTitle}</Text>
                 </View>
                 <TouchableOpacity onPress={props.onRightIconPressed}>
-                    <Icon name="calendar" size={30} color='#666' />
+                    <Icon name="calendar" size={30} color='#fff' />
                 </TouchableOpacity>
             </View>
             <View>
@@ -81,12 +81,21 @@ const Header = (props) => {
                             <Text style={{ fontSize: 15, color: '#fff' }}>$200</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{ marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 5 }} onPress={props.onAddExpensesClicked}>
-                        <View style={{ backgroundColor: '#fff', borderRadius: 30, paddingHorizontal: 20, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-                            <Icon name="wallet" size={16} color='#555' style={{ marginRight: 10 }} />
-                            <Text style={{ fontWeight: 'bold', color: '#555', fontSize: 14 }}>Add Expenses</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <View style={{ marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 5 }}>
+                        <TouchableOpacity onPress={props.onAddExpensesClicked}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 30, paddingHorizontal: 20, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+                                <Icon name="wallet" size={16} color='#555' style={{ marginRight: 10 }} />
+                                <Text style={{ fontWeight: 'bold', color: '#555', fontSize: 14 }}>Add Expenses</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <View style={{ paddingHorizontal: 5 }} />
+                        <TouchableOpacity>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 30, paddingHorizontal: 20, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+                                <Icon name="bug" size={16} color='#555' style={{ marginRight: 10 }} />
+                                <Text style={{ fontWeight: 'bold', color: '#555', fontSize: 14 }}>View Detailed</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
@@ -104,7 +113,7 @@ const styles = StyleSheet.create({
     },
     headerContainer : {
         width: '100%',
-        backgroundColor: '#fff',
+        backgroundColor: '#11998e',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -114,7 +123,9 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 4 },
         shadowRadius: 6,
         shadowOpacity: 0.2,
-        elevation: 5
+        elevation: 5,
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#aaa'
     },
     headerBarContent : {
         flexDirection: 'row'
@@ -130,7 +141,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     headerTitle: {
-        color: '#000',
+        color: '#fff',
         fontWeight: 'bold',
         fontSize: 20
     },

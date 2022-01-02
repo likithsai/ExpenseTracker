@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, TouchableOpacity, Text, Modal, ScrollView, View } from 'react-native'
 import Icon from 'react-native-ionicons';
 
@@ -6,8 +6,8 @@ const Dropdown = (props) => {
     const [modalVisible, setModalVisible] = useState(false)
     const [selectedItem, setSelectedItem] = useState([])
 
-    const getText = () => {
-        return selectedItem.length > 0 ? selectedItem : []
+    const getSelected = () => {
+        return selectedItem
     }
 
     return (
