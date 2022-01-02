@@ -103,6 +103,7 @@ const AddExpense = ({ navigation }) => {
         <DatePicker
             isVisible={showDatePicker}
             mode={'single'}
+            maxDate={new Date()}
             colorOptions={{
                 headerColor: '#11998e',
                 weekDaysColor: '#11998e',
