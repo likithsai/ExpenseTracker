@@ -88,13 +88,6 @@ const Header = (props) => {
                                 <Text style={{ fontWeight: 'bold', color: '#555', fontSize: 14 }}>Add Expenses</Text>
                             </View>
                         </TouchableOpacity>
-                        <View style={{ paddingHorizontal: 5 }} />
-                        <TouchableOpacity>
-                            <View style={{ backgroundColor: '#fff', borderRadius: 30, paddingHorizontal: 20, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-                                <Icon name="bug" size={16} color='#555' style={{ marginRight: 10 }} />
-                                <Text style={{ fontWeight: 'bold', color: '#555', fontSize: 14 }}>View Detailed</Text>
-                            </View>
-                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
