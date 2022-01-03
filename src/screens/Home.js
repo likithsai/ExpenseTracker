@@ -51,10 +51,6 @@ const ExpenseTracker = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar
-                animated={true}
-                backgroundColor="rgba(255, 255, 255, 0.7)" />
-
             <DatePicker
                 isVisible={showDatePicker}
                 mode={'single'}

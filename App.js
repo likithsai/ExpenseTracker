@@ -39,7 +39,7 @@ const ExpenseTracker = () => {
         <SafeAreaView style={styles.container}>
           <NavigationContainer>
             {/* <StatusBar animated={true} backgroundColor="#11998e" /> */}
-            <StatusBar barStyle="dark-content" backgroundColor="#11998e" />
+            <StatusBar barStyle="light-content" backgroundColor="#11998e" />
             <MyStacks />
           </NavigationContainer>
         </SafeAreaView>
