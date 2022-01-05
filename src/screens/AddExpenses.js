@@ -178,8 +178,8 @@ const AddExpense = ({ navigation }) => {
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
                             modalItems = {[
-                                { itemKey: '1', itemName: 'Income', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'add-circle' }, 
-                                { itemKey: '2', itemName: 'Expense', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'remove-circle' }
+                                { itemKey: '1', itemName: 'Income', itemDesc: 'Transaction where money is added to the account', itemIcon: 'add-circle' }, 
+                                { itemKey: '2', itemName: 'Expense', itemDesc: 'Transaction where money is deducted from the account', itemIcon: 'remove-circle' }
                             ]}
                             onItemSelected = {() => {
                                 console.log('clicked!')
