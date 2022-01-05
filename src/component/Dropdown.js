@@ -55,7 +55,7 @@ const Dropdown = (props) => {
                     <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.itemName || 'Please Select Invoice Type' ]}</Text>
                     {/* <Text style={{ color: props.itemColor, fontSize: 15 }}>{[ selectedItem.itemDesc || null ]}</Text> */}
                 </View>
-                <Icon name={[ selectedItem.itemIcon || 'arrow-dropdown-circle' ]} color={props.itemColor} style={{ marginRight: 10 }} />
+                <Icon name="arrow-dropdown-circle" color={props.itemColor} style={{ marginRight: 10 }} />
             </TouchableOpacity>
         </>
     )

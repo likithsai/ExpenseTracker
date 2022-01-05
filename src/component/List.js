@@ -81,7 +81,7 @@ const List = (props) => {
                             <View style={{ width: '75%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '75%' }}>
                                     <View>
-                                        <Icon name={ item.expense_type === 'credit' ? 'add-circle' : 'remove-circle' } size={35} color={ item.expense_type === 'credit' ? '#11998e' : 'red' } style={{ marginRight: 20 }} />
+                                        <Icon name={ item.expense_type === 'credit' ? 'card' : 'cash' } size={35} color="#11998e" style={{ marginRight: 20 }} />
                                     </View>
                                     <View>
                                         <Text numberOfLines={1} style={styles.listItemText}>{item.expense_name}</Text>
