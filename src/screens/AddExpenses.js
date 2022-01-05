@@ -181,6 +181,9 @@ const AddExpense = ({ navigation }) => {
                                 { itemKey: '1', itemName: 'Income', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'add-circle' }, 
                                 { itemKey: '2', itemName: 'Expense', itemDesc: 'Simple Expense example for a demo purpose. Please Ignore it as this is exactly for demo purpose', itemIcon: 'remove-circle' }
                             ]}
+                            onItemSelected = {() => {
+                                console.log('clicked!')
+                            }}
                         />
 
                         <View style={{ marginTop: 10 }}>

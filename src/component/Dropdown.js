@@ -48,11 +48,11 @@ const Dropdown = (props) => {
                     </View>
             </Modal>
             <TouchableOpacity 
-                style={[ props.style, { width: '100%', backgroundColor: '#fff', marginTop: 10, marginBottom: 20, flexDirection: 'row',  } ]}
+                style={[ props.style, { width: '100%', backgroundColor: '#fff', marginTop: 10, marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' } ]}
                 onPress={() => setModalVisible(true)}
             >
-                <Icon name={[ selectedItem.itemIcon || 'arrow-dropdown-circle' ]} color={props.itemColor} style={{ marginRight: 10 }} />
                 <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.itemName || 'Please Select Invoice Type' ]}</Text>
+                <Icon name={[ selectedItem.itemIcon || 'arrow-dropdown-circle' ]} color={props.itemColor} style={{ marginRight: 10 }} />
             </TouchableOpacity>
         </>
     )
