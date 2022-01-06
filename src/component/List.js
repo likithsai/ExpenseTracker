@@ -81,7 +81,7 @@ const List = (props) => {
                             <View style={{ width: '75%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '75%' }}>
                                     <View>
-                                        <Icon name={ item.expense_type === 'credit' ? 'card' : 'cash' } size={35} color="#11998e" style={{ marginRight: 20 }} />
+                                        <Icon name={ item.expense_type === 'income' ? 'card' : 'cash' } size={35} color="#11998e" style={{ marginRight: 20 }} />
                                     </View>
                                     <View>
                                         <Text numberOfLines={1} style={styles.listItemText}>{item.expense_name}</Text>
@@ -90,7 +90,7 @@ const List = (props) => {
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                <Text style={ item.expense_type === 'credit' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>$ {item.expense_amt}</Text>
+                                <Text style={ item.expense_type === 'income' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>$ {item.expense_amt}</Text>
                             </View>
                         </TouchableOpacity>
                     )
