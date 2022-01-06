@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Vibration } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Vibration, ScrollView } from 'react-native'
 import Icon from 'react-native-ionicons';
 import RBSheet from "react-native-raw-bottom-sheet";
 

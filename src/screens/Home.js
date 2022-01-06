@@ -34,33 +34,26 @@ const ExpenseTracker = ({ navigation }) => {
     // Setup database
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
-        loadIncomeKPIS()
-        loadExpenseKPIS()
-        loadBalanceKPIS()
     }, [selectedData])
 
-    const loadIncomeKPIS = () => {
-        let item = 0
-        DATA.filter(item => item.expense_type === 'credit').map(filteredItem => {
-            item = item + filteredItem.expense_amt
-        })
-        setIncome(item)
-    }
-
-    const loadExpenseKPIS = () => {
-        let item = 0
-        DATA.filter(item => item.expense_type === 'debit').map(filteredItem => {
-            item = item + filteredItem.expense_amt
-        })
-        setExpense(item)
-    }
-
-    const loadBalanceKPIS = () => {
+    useEffect(() => {
+        selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
+        //  load KPI's
+        setIncome(loadKPIS('credit'))
+        setExpense(loadKPIS('debit'))
         setBalance(income + expense)
+    })
+
+    const loadKPIS = (type) => {
+        let item = 0
+        DATA.filter(item => item.expense_type === type).map(filteredItem => {
+            item = item + filteredItem.expense_amt
+        })
+        return item
     }
 
-    const selectDataFromDatabase = (query, param) => {
-        db.transaction(tx => {
+    const selectDataFromDatabase = async (query, param) => {
+        await db.transaction(tx => {
             tx.executeSql(query, param, (tx, results) => {
                 var temp = []
                 for (let i = 0; i < results.rows.length; ++i) {
