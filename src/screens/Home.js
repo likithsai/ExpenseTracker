@@ -39,8 +39,8 @@ const ExpenseTracker = ({ navigation }) => {
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
         //  load KPI's
-        setIncome(loadKPIS('credit'))
-        setExpense(loadKPIS('debit'))
+        setIncome(loadKPIS('income'))
+        setExpense(loadKPIS('expense'))
         setBalance(income + expense)
     })
 

@@ -45,7 +45,6 @@ const AddExpense = ({ navigation }) => {
         db.transaction(function(txn) {
             txn.executeSql(        
                 'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_date) VALUES (?, ?, ?, ?, ?)',
-                // [ title, description, invoiceType, eval(amount), date ],
                 [ title, description, invoiceType, eval(amount), date ],
                 (tx, results) => {               
                     console.log('Results', results.rowsAffected);
@@ -183,7 +182,7 @@ const AddExpense = ({ navigation }) => {
                             ]}
                             onItemSelected = {(item) => {
                                 console.log('Item selected : ' + item.itemName)
-                                setInvoiceType(item.itemName)
+                                setInvoiceType(item.itemName.toLowerCase())
                             }}
                         />
 
