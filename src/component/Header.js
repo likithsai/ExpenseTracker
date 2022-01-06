@@ -66,19 +66,19 @@ const Header = (props) => {
                         <TouchableOpacity style={{ flexDirection: 'column', alignItems: 'center', borderRightColor: '#ccc' }}>
                             <Icon name="card" size={40} color='#fff' style={{ paddingVertical: 5}} />
                             <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Incomes</Text>
-                            <Text style={{ fontSize: 15, color: '#fff' }}>$200</Text>
+                            <Text style={{ fontSize: 15, color: '#fff' }}>$ {props.incomeValue}</Text>
                         </TouchableOpacity>
                         <View style={{ borderColor: '#f0f0f0', borderWidth: 0.2, height: '100%' }} />
                         <TouchableOpacity style={{ flexDirection: 'column', alignItems: 'center', borderRightColor: '#ccc'}}>
                             <Icon name="cash" size={40} color='#fff' style={{ paddingVertical: 5}} />
                             <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Expense</Text>
-                            <Text style={{ fontSize: 15, color: '#fff' }}>$200</Text>
+                            <Text style={{ fontSize: 15, color: '#fff' }}>$ {props.expenseValue}</Text>
                         </TouchableOpacity>
                         <View style={{ borderColor: '#f0f0f0', borderWidth: 0.2, height: '100%' }} />
                         <TouchableOpacity style={{ flexDirection: 'column', alignItems: 'center', borderRightColor: '#ccc' }}>
                             <Icon name="wallet" size={40} color='#fff' style={{ paddingVertical: 5}} />
                             <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Balance</Text>
-                            <Text style={{ fontSize: 15, color: '#fff' }}>$200</Text>
+                            <Text style={{ fontSize: 15, color: '#fff' }}>$ {props.balanceValue}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{ marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 5 }}>

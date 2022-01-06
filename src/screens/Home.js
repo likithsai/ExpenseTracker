@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, SafeAreaView, StatusBar, Vibration } from 'react-native'
+import { StyleSheet, View, SafeAreaView, StatusBar, Vibration, ToastAndroid } from 'react-native'
 import Header from '../component/Header'
 import List from '../component/List'
 import { openDatabase } from 'react-native-sqlite-storage';
@@ -11,9 +11,12 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 });
 
 const ExpenseTracker = ({ navigation }) => {
-    const [showDatePicker, setShowDatePicker] = useState(false)
-    const [selectedData, setSelectedDate] = useState(Utils.dateFormatter(new Date()))
-    const [DATA, setDATA] = useState([])
+    const [ showDatePicker, setShowDatePicker ] = useState(false)
+    const [ selectedData, setSelectedDate ] = useState(Utils.dateFormatter(new Date()))
+    const [ income, setIncome ] = useState(0.0)
+    const [ expense, setExpense ] = useState(0.0)
+    const [ balance, setBalance ] = useState(0.0)
+    const [ DATA, setDATA ] = useState([])
 
     const openDatePicker = () => {
         setShowDatePicker(true)
@@ -30,9 +33,31 @@ const ExpenseTracker = ({ navigation }) => {
 
     // Setup database
     useEffect(() => {
-        console.log(selectedData)
         selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
+        loadIncomeKPIS()
+        loadExpenseKPIS()
+        loadBalanceKPIS()
     }, [selectedData])
+
+    const loadIncomeKPIS = () => {
+        let item = 0
+        DATA.filter(item => item.expense_type === 'credit').map(filteredItem => {
+            item = item + filteredItem.expense_amt
+        })
+        setIncome(item)
+    }
+
+    const loadExpenseKPIS = () => {
+        let item = 0
+        DATA.filter(item => item.expense_type === 'debit').map(filteredItem => {
+            item = item + filteredItem.expense_amt
+        })
+        setExpense(item)
+    }
+
+    const loadBalanceKPIS = () => {
+        setBalance(income + expense)
+    }
 
     const selectDataFromDatabase = (query, param) => {
         db.transaction(tx => {
@@ -41,10 +66,10 @@ const ExpenseTracker = ({ navigation }) => {
                 for (let i = 0; i < results.rows.length; ++i) {
                     temp.push(results.rows.item(i))
                 }
-                console.log(temp)
+                // console.log(temp)
                 setDATA(temp)
-            });
-        });
+            })
+        })
     }
 
     // selectDataFromDatabase("SELECT * FROM tbl_expense", [])
@@ -67,11 +92,15 @@ const ExpenseTracker = ({ navigation }) => {
             />
 
             <View style={styles.container}>
-                <Header headerTitle="Expense Tracker"
+                <Header 
+                    headerTitle="Expense Tracker"
                     onRightIconPressed = {() => {
                         Vibration.vibrate(50)
                         openDatePicker()
                     }}
+                    incomeValue = {income}
+                    expenseValue = {expense}
+                    balanceValue = {balance}
                     dateText = {selectedData}
                     onAddExpensesClicked = {() => {
                         Vibration.vibrate(50)
