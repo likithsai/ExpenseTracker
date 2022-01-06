@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, Text, Modal, ScrollView, View } from 'react-native'
 import Icon from 'react-native-ionicons'
+import PropTypes from 'prop-types';
 
 const Dropdown = (props) => {
     const [modalVisible, setModalVisible] = useState(false)
@@ -28,7 +29,7 @@ const Dropdown = (props) => {
                                         <TouchableOpacity 
                                             key={item.itemKey}
                                             onPress={() => {
-                                                props.onItemSelected()
+                                                props.onItemSelected(item)
                                                 setSelectedItem(item)
                                                 setModalVisible(false)
                                             }} 

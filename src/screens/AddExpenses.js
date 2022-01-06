@@ -46,7 +46,7 @@ const AddExpense = ({ navigation }) => {
             txn.executeSql(        
                 'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_date) VALUES (?, ?, ?, ?, ?)',
                 // [ title, description, invoiceType, eval(amount), date ],
-                [ title, description, 'credit', eval(amount), date ],
+                [ title, description, invoiceType, eval(amount), date ],
                 (tx, results) => {               
                     console.log('Results', results.rowsAffected);
                     if(results.rowsAffected > 0) {
@@ -181,8 +181,9 @@ const AddExpense = ({ navigation }) => {
                                 { itemKey: '1', itemName: 'Income', itemDesc: 'Transaction where money is added to the account', itemIcon: 'card' }, 
                                 { itemKey: '2', itemName: 'Expense', itemDesc: 'Transaction where money is deducted from the account', itemIcon: 'cash' }
                             ]}
-                            onItemSelected = {() => {
-                                console.log('clicked!')
+                            onItemSelected = {(item) => {
+                                console.log('Item selected : ' + item.itemName)
+                                setInvoiceType(item.itemName)
                             }}
                         />
 
