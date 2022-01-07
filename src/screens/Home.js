@@ -41,7 +41,7 @@ const ExpenseTracker = ({ navigation }) => {
         //  load KPI's
         setIncome(loadKPIS('income'))
         setExpense(loadKPIS('expense'))
-        setBalance(income + expense)
+        setBalance(income - expense)
     })
 
     const loadKPIS = (type) => {

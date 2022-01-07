@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration } from 'react-native'
 import Icon from 'react-native-ionicons';
 import RBSheet from "react-native-raw-bottom-sheet";
 
@@ -75,6 +75,7 @@ const List = (props) => {
                 }}
                 renderItem={({item}) => ( 
                         <TouchableOpacity style={styles.listItems} onLongPress={() => {
+                            Vibration.vibrate(50)
                             setSelectedItem(item)
                             refRBSheet.current.open()
                         }}>
@@ -90,6 +91,7 @@ const List = (props) => {
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+                                {/* { console.log(item.expense_type) } */}
                                 <Text style={ item.expense_type === 'income' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>$ {item.expense_amt}</Text>
                             </View>
                         </TouchableOpacity>
