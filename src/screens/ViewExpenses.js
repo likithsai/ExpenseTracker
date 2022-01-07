@@ -4,15 +4,10 @@ import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-ionicons';
+import { useNavigation } from '@react-navigation/native'
 
-const ViewExpenses = ({ route, navigation }) => {
-
-    // const name = route.params.data.expense_name
-    // const desc = route.params.data.expense_desc
-    // const type = route.params.data.expense_type
-    // const amount = route.params.data.expense_amt
-    // const date = route.params.data.expense_date
-
+const ViewExpenses = () => {
+    const navigation = useNavigation()
     const { name, desc, type, amount, date } = route.params.data
 
     return (

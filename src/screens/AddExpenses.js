@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration, ToastAndroid } from 'react-native'
+import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
 import DatePicker from 'react-native-neat-date-picker'
@@ -159,17 +159,6 @@ const AddExpense = ({ navigation }) => {
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1, width: '100%' }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Type</Text>
-
-                        {/* <Picker 
-                            selectedValue={invoiceType} 
-                            onValueChange={(itemValue, itemIndex) => {
-                                setInvoiceType(itemValue)
-                            }}
-                            style={{ color: '#555', fontSize: 20 }}>
-                            <Picker.Item label="Income" style={{ color: '#fff', fontSize: 20  }} value="Income" />
-                            <Picker.Item label="Expenses" style={{ color: '#fff', fontSize: 20 }} value="Expenses" />
-                        </Picker> */}
-
                         <Dropdown 
                             placeholderText = "Please Select Transaction Type"
                             modalTitle = "Transaction Type"
@@ -183,7 +172,7 @@ const AddExpense = ({ navigation }) => {
                             ]}
                             onItemSelected = {(item) => {
                                 if(item.itemKey === '3') {
-                                    ToastAndroid.show('Selected Item: ' + item.itemName, ToastAndroid.LONG)
+                                    navigation.navigate('AddCategory', {})  
                                 } else {
                                     // console.log('Item selected : ' + item.itemName)
                                     setInvoiceType(item.itemName.toLowerCase())
