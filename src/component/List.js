@@ -92,7 +92,7 @@ const List = (props) => {
                             </View>
                             <View style={{ flexDirection: 'column', alignItems: 'center' }}>
                                 {/* { console.log(item.expense_type) } */}
-                                <Text style={ item.expense_type === 'income' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>$ {item.expense_amt}</Text>
+                                <Text style={ item.expense_type === 'income' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>{item.expense_type === 'income' ? '+ ' + item.expense_amt : '- ' + item.expense_amt }</Text>
                             </View>
                         </TouchableOpacity>
                     )

@@ -193,7 +193,7 @@ const AddExpense = ({ navigation }) => {
                             {/* <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Amount</Text> */}
                             <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice amount</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', margin: 10 }}>
-                                <Text style={{ fontSize: 30, color: '#000', marginRight: 10 }}>$</Text>
+                                {/* <Text style={{ fontSize: 30, color: '#000', marginRight: 10 }}></Text> */}
                                 <Text style={{ fontSize: 30, color: '#000' }}>{amount}</Text>
                             </View>
                             <FlatList
