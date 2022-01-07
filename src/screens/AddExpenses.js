@@ -115,6 +115,8 @@ const AddExpense = ({ navigation }) => {
         />
         <View style={{ flex: 1 }}>
             <HeaderComp headerTitle="Add Expenses"
+                leftIcon = "arrow-back"
+                rightIcon = "checkmark"
                 onBackPressed = {() => {
                     Vibration.vibrate(50)
                     navigation.pop()

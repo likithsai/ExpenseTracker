@@ -17,6 +17,8 @@ const ViewExpenses = ({ route, navigation }) => {
     return (
         <View style={{ flex: 1 }}>
             <HeaderComp 
+                leftIcon = "arrow-back"
+                rightIcon = "create"
                 headerTitle="View Expenses"
                 onBackPressed = {() => {
                     Vibration.vibrate(50)
