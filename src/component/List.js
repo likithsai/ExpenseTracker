@@ -2,11 +2,13 @@ import React, { useRef, useState } from 'react'
 import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration } from 'react-native'
 import Icon from 'react-native-ionicons';
 import RBSheet from "react-native-raw-bottom-sheet";
+import { useNavigation } from '@react-navigation/native'
 
 const List = (props) => {
     const refRBSheet = useRef();
     const [selectedItem, setSelectedItem] = useState([])
-    
+    const navigation = useNavigation()
+
     return (
         <>
         <RBSheet
@@ -74,11 +76,25 @@ const List = (props) => {
                     )
                 }}
                 renderItem={({item}) => ( 
-                        <TouchableOpacity style={styles.listItems} onLongPress={() => {
-                            Vibration.vibrate(50)
-                            setSelectedItem(item)
-                            refRBSheet.current.open()
-                        }}>
+                        <TouchableOpacity style={styles.listItems} 
+                            onPress={() => {
+                                console.log(item)
+                                props.onItemPress(item)
+                                navigation.navigate('ViewExpenses', {
+                                    data: {
+                                        name : item.expense_name,
+                                        desc : item.expense_desc,
+                                        type : item.expense_type,
+                                        amount : item.expense_amt,
+                                        date : item.expense_date
+                                    }
+                                })    
+                            }}
+                            onLongPress={() => {
+                                Vibration.vibrate(50)
+                                setSelectedItem(item)
+                                refRBSheet.current.open()
+                            }}>
                             <View style={{ width: '75%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '75%' }}>
                                     <View>

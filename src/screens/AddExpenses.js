@@ -130,7 +130,7 @@ const AddExpense = ({ navigation }) => {
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Title</Text>
                         <TextInput
-                            style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, color: '#000' }}
+                            style={{ fontSize: 18, color: '#000', paddingHorizontal: 0 }}
                             onChangeText={setTitle}
                             value={title}
                             placeholder="Set title"

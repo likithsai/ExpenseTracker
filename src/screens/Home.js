@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, SafeAreaView, StatusBar, Vibration, ToastAndroid } from 'react-native'
+import { StyleSheet, View, SafeAreaView, Vibration } from 'react-native'
 import Header from '../component/Header'
 import List from '../component/List'
 import { openDatabase } from 'react-native-sqlite-storage';
@@ -100,7 +100,11 @@ const ExpenseTracker = ({ navigation }) => {
                         navigation.navigate('AddExpenses', {})
                     }}/>
                     <View style={styles.scrollView}>
-                        <List listData={DATA} />
+                        <List 
+                            listData={DATA}
+                            onItemPress = {(item) => {
+                                console.log('Item Clicked : ' + item)
+                            }} />
                     </View>
             </View>
         </SafeAreaView>
