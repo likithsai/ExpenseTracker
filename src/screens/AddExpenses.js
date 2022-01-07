@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration } from 'react-native'
+import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration, ToastAndroid } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
 import DatePicker from 'react-native-neat-date-picker'
-import Icon from 'react-native-ionicons';
 import { openDatabase } from 'react-native-sqlite-storage';
-import {Picker} from '@react-native-picker/picker';
 import Utils from '../utils/Utils'
 import Dropdown from '../component/Dropdown'
 
@@ -158,7 +156,7 @@ const AddExpense = ({ navigation }) => {
 
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1, width: '100%' }}>
                     <View style={{ flex: 1 }}>
-                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice Type</Text>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Type</Text>
 
                         {/* <Picker 
                             selectedValue={invoiceType} 
@@ -171,18 +169,23 @@ const AddExpense = ({ navigation }) => {
                         </Picker> */}
 
                         <Dropdown 
-                            placeholderText = "Please Select Invoice Type"
-                            modalTitle = "Select Invoice Type"
+                            placeholderText = "Please Select Transaction Type"
+                            modalTitle = "Transaction Type"
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
                             modalItems = {[
                                 { itemKey: '1', itemName: 'Income', itemDesc: 'Transaction where money is added to the account', itemIcon: 'card' }, 
-                                { itemKey: '2', itemName: 'Expense', itemDesc: 'Transaction where money is deducted from the account', itemIcon: 'cash' }
+                                { itemKey: '2', itemName: 'Expense', itemDesc: 'Transaction where money is deducted from the account', itemIcon: 'cash' },
+                                { itemKey: '3', itemName: 'New Category', itemDesc: 'Add New Transaction Type', itemIcon: 'add' }
                             ]}
                             onItemSelected = {(item) => {
-                                console.log('Item selected : ' + item.itemName)
-                                setInvoiceType(item.itemName.toLowerCase())
+                                if(item.itemKey === '3') {
+                                    ToastAndroid.show('Selected Item: ' + item.itemName, ToastAndroid.LONG)
+                                } else {
+                                    // console.log('Item selected : ' + item.itemName)
+                                    setInvoiceType(item.itemName.toLowerCase())
+                                }
                             }}
                         />
 

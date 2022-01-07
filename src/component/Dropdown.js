@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, Text, Modal, ScrollView, View } from 'react-native'
 import Icon from 'react-native-ionicons'
-import PropTypes from 'prop-types';
 
 const Dropdown = (props) => {
     const [modalVisible, setModalVisible] = useState(false)
@@ -53,7 +52,7 @@ const Dropdown = (props) => {
                 onPress={() => setModalVisible(true)}
             >
                 <View style={{ flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', width: '80%' }}>
-                    <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.itemName || 'Please Select Invoice Type' ]}</Text>
+                    <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.itemName || "Select " + props.modalTitle ]}</Text>
                     {/* <Text style={{ color: props.itemColor, fontSize: 15 }}>{[ selectedItem.itemDesc || null ]}</Text> */}
                 </View>
                 <Icon name="arrow-dropdown-circle" color={props.itemColor} style={{ marginRight: 10 }} />
