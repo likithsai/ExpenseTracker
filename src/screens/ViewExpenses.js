@@ -60,9 +60,9 @@ const ViewExpenses = ({ route, navigation }) => {
                     <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ date|| '-' }</Text>
                 </View>
             </Card>
-            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 20, margin: 10, elevation: 5, backgroundColor: 'red' }}>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 14, margin: 10, elevation: 5, backgroundColor: '#11998e' }}>
                 <Icon name="trash" size={20} color='#fff' style={{ marginRight: 10 }} />
-                <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#fff' }}>Delete</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#fff' }}>Delete</Text>
             </TouchableOpacity>
         </View>
     )
