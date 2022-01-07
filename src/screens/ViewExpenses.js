@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Vibration, Text } from 'react-native'
+import { View, Vibration, Text, Button } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
-
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import Icon from 'react-native-ionicons';
 
 const ViewExpenses = ({ route, navigation }) => {
 
@@ -59,6 +60,10 @@ const ViewExpenses = ({ route, navigation }) => {
                     <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ date|| '-' }</Text>
                 </View>
             </Card>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 20, margin: 10, elevation: 5, backgroundColor: 'red' }}>
+                <Icon name="trash" size={20} color='#fff' style={{ marginRight: 10 }} />
+                <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#fff' }}>Delete</Text>
+            </TouchableOpacity>
         </View>
     )
 }
