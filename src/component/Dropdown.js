@@ -51,7 +51,8 @@ const Dropdown = (props) => {
                 style={[ props.style, { width: '100%', backgroundColor: '#fff', marginTop: 10, marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' } ]}
                 onPress={() => setModalVisible(true)}
             >
-                <View style={{ flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', width: '80%' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '80%' }}>
+                    <Icon name={selectedItem.itemIcon} size={30} color={props.itemColor} style={{ marginRight: 10, marginTop: 5 }} />
                     <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.itemName || "Select " + props.modalTitle ]}</Text>
                     {/* <Text style={{ color: props.itemColor, fontSize: 15 }}>{[ selectedItem.itemDesc || null ]}</Text> */}
                 </View>
