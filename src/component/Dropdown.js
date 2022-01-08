@@ -20,7 +20,7 @@ const Dropdown = (props) => {
                     setModalVisible(!modalVisible);
                 }}>
                     <View style={{ flex:1, flexDirection: 'column' }}>
-                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: props.modalItemBackgroundColor, elevation: 10, padding: 20, maxHeight: 340 }}>
+                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: props.modalItemBackgroundColor, elevation: 10, padding: 20 }}>
                             <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold' }}>Select {props.modalTitle}</Text>
                         
                             {
