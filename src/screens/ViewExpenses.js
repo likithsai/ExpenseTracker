@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-ionicons';
 import { useNavigation } from '@react-navigation/native'
 
-const ViewExpenses = () => {
+const ViewExpenses = ({ route }) => {
     const navigation = useNavigation()
     const { name, desc, type, amount, date } = route.params.data
 
