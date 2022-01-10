@@ -17,22 +17,21 @@ const Dropdown = (props) => {
                     setModalVisible(!modalVisible)
                 }}>
                     <View style={{ flex:1, flexDirection: 'column' }}>
-                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: props.modalItemBackgroundColor, elevation: 10, padding: 20 }}>
+                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: props.modalItemBackgroundColor, elevation: 10, padding: 20, minHeight: '70%' }}>
                             <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold' }}>Select {props.modalTitle}</Text>
-                        
                             {
                                 props.modalItems.map(item => (
                                         <TouchableOpacity 
                                             key={item.category_id + ""}
                                             onPress={() => {
-                                                console.log(JSON.parse(item.category_icon).iconName)
+                                                // console.log(JSON.parse(item.category_icon).iconName)
                                                 props.onItemSelected(item)
                                                 setSelectedItem(item)
                                                 setModalVisible(false)
                                             }} 
                                             style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20 }}>
                                                 <View>
-                                                    <FeatherIcons name={JSON.parse(item.category_icon).iconName} color={props.modalItemTextColor} style={{ marginRight: 20 }} size={30}/>
+                                                    <FeatherIcons name={item.category_icon} color={props.modalItemTextColor} style={{ marginRight: 20 }} size={30}/>
                                                 </View>
                                                 <View>
                                                     <Text style={[styles.listItemText, { color: props.modalItemTextColor}]}>{ item.category_name }</Text>
@@ -45,7 +44,7 @@ const Dropdown = (props) => {
                             <TouchableOpacity 
                                 key="add_category"
                                 onPress={() => {
-                                    props.onItemSelected({ category_id: '10000', category_name: 'category', category_desc: 'add transactional category' })
+                                    props.onItemSelected({ category_id: 'add_category', category_name: 'category', category_desc: 'add transactional category' })
                                     setModalVisible(false)
                                 }} 
                                 style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20 }}
@@ -66,7 +65,7 @@ const Dropdown = (props) => {
                 onPress={() => setModalVisible(true)}
             >
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '80%' }}>
-                    <FeatherIcons name={JSON.parse(selectedItem.category_icon).iconName} size={30} color={props.itemColor} style={{ marginRight: 10, marginTop: 5 }} />
+                    <FeatherIcons name={selectedItem.category_icon} size={30} color={props.itemColor} style={{ marginRight: 10, marginTop: 5 }} />
                     <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.category_name || "Select " + props.modalTitle ]}</Text>
                     {/* <Text style={{ color: props.itemColor, fontSize: 15 }}>{[ selectedItem.itemDesc || null ]}</Text> */}
                 </View>

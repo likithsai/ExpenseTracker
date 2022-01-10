@@ -176,7 +176,7 @@ const AddCategory = () => {
                 }}
                 onSucessPressed = {() => {
                     Vibration.vibrate(50)
-                    insertIntoDatabase(categoryName, categoryDesc, JSON.stringify(selectedCategoryIcon))
+                    insertIntoDatabase(categoryName, categoryDesc, selectedCategoryIcon.iconName)
                     navigation.pop()
                 }} 
             />
