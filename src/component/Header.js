@@ -1,10 +1,10 @@
 import React, { useRef } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Vibration, ScrollView } from 'react-native'
-import Icon from 'react-native-ionicons';
-import RBSheet from "react-native-raw-bottom-sheet";
+import Icon from 'react-native-ionicons'
+import RBSheet from "react-native-raw-bottom-sheet"
 
 const Header = (props) => {
-    const refRBSheet = useRef();
+    const refRBSheet = useRef()
 
     return (
         <>

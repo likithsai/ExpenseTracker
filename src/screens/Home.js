@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, SafeAreaView, Vibration } from 'react-native'
 import Header from '../component/Header'
 import List from '../component/List'
-import { openDatabase } from 'react-native-sqlite-storage';
+import { openDatabase } from 'react-native-sqlite-storage'
 import DatePicker from 'react-native-neat-date-picker'
-import Utils from '../utils/Utils';
+import Utils from '../utils/Utils'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
-});
+})
 
 const ExpenseTracker = ({ navigation }) => {
     const [ showDatePicker, setShowDatePicker ] = useState(false)
@@ -59,7 +59,6 @@ const ExpenseTracker = ({ navigation }) => {
                 for (let i = 0; i < results.rows.length; ++i) {
                     temp.push(results.rows.item(i))
                 }
-                // console.log(temp)
                 setDATA(temp)
             })
         })

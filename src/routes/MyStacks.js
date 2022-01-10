@@ -1,11 +1,11 @@
-import React from 'react';
-import Home from '../screens/Home';
-import AddExpense from '../screens/AddExpenses';
-import ViewExpenses from '../screens/ViewExpenses';
-import AddCategory from '../screens/AddCategory';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react'
+import Home from '../screens/Home'
+import AddExpense from '../screens/AddExpenses'
+import ViewExpenses from '../screens/ViewExpenses'
+import AddCategory from '../screens/AddCategory'
+import { createStackNavigator } from '@react-navigation/stack'
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 const MyStacks = () => {
     return (

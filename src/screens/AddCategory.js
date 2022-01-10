@@ -1,9 +1,32 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, Vibration } from 'react-native'
+import { View, Text, TextInput, Vibration, ToastAndroid } from 'react-native'
 import Card from '../component/Card'
 import { useNavigation } from '@react-navigation/native'
 import HeaderComp from '../component/HeaderComp'
 import IconList from '../component/IconList'
+import { openDatabase } from 'react-native-sqlite-storage'
+
+var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
+    console.log('SQL Error : ' + err.message)
+})
+
+const insertIntoDatabase = (name, desc, icon) => {
+    db.transaction((txn) => {
+        txn.executeSql(        
+            'INSERT INTO tbl_category(category_name, category_desc, category_icon) VALUES (?, ?, ?)',
+            [name, desc, icon],
+            (tx, results) => {               
+                console.log('Results', results.rowsAffected)
+                if(results.rowsAffected > 0) {
+                    navigation.pop()
+                }
+            },
+            (err) => {
+                console.log('Error: ' + err.message)
+            }
+        )
+    })
+}
 
 const AddCategory = () => {
     const navigation = useNavigation()
@@ -135,11 +158,10 @@ const AddCategory = () => {
         { iconKey: 115, iconType: 'feather', iconName: 'grid' },
         { iconKey: 116, iconType: 'feather', iconName: 'hard-drive' },
         { iconKey: 117, iconType: 'feather', iconName: 'hash' },
-        { iconKey: 118, iconType: 'feather', iconName: 'headphone' },
-        { iconKey: 119, iconType: 'feather', iconName: 'heart' },
-        { iconKey: 120, iconType: 'feather', iconName: 'help-circle' },
-        { iconKey: 121, iconType: 'feather', iconName: 'hexagon' },
-        { iconKey: 122, iconType: 'feather', iconName: 'home' }
+        { iconKey: 118, iconType: 'feather', iconName: 'heart' },
+        { iconKey: 119, iconType: 'feather', iconName: 'help-circle' },
+        { iconKey: 120, iconType: 'feather', iconName: 'hexagon' },
+        { iconKey: 121, iconType: 'feather', iconName: 'home' }
     ]
 
     return (
@@ -154,6 +176,7 @@ const AddCategory = () => {
                 }}
                 onSucessPressed = {() => {
                     Vibration.vibrate(50)
+                    insertIntoDatabase(categoryName, categoryDesc, JSON.stringify(selectedCategoryIcon))
                     navigation.pop()
                 }} 
             />

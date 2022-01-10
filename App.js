@@ -40,9 +40,8 @@ const ExpenseTracker = () => {
               `CREATE TABLE IF NOT EXISTS tbl_category(
                   category_id INTEGER PRIMARY KEY AUTOINCREMENT, 
                   category_name VARCHAR(20) DEFAULT NULL, 
-                  category_desc VARCHAR(500) DEFAULT NULL, 
-                  category_icon_type VARCHAR(20) DEFAULT NULL, 
-                  category_icon VARCHAR(20) DEFAULT NULL, 
+                  category_desc VARCHAR(500) DEFAULT NULL,
+                  category_icon VARCHAR(100) DEFAULT NULL, 
                   category_created timestamp default CURRENT_TIMESTAMP
               )`,
               [],

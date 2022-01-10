@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import React from "react"
+import { Text, StyleSheet, TouchableOpacity } from "react-native"
 
 const Btn = ({ text, colorText, onPress, zero }) => {
   return (
@@ -9,8 +9,8 @@ const Btn = ({ text, colorText, onPress, zero }) => {
     >
       <Text style={colorText ? styles.textLight : styles.textDark}>{text}</Text>
     </TouchableOpacity>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -34,5 +34,5 @@ const styles = StyleSheet.create({
     fontSize: 34,
     color: "#575757"
   }
-});
-export default Btn;
+})
+export default Btn

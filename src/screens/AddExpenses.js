@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
 import DatePicker from 'react-native-neat-date-picker'
-import { openDatabase } from 'react-native-sqlite-storage';
+import { openDatabase } from 'react-native-sqlite-storage'
 import Utils from '../utils/Utils'
 import Dropdown from '../component/Dropdown'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
-});
+})
 
 const AddExpense = ({ navigation }) => {
     const calcButtons = [
@@ -38,14 +38,32 @@ const AddExpense = ({ navigation }) => {
     const [ description, setDescription ] = useState()
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
     const [invoiceType, setInvoiceType] = useState()
+    const [ category, setCategory ] = useState([])
 
+    useEffect(() => {
+        selectDataFromDatabase("SELECT * FROM tbl_category")
+        // console.log(category)
+    })
+
+    const selectDataFromDatabase = async (query, param) => {
+        await db.transaction((tx) => {
+            tx.executeSql(query, param, (tx, results) => {
+                var temp = []
+                for (let i = 0; i < results.rows.length; ++i) {
+                    temp.push(results.rows.item(i))
+                }
+                setCategory(temp)
+            })
+        })
+    }
+    
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
             txn.executeSql(        
                 'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_date) VALUES (?, ?, ?, ?, ?)',
                 [ title, description, invoiceType, eval(amount), date ],
                 (tx, results) => {               
-                    console.log('Results', results.rowsAffected);
+                    console.log('Results', results.rowsAffected)
                     if(results.rowsAffected > 0) {
                         navigation.pop()
                     }
@@ -73,11 +91,11 @@ const AddExpense = ({ navigation }) => {
         switch (item.id) {
             case 'NUM_EQ':
                 setAmount(eval(amount))
-                break;
+                break
         
             case 'NUM_CLR':
                 setAmount(0)
-                break;
+                break
             
             case 'NUM_BCK':
                 if(amount.toString().length === 1) {
@@ -85,7 +103,7 @@ const AddExpense = ({ navigation }) => {
                 } else {
                     setAmount(amount.toString().slice(0, -1))
                 }
-                break;
+                break
 
             default:
                 if(amount === 0) {
@@ -93,7 +111,7 @@ const AddExpense = ({ navigation }) => {
                 } else {
                     setAmount(amount + item.key)
                 }
-                break;
+                break
         }
     }
 
@@ -165,17 +183,19 @@ const AddExpense = ({ navigation }) => {
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
-                            modalItems = {[
-                                { itemKey: '1', itemName: 'Income', itemDesc: 'Transaction where money is added to the account', itemIcon: 'card' }, 
-                                { itemKey: '2', itemName: 'Expense', itemDesc: 'Transaction where money is deducted from the account', itemIcon: 'cash' },
-                                { itemKey: '3', itemName: 'New Category', itemDesc: 'Add New Transaction Type', itemIcon: 'add' }
-                            ]}
+                            // modalItems = {[
+                            //     { itemKey: '1', itemName: 'Income', itemDesc: 'Transaction where money is added to the account', itemIcon: 'card' }, 
+                            //     { itemKey: '2', itemName: 'Expense', itemDesc: 'Transaction where money is deducted from the account', itemIcon: 'cash' },
+                            //     { itemKey: '3', itemName: 'New Category', itemDesc: 'Add New Transaction Type', itemIcon: 'add' }
+                            // ]}
+                            modalItems = {category}
                             onItemSelected = {(item) => {
-                                if(item.itemKey === '3') {
+                                console.log(item)
+                                if(item.category_id === '10000') {
                                     navigation.navigate('AddCategory', {})  
                                 } else {
                                     // console.log('Item selected : ' + item.itemName)
-                                    setInvoiceType(item.itemName.toLowerCase())
+                                    setInvoiceType(item.category_name)
                                 }
                             }}
                         />

@@ -1,13 +1,12 @@
 import React from 'react'
 import {View, TouchableOpacity, FlatList, StyleSheet, ScrollView} from 'react-native'
-// import Icon from 'react-native-ionicons';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Feather'
 
 const IconList = (props) => {
     return (
         <View style={styles.MainContainer}>
             <FlatList  
-                style = {{ padding: 0, margin: 0 }}
+                style = {{ padding: 0, margin: 0, marginBottom: 50 }}
                 data={props.iconList}
                 renderItem={({item}) =>
                     <TouchableOpacity style={styles.GridViewBlockStyle} onPress={() => {

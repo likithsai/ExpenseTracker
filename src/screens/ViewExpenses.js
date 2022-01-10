@@ -3,7 +3,7 @@ import { View, Vibration, Text, Button } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import Icon from 'react-native-ionicons';
+import Icon from 'react-native-ionicons'
 import { useNavigation } from '@react-navigation/native'
 
 const ViewExpenses = ({ route }) => {
@@ -63,4 +63,4 @@ const ViewExpenses = ({ route }) => {
     )
 }
 
-export default ViewExpenses;
+export default ViewExpenses

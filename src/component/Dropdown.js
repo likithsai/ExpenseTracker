@@ -6,10 +6,6 @@ const Dropdown = (props) => {
     const [modalVisible, setModalVisible] = useState(false)
     const [selectedItem, setSelectedItem] = useState([])
 
-    const getSelected = () => {
-        return selectedItem
-    }
-
     return (
         <>
             <Modal
@@ -17,7 +13,7 @@ const Dropdown = (props) => {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    setModalVisible(!modalVisible);
+                    setModalVisible(!modalVisible)
                 }}>
                     <View style={{ flex:1, flexDirection: 'column' }}>
                         <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: props.modalItemBackgroundColor, elevation: 10, padding: 20 }}>
@@ -26,24 +22,40 @@ const Dropdown = (props) => {
                             {
                                 props.modalItems.map(item => (
                                         <TouchableOpacity 
-                                            key={item.itemKey}
+                                            key={item.category_id + ""}
                                             onPress={() => {
                                                 props.onItemSelected(item)
                                                 setSelectedItem(item)
                                                 setModalVisible(false)
                                             }} 
                                             style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20 }}>
-                                            <View>
-                                                <Icon name={item.itemIcon} color={props.modalItemTextColor} style={{ marginRight: 20 }} />
-                                            </View>
-                                            <View>
-                                                <Text style={[styles.listItemText, { color: props.modalItemTextColor}]}>{ item.itemName }</Text>
-                                                <Text style={[styles.listItemSubText, { color: props.modalItemTextColor, textAlign: 'justify' }]}>{ item.itemDesc }</Text>
-                                            </View>
+                                                <View>
+                                                    <Icon name="add" color={props.modalItemTextColor} style={{ marginRight: 20 }} />
+                                                </View>
+                                                <View>
+                                                    <Text style={[styles.listItemText, { color: props.modalItemTextColor}]}>{ item.category_name }</Text>
+                                                    <Text style={[styles.listItemSubText, { color: props.modalItemTextColor, textAlign: 'justify' }]}>{ item.category_desc }</Text>
+                                                </View>
                                         </TouchableOpacity>
                                     )
                                 )
                             }
+                            <TouchableOpacity 
+                                key="10000"
+                                onPress={() => {
+                                    props.onItemSelected({ category_id: '10000', category_name: 'category', category_desc: 'add transactional category' })
+                                    setModalVisible(false)
+                                }} 
+                                style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20 }}
+                            >
+                                <View>
+                                    <Icon name="add" color={props.modalItemTextColor} style={{ marginRight: 20 }} />
+                                </View>
+                                <View>
+                                    <Text style={[styles.listItemText, { color: props.modalItemTextColor}]}>Add Category</Text>
+                                    <Text style={[styles.listItemSubText, { color: props.modalItemTextColor, textAlign: 'justify' }]}>Add transaction category</Text>
+                                </View>
+                            </TouchableOpacity>
                         </ScrollView>
                     </View>
             </Modal>
