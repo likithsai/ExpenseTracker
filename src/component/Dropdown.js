@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, Text, Modal, ScrollView, View } from 'react-native'
 import Icon from 'react-native-ionicons'
+import FeatherIcons from 'react-native-vector-icons/Feather'
 
 const Dropdown = (props) => {
     const [modalVisible, setModalVisible] = useState(false)
@@ -24,13 +25,14 @@ const Dropdown = (props) => {
                                         <TouchableOpacity 
                                             key={item.category_id + ""}
                                             onPress={() => {
+                                                console.log(JSON.parse(item.category_icon).iconName)
                                                 props.onItemSelected(item)
                                                 setSelectedItem(item)
                                                 setModalVisible(false)
                                             }} 
                                             style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20 }}>
                                                 <View>
-                                                    <Icon name="add" color={props.modalItemTextColor} style={{ marginRight: 20 }} />
+                                                    <FeatherIcons name={JSON.parse(item.category_icon).iconName} color={props.modalItemTextColor} style={{ marginRight: 20 }} size={30}/>
                                                 </View>
                                                 <View>
                                                     <Text style={[styles.listItemText, { color: props.modalItemTextColor}]}>{ item.category_name }</Text>
@@ -41,7 +43,7 @@ const Dropdown = (props) => {
                                 )
                             }
                             <TouchableOpacity 
-                                key="10000"
+                                key="add_category"
                                 onPress={() => {
                                     props.onItemSelected({ category_id: '10000', category_name: 'category', category_desc: 'add transactional category' })
                                     setModalVisible(false)
@@ -49,7 +51,7 @@ const Dropdown = (props) => {
                                 style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20 }}
                             >
                                 <View>
-                                    <Icon name="add" color={props.modalItemTextColor} style={{ marginRight: 20 }} />
+                                    <FeatherIcons name="plus" color={props.modalItemTextColor} style={{ marginRight: 20 }} size={30} />
                                 </View>
                                 <View>
                                     <Text style={[styles.listItemText, { color: props.modalItemTextColor}]}>Add Category</Text>
@@ -64,8 +66,8 @@ const Dropdown = (props) => {
                 onPress={() => setModalVisible(true)}
             >
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '80%' }}>
-                    <Icon name={selectedItem.itemIcon} size={30} color={props.itemColor} style={{ marginRight: 10, marginTop: 5 }} />
-                    <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.itemName || "Select " + props.modalTitle ]}</Text>
+                    <FeatherIcons name={JSON.parse(selectedItem.category_icon).iconName} size={30} color={props.itemColor} style={{ marginRight: 10, marginTop: 5 }} />
+                    <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.category_name || "Select " + props.modalTitle ]}</Text>
                     {/* <Text style={{ color: props.itemColor, fontSize: 15 }}>{[ selectedItem.itemDesc || null ]}</Text> */}
                 </View>
                 <Icon name="arrow-dropdown-circle" color={props.itemColor} style={{ marginRight: 10 }} />

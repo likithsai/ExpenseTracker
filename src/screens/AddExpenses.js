@@ -183,15 +183,10 @@ const AddExpense = ({ navigation }) => {
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
-                            // modalItems = {[
-                            //     { itemKey: '1', itemName: 'Income', itemDesc: 'Transaction where money is added to the account', itemIcon: 'card' }, 
-                            //     { itemKey: '2', itemName: 'Expense', itemDesc: 'Transaction where money is deducted from the account', itemIcon: 'cash' },
-                            //     { itemKey: '3', itemName: 'New Category', itemDesc: 'Add New Transaction Type', itemIcon: 'add' }
-                            // ]}
                             modalItems = {category}
                             onItemSelected = {(item) => {
                                 console.log(item)
-                                if(item.category_id === '10000') {
+                                if(item.category_id === 'add_category') {
                                     navigation.navigate('AddCategory', {})  
                                 } else {
                                     // console.log('Item selected : ' + item.itemName)
