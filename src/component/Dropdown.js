@@ -29,7 +29,7 @@ const Dropdown = (props) => {
                                                 setSelectedItem(item)
                                                 setModalVisible(false)
                                             }} 
-                                            style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20 }}>
+                                            style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
                                                 <View>
                                                     <FeatherIcons name={item.category_icon} color={props.modalItemTextColor} style={{ marginRight: 20 }} size={30}/>
                                                 </View>
