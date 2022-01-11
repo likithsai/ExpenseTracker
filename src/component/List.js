@@ -33,6 +33,22 @@ const List = (props) => {
                     </View>
                     <ScrollView style={{ marginTop: 20 }}>
                         <View style={{ flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                            <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => {
+                                refRBSheet.current.close()
+                                navigation.navigate('ViewExpenses', {
+                                    data: {
+                                        name : selectedItem.expense_name,
+                                        desc : selectedItem.expense_desc,
+                                        type : selectedItem.expense_type,
+                                        amount : selectedItem.expense_amt,
+                                        date : selectedItem.expense_date
+                                    }
+                                })
+                            }}>
+                                <Icon name="add" size={20} color='#fff' style={{ marginRight: 20 }} />
+                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>View</Text>
+                            </TouchableOpacity>
+                            <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                             <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name="create" size={20} color='#fff' style={{ marginRight: 20 }} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>Edit</Text>
@@ -77,20 +93,21 @@ const List = (props) => {
                 }}
                 renderItem={({item}) => ( 
                         <TouchableOpacity style={styles.listItems} 
+                            // onPress={() => {
+                            //     console.log(item)
+                            //     props.onItemPress(item)
+                            //     navigation.navigate('ViewExpenses', {
+                            //         data: {
+                            //             name : item.expense_name,
+                            //             desc : item.expense_desc,
+                            //             type : item.expense_type,
+                            //             amount : item.expense_amt,
+                            //             date : item.expense_date
+                            //         }
+                            //     })    
+                            // }}
                             onPress={() => {
-                                console.log(item)
-                                props.onItemPress(item)
-                                navigation.navigate('ViewExpenses', {
-                                    data: {
-                                        name : item.expense_name,
-                                        desc : item.expense_desc,
-                                        type : item.expense_type,
-                                        amount : item.expense_amt,
-                                        date : item.expense_date
-                                    }
-                                })    
-                            }}
-                            onLongPress={() => {
+                                setSelectedItem(item)
                                 Vibration.vibrate(50)
                                 setSelectedItem(item)
                                 refRBSheet.current.open()

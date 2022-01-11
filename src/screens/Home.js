@@ -101,9 +101,10 @@ const ExpenseTracker = ({ navigation }) => {
                     <View style={styles.scrollView}>
                         <List 
                             listData={DATA}
-                            onItemPress = {(item) => {
-                                console.log('Item Clicked : ' + item)
-                            }} />
+                            // onItemPress = {(item) => {
+                            //     console.log('Item Clicked : ' + item)
+                            // }} 
+                            />
                     </View>
             </View>
         </SafeAreaView>
