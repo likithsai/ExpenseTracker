@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Vibration, Text, Button } from 'react-native'
+import { View, Vibration, Text, Button, ScrollView } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -27,38 +27,40 @@ const ViewExpenses = ({ route }) => {
                 }} 
             />
             <View style={{ padding: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <QRCode value={[{ itemName: name, itemDesc: desc, itemType: type, itemAmount: amount, itemDate: date }]} />
+                <QRCode value={[{ itemName: name, itemDesc: desc, itemType: type, itemAmount: amount, itemDate: date }]} size={120} />
             </View>
-            <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
-                <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Title</Text>
-                    <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ name || '-' }</Text>
-                </View>
-            </Card>
-            <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
-                <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Description</Text>
-                    <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ desc|| '-' }</Text>
-                </View>
-            </Card>
-            <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
-                <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Type</Text>
-                    <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ type|| '-' }</Text>
-                </View>
-            </Card>
-            <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
-                <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice Amount</Text>
-                    <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ amount|| '-' }</Text>
-                </View>
-            </Card>
-            <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
-                <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Date</Text>
-                    <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ date|| '-' }</Text>
-                </View>
-            </Card>
+            <ScrollView>    
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Title</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ name || '-' }</Text>
+                    </View>
+                </Card>
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Description</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ desc|| '-' }</Text>
+                    </View>
+                </Card>
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Type</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ type|| '-' }</Text>
+                    </View>
+                </Card>
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice Amount</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ amount|| '-' }</Text>
+                    </View>
+                </Card>
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Date</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ date|| '-' }</Text>
+                    </View>
+                </Card>
+            </ScrollView>
             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 14, margin: 10, elevation: 5, backgroundColor: '#11998e' }}>
                 <Icon name="trash" size={20} color='#fff' style={{ marginRight: 10 }} />
                 <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#fff' }}>Delete</Text>

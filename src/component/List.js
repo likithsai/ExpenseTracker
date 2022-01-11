@@ -66,6 +66,20 @@ const List = (props) => {
                                     )
                                 )
                             }
+                            <TouchableOpacity 
+                                key="add_catgeory"
+                                onPress={() => {
+                                    navigation.navigate("AddCategory", {})
+                                }} 
+                                style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
+                                    <View>
+                                        <FeatherIcons name="plus" color="#fff" style={{ marginRight: 20 }} size={30}/>
+                                    </View>
+                                    <View>
+                                        <Text style={[styles.listItemText, { color: '#fff' }]}>Add Category</Text>
+                                        <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify' }]}>Add Transaction category</Text>
+                                   </View>
+                            </TouchableOpacity>
                         </ScrollView>
                     </View>
             </Modal>
@@ -103,7 +117,7 @@ const List = (props) => {
                                     }
                                 })
                             }}>
-                                <Icon name="add" size={20} color='#fff' style={{ marginRight: 20 }} />
+                                <Icon name="eye" size={20} color='#fff' style={{ marginRight: 20 }} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>View</Text>
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>

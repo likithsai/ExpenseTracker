@@ -37,13 +37,13 @@ const AddExpense = ({ navigation }) => {
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
-    const [ invoiceType, setInvoiceType ] = useState(null)
+    const [ invoiceType, setInvoiceType ] = useState('')
     
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
             txn.executeSql(        
                 'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_date) VALUES (?, ?, ?, ?, ?)',
-                [ title, description, invoiceType, eval(amount), date ],
+                [ title, description, invoiceType.toLowerCase(), eval(amount), date ],
                 (tx, results) => {               
                     console.log('Results', results.rowsAffected)
                     if(results.rowsAffected > 0) {
@@ -165,11 +165,11 @@ const AddExpense = ({ navigation }) => {
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
-                            modalItems = {[{ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'add' }, { category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'add' }]}
+                            modalItems = {[{ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'credit-card' }, { category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'dollar-sign' }]}
                             // modalItems = {category}
                             onItemSelected = {(item) => {
                                 // console.log(item.category_name)
-                                setInvoiceType(item.category_name)
+                                setInvoiceType(item.category_name.toString())
                                 console.log(invoiceType)
                             }}
                         />
