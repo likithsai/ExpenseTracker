@@ -46,7 +46,7 @@ const ExpenseTracker = ({ navigation }) => {
 
     const loadKPIS = (type) => {
         let item = 0
-        DATA.filter(item => item.expense_type === type).map(filteredItem => {
+        DATA.filter(item => item.expense_type.toLowerCase() === type.toLowerCase()).map(filteredItem => {
             item = item + filteredItem.expense_amt
         })
         return item

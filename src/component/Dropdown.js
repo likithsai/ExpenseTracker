@@ -41,7 +41,7 @@ const Dropdown = (props) => {
                                     )
                                 )
                             }
-                            <TouchableOpacity 
+                            {/* <TouchableOpacity 
                                 key="add_category"
                                 onPress={() => {
                                     props.onItemSelected({ category_id: 'add_category', category_name: 'category', category_desc: 'add transactional category' })
@@ -56,7 +56,7 @@ const Dropdown = (props) => {
                                     <Text style={[styles.listItemText, { color: props.modalItemTextColor}]}>Add Category</Text>
                                     <Text style={[styles.listItemSubText, { color: props.modalItemTextColor, textAlign: 'justify' }]}>Add transaction category</Text>
                                 </View>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </ScrollView>
                     </View>
             </Modal>

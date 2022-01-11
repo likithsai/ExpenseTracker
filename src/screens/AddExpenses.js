@@ -183,15 +183,17 @@ const AddExpense = ({ navigation }) => {
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
-                            modalItems = {category}
+                            modalItems = {[{ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'add' }, { category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'add' }]}
+                            // modalItems = {category}
                             onItemSelected = {(item) => {
                                 console.log(item)
-                                if(item.category_id === 'add_category') {
-                                    navigation.navigate('AddCategory', {})  
-                                } else {
-                                    // console.log('Item selected : ' + item.itemName)
-                                    setInvoiceType(item.category_name)
-                                }
+                                // if(item.category_id === 'add_category') {
+                                //     navigation.navigate('AddCategory', {})  
+                                // } else {
+                                //     // console.log('Item selected : ' + item.itemName)
+                                //     setInvoiceType(item.category_name)
+                                // }
+                                setInvoiceType(item.category_name)
                             }}
                         />
 
