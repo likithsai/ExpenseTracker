@@ -1,16 +1,74 @@
-import React, { useRef, useState } from 'react'
-import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration } from 'react-native'
+import React, {useRef, useState, useEffect} from 'react'
+import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration, Modal } from 'react-native'
 import Icon from 'react-native-ionicons'
 import RBSheet from "react-native-raw-bottom-sheet"
 import { useNavigation } from '@react-navigation/native'
+import { openDatabase } from 'react-native-sqlite-storage'
+import FeatherIcons from 'react-native-vector-icons/Feather'
+
+var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
+    console.log('SQL Error : ' + err.message)
+})
+
 
 const List = (props) => {
     const refRBSheet = useRef()
     const [selectedItem, setSelectedItem] = useState([])
+    const [categoryModalVisible, setCategoryModalVisible] = useState(false)
+    const [ category, setCategory ] = useState([])
     const navigation = useNavigation()
+
+    useEffect(() => {
+        selectDataFromDatabase("SELECT * FROM tbl_category")
+    })
+
+    const selectDataFromDatabase = async (query, param) => {
+        await db.transaction((tx) => {
+            tx.executeSql(query, param, (tx, results) => {
+                var temp = []
+                for (let i = 0; i < results.rows.length; ++i) {
+                    temp.push(results.rows.item(i))
+                }
+                setCategory(temp)
+            })
+        })
+    }
 
     return (
         <>
+        <Modal
+                animationType="none"
+                transparent={true}
+                visible={categoryModalVisible}
+                onRequestClose={() => {
+                    setCategoryModalVisible(!categoryModalVisible)
+                }}>
+                    <View style={{ flex:1, flexDirection: 'column' }}>
+                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: '#11998e', elevation: 10, padding: 20, minHeight: '70%' }}>
+                            <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', color: '#fff' }}>Select Category</Text>
+                            {
+                                category.map(item => (
+                                        <TouchableOpacity 
+                                            key={item.category_id + ""}
+                                            onPress={() => {
+                                                setSelectedItem(item)
+                                                setCategoryModalVisible(false)
+                                            }} 
+                                            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
+                                                <View>
+                                                    <FeatherIcons name={item.category_icon} color="#fff" style={{ marginRight: 20 }} size={30}/>
+                                                </View>
+                                                <View>
+                                                    <Text style={[styles.listItemText, { color: '#fff' }]}>{ item.category_name }</Text>
+                                                    <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify' }]}>{ item.category_desc }</Text>
+                                                </View>
+                                        </TouchableOpacity>
+                                    )
+                                )
+                            }
+                        </ScrollView>
+                    </View>
+            </Modal>
         <RBSheet
             ref={refRBSheet}
             height={200}
@@ -28,7 +86,7 @@ const List = (props) => {
                             <Text numberOfLines={2} style={[styles.listItemSubText, {color: '#fff'}]}>{selectedItem.expense_desc}</Text>
                         </View>
                         <View>
-                            <Text style={ [styles.listItemAmt, {color: '#fff'}] }>{selectedItem.expense_amt}</Text>
+                            <Text style={ [styles.listItemAmt, {color: '#fff'}] }>{ selectedItem.expense_type === 'income' ? '+ ' + selectedItem.expense_amt : '- ' + selectedItem.expense_amt }</Text>
                         </View>
                     </View>
                     <ScrollView style={{ marginTop: 20 }}>
@@ -64,7 +122,10 @@ const List = (props) => {
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>Share</Text>
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
-                            <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
+                            <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => { 
+                                setCategoryModalVisible(!categoryModalVisible) 
+                                refRBSheet.current.close()
+                            }}>
                                 <Icon name="albums" size={20} color='#fff' style={{ marginRight: 20 }} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>Add to category</Text>
                             </TouchableOpacity>
@@ -93,19 +154,6 @@ const List = (props) => {
                 }}
                 renderItem={({item}) => ( 
                         <TouchableOpacity style={styles.listItems} 
-                            // onPress={() => {
-                            //     console.log(item)
-                            //     props.onItemPress(item)
-                            //     navigation.navigate('ViewExpenses', {
-                            //         data: {
-                            //             name : item.expense_name,
-                            //             desc : item.expense_desc,
-                            //             type : item.expense_type,
-                            //             amount : item.expense_amt,
-                            //             date : item.expense_date
-                            //         }
-                            //     })    
-                            // }}
                             onPress={() => {
                                 setSelectedItem(item)
                                 Vibration.vibrate(50)

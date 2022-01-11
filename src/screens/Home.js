@@ -46,7 +46,7 @@ const ExpenseTracker = ({ navigation }) => {
 
     const loadKPIS = (type) => {
         let item = 0
-        DATA.filter(item => item.expense_type.toLowerCase() === type.toLowerCase()).map(filteredItem => {
+        DATA.filter(item => item.expense_type.toLowerCase() === type).map(filteredItem => {
             item = item + filteredItem.expense_amt
         })
         return item
@@ -99,12 +99,7 @@ const ExpenseTracker = ({ navigation }) => {
                         navigation.navigate('AddExpenses', {})
                     }}/>
                     <View style={styles.scrollView}>
-                        <List 
-                            listData={DATA}
-                            // onItemPress = {(item) => {
-                            //     console.log('Item Clicked : ' + item)
-                            // }} 
-                            />
+                        <List listData={DATA} />
                     </View>
             </View>
         </SafeAreaView>

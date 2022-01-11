@@ -38,24 +38,6 @@ const AddExpense = ({ navigation }) => {
     const [ description, setDescription ] = useState()
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
     const [invoiceType, setInvoiceType] = useState()
-    const [ category, setCategory ] = useState([])
-
-    useEffect(() => {
-        selectDataFromDatabase("SELECT * FROM tbl_category")
-        // console.log(category)
-    })
-
-    const selectDataFromDatabase = async (query, param) => {
-        await db.transaction((tx) => {
-            tx.executeSql(query, param, (tx, results) => {
-                var temp = []
-                for (let i = 0; i < results.rows.length; ++i) {
-                    temp.push(results.rows.item(i))
-                }
-                setCategory(temp)
-            })
-        })
-    }
     
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
@@ -187,12 +169,6 @@ const AddExpense = ({ navigation }) => {
                             // modalItems = {category}
                             onItemSelected = {(item) => {
                                 console.log(item)
-                                // if(item.category_id === 'add_category') {
-                                //     navigation.navigate('AddCategory', {})  
-                                // } else {
-                                //     // console.log('Item selected : ' + item.itemName)
-                                //     setInvoiceType(item.category_name)
-                                // }
                                 setInvoiceType(item.category_name)
                             }}
                         />
