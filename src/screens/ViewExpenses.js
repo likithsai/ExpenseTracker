@@ -5,6 +5,7 @@ import Card from '../component/Card'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-ionicons'
 import { useNavigation } from '@react-navigation/native'
+import QRCode from 'react-native-qrcode-svg'
 
 const ViewExpenses = ({ route }) => {
     const navigation = useNavigation()
@@ -25,6 +26,9 @@ const ViewExpenses = ({ route }) => {
                     navigation.pop()
                 }} 
             />
+            <View style={{ padding: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <QRCode value={[{ itemName: name, itemDesc: desc, itemType: type, itemAmount: amount, itemDate: date }]} />
+            </View>
             <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                 <View style={{ flex: 1 }}>
                     <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Title</Text>

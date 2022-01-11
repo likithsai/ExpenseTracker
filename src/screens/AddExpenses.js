@@ -37,7 +37,7 @@ const AddExpense = ({ navigation }) => {
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
-    const [invoiceType, setInvoiceType] = useState()
+    const [ invoiceType, setInvoiceType ] = useState(null)
     
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
@@ -168,8 +168,9 @@ const AddExpense = ({ navigation }) => {
                             modalItems = {[{ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'add' }, { category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'add' }]}
                             // modalItems = {category}
                             onItemSelected = {(item) => {
-                                console.log(item)
+                                // console.log(item.category_name)
                                 setInvoiceType(item.category_name)
+                                console.log(invoiceType)
                             }}
                         />
 
