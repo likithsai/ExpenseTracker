@@ -24,7 +24,6 @@ const Dropdown = (props) => {
                                         <TouchableOpacity 
                                             key={item.category_id + ""}
                                             onPress={() => {
-                                                // console.log(JSON.parse(item.category_icon).iconName)
                                                 props.onItemSelected(item)
                                                 setSelectedItem(item)
                                                 setModalVisible(false)
