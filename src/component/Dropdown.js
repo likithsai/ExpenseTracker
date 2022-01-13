@@ -1,24 +1,29 @@
-import React, { useState } from 'react'
-import { StyleSheet, TouchableOpacity, Text, Modal, ScrollView, View } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { StyleSheet, TouchableOpacity, Text, ScrollView, View } from 'react-native'
 import Icon from 'react-native-ionicons'
 import FeatherIcons from 'react-native-vector-icons/Feather'
+import RBSheet from "react-native-raw-bottom-sheet"
 
 const Dropdown = (props) => {
-    const [modalVisible, setModalVisible] = useState(false)
     const [selectedItem, setSelectedItem] = useState([])
+    const refDropdownModal = useRef()
 
     return (
         <>
-            <Modal
-                animationType="none"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible)
+            <RBSheet
+                ref={refDropdownModal}
+                height={200}
+                openDuration={250}
+                customStyles={{
+                    container: {
+                        height: 240,
+                        elevation: 5,
+                        backgroundColor: '#11998e'
+                    }
                 }}>
-                    <View style={{ flex:1, flexDirection: 'column' }}>
-                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: props.modalItemBackgroundColor, elevation: 10, padding: 20, minHeight: '70%' }}>
-                            <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold' }}>Select {props.modalTitle}</Text>
+                    <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', padding: 20 }}>Select {props.modalTitle}</Text>
+                    <View style={{ flex:1 }}>
+                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: props.modalItemBackgroundColor, elevation: 10, paddingHorizontal: 20 }}>
                             {
                                 props.modalItems.map(item => (
                                         <TouchableOpacity 
@@ -26,7 +31,7 @@ const Dropdown = (props) => {
                                             onPress={() => {
                                                 props.onItemSelected(item)
                                                 setSelectedItem(item)
-                                                setModalVisible(false)
+                                                refDropdownModal.current.close()
                                             }} 
                                             style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
                                                 <View>
@@ -40,28 +45,14 @@ const Dropdown = (props) => {
                                     )
                                 )
                             }
-                            {/* <TouchableOpacity 
-                                key="add_category"
-                                onPress={() => {
-                                    props.onItemSelected({ category_id: 'add_category', category_name: 'category', category_desc: 'add transactional category' })
-                                    setModalVisible(false)
-                                }} 
-                                style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20 }}
-                            >
-                                <View>
-                                    <FeatherIcons name="plus" color={props.modalItemTextColor} style={{ marginRight: 20 }} size={30} />
-                                </View>
-                                <View>
-                                    <Text style={[styles.listItemText, { color: props.modalItemTextColor}]}>Add Category</Text>
-                                    <Text style={[styles.listItemSubText, { color: props.modalItemTextColor, textAlign: 'justify' }]}>Add transaction category</Text>
-                                </View>
-                            </TouchableOpacity> */}
                         </ScrollView>
                     </View>
-            </Modal>
+            </RBSheet>
             <TouchableOpacity 
                 style={[ props.style, { width: '100%', backgroundColor: '#fff', marginTop: 10, marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' } ]}
-                onPress={() => setModalVisible(true)}
+                onPress={() => {
+                    refDropdownModal.current.open()
+                }}
             >
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '80%' }}>
                     <FeatherIcons name={selectedItem.category_icon} size={30} color={props.itemColor} style={{ marginRight: 10, marginTop: 5 }} />

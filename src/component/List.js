@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react'
-import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration, Modal } from 'react-native'
+import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration } from 'react-native'
 import Icon from 'react-native-ionicons'
 import RBSheet from "react-native-raw-bottom-sheet"
 import { useNavigation } from '@react-navigation/native'
@@ -13,8 +13,8 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 
 const List = (props) => {
     const refRBSheet = useRef()
+    const refCategorySheet = useRef()
     const [selectedItem, setSelectedItem] = useState([])
-    const [categoryModalVisible, setCategoryModalVisible] = useState(false)
     const [ category, setCategory ] = useState([])
     const navigation = useNavigation()
 
@@ -36,53 +36,57 @@ const List = (props) => {
 
     return (
         <>
-        <Modal
-                animationType="none"
-                transparent={true}
-                visible={categoryModalVisible}
-                onRequestClose={() => {
-                    setCategoryModalVisible(!categoryModalVisible)
-                }}>
-                    <View style={{ flex:1, flexDirection: 'column' }}>
-                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: '#11998e', elevation: 10, padding: 20, minHeight: '70%' }}>
-                            <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', color: '#fff' }}>Select Category</Text>
-                            {
-                                category.map(item => (
-                                        <TouchableOpacity 
-                                            key={item.category_id + ""}
-                                            onPress={() => {
-                                                setSelectedItem(item)
-                                                setCategoryModalVisible(false)
-                                            }} 
-                                            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
-                                                <View>
-                                                    <FeatherIcons name={item.category_icon} color="#fff" style={{ marginRight: 20 }} size={30}/>
-                                                </View>
-                                                <View>
-                                                    <Text style={[styles.listItemText, { color: '#fff' }]}>{ item.category_name }</Text>
-                                                    <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify' }]}>{ item.category_desc }</Text>
-                                                </View>
-                                        </TouchableOpacity>
-                                    )
-                                )
-                            }
-                            <TouchableOpacity 
-                                key="add_catgeory"
-                                onPress={() => {
-                                    navigation.navigate("AddCategory", {})
-                                }} 
-                                style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
-                                    <View>
-                                        <FeatherIcons name="plus" color="#fff" style={{ marginRight: 20 }} size={30}/>
-                                    </View>
-                                    <View>
-                                        <Text style={[styles.listItemText, { color: '#fff' }]}>Add Category</Text>
-                                        <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify' }]}>Add Transaction category</Text>
-                                   </View>
-                            </TouchableOpacity>
-                        </ScrollView>
-                    </View>
-            </Modal>
+        <RBSheet
+            ref={refCategorySheet}
+            height={200}
+            openDuration={250}
+            customStyles={{
+                container: {
+                    height: 300,
+                    elevation: 5,
+                    backgroundColor: '#11998e'
+                }
+            }}>
+                <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', color: '#fff', padding: 20 }}>Select Category</Text>
+                <View style={{ flex:1, flexDirection: 'column' }}>
+                    <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', height: '100%', backgroundColor: '#11998e', elevation: 10, paddingHorizontal: 20, minHeight: '70%' }}>
+                        {
+                            category.map(item => (
+                                <TouchableOpacity 
+                                    key={item.category_id + ""}
+                                    onPress={() => {
+                                        setSelectedItem(item)
+                                        // setCategoryModalVisible(false)
+                                        refCategorySheet.current.close()
+                                    }} 
+                                    style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
+                                        <View>
+                                            <FeatherIcons name={item.category_icon} color="#fff" style={{ marginRight: 20 }} size={30}/>
+                                        </View>
+                                        <View>
+                                            <Text style={[styles.listItemText, { color: '#fff' }]}>{ item.category_name }</Text>
+                                            <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify' }]}>{ item.category_desc }</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                            ))
+                        }
+                        <TouchableOpacity 
+                            key="add_catgeory"
+                            onPress={() => {
+                                navigation.navigate("AddCategory", {})
+                            }} 
+                            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
+                                <View>
+                                    <FeatherIcons name="plus" color="#fff" style={{ marginRight: 20 }} size={30}/>
+                                </View>
+                                <View>
+                                    <Text style={[styles.listItemText, { color: '#fff' }]}>Add Category</Text>
+                                    <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify' }]}>Add Transaction category</Text>
+                               </View>
+                        </TouchableOpacity>
+                    </ScrollView>
+                </View>
+        </RBSheet>
         <RBSheet
             ref={refRBSheet}
             height={200}
@@ -96,8 +100,8 @@ const List = (props) => {
                 <View style={{ width: '100%', height: '100%', backgroundColor: '#11998e', padding: 20 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View style={{ width: '75%' }}>
-                            <Text style={[styles.listItemText, {color: '#fff'}]}>{selectedItem.expense_name}</Text>
-                            <Text numberOfLines={2} style={[styles.listItemSubText, {color: '#fff'}]}>{selectedItem.expense_desc}</Text>
+                            <Text style={[styles.listItemText, { color: '#fff' }]}>{selectedItem.expense_name}</Text>
+                            <Text numberOfLines={2} style={[styles.listItemSubText, {color: '#fff', fontSize: 15}]}>{selectedItem.expense_desc}</Text>
                         </View>
                         <View>
                             <Text style={ [styles.listItemAmt, {color: '#fff'}] }>{ selectedItem.expense_type === 'income' ? '+ ' + selectedItem.expense_amt : '- ' + selectedItem.expense_amt }</Text>
@@ -118,30 +122,31 @@ const List = (props) => {
                                 })
                             }}>
                                 <Icon name="eye" size={20} color='#fff' style={{ marginRight: 20 }} />
-                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>View</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>View</Text>
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                             <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name="create" size={20} color='#fff' style={{ marginRight: 20 }} />
-                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>Edit</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Edit</Text>
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                             <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name="trash" size={20} color='#fff' style={{ marginRight: 20 }} />
-                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>Delete</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Delete</Text>
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                             <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name="share" size={20} color='#fff' style={{ marginRight: 20 }} />
-                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>Share</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Share</Text>
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                             <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => { 
-                                setCategoryModalVisible(true) 
+                                // setCategoryModalVisible(true) 
                                 refRBSheet.current.close()
+                                refCategorySheet.current.open()
                             }}>
                                 <Icon name="albums" size={20} color='#fff' style={{ marginRight: 20 }} />
-                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff' }}>Add to category</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Add to category</Text>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
@@ -171,7 +176,7 @@ const List = (props) => {
                             onPress={() => {
                                 setSelectedItem(item)
                                 Vibration.vibrate(50)
-                                setSelectedItem(item)
+                                // setSelectedItem(item)
                                 refRBSheet.current.open()
                             }}>
                             <View style={{ width: '75%' }}>
