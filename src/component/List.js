@@ -46,7 +46,7 @@ const List = (props) => {
                     backgroundColor: '#11998e'
                 }
             }}>
-                <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', color: '#fff', padding: 20 }}>Select Category</Text>
+                <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', color: '#fff', paddingHorizontal: 20, marginTop: 20, marginBottom: 10 }}>Select Category</Text>
                 <View style={{ flex:1, flexDirection: 'column' }}>
                     <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', height: '100%', backgroundColor: '#11998e', paddingHorizontal: 20, minHeight: '70%' }}>
                         {
