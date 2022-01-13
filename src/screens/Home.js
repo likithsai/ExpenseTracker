@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, SafeAreaView, Vibration } from 'react-native'
+import { StyleSheet, View, SafeAreaView, Vibration, Share } from 'react-native'
 import Header from '../component/Header'
 import List from '../component/List'
 import { openDatabase } from 'react-native-sqlite-storage'
@@ -9,6 +9,25 @@ import Utils from '../utils/Utils'
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
 })
+
+const shareItem = async (item) => {
+    try {
+        const result = await Share.share({
+            message: JSON.stringify(item),
+        })
+        if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+                // shared with activity type of result.activityType
+            } else {
+                // shared
+            }
+        } else if (result.action === Share.dismissedAction) {
+            // dismissed
+        }
+    } catch (error) {
+      console.log(error.message)
+    }
+}
 
 const ExpenseTracker = ({ navigation }) => {
     const [ showDatePicker, setShowDatePicker ] = useState(false)
@@ -99,7 +118,11 @@ const ExpenseTracker = ({ navigation }) => {
                         navigation.navigate('AddExpenses', {})
                     }}/>
                     <View style={styles.scrollView}>
-                        <List listData={DATA} />
+                        <List listData={DATA}
+                            onShareItem = {(item) => {
+                                // console.log(item)
+                                shareItem(item)
+                            }} />
                     </View>
             </View>
         </SafeAreaView>
