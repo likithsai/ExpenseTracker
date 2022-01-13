@@ -43,13 +43,12 @@ const List = (props) => {
             customStyles={{
                 container: {
                     height: 300,
-                    elevation: 5,
                     backgroundColor: '#11998e'
                 }
             }}>
                 <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', color: '#fff', padding: 20 }}>Select Category</Text>
                 <View style={{ flex:1, flexDirection: 'column' }}>
-                    <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', height: '100%', backgroundColor: '#11998e', elevation: 10, paddingHorizontal: 20, minHeight: '70%' }}>
+                    <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', height: '100%', backgroundColor: '#11998e', paddingHorizontal: 20, minHeight: '70%' }}>
                         {
                             category.map(item => (
                                 <TouchableOpacity 
@@ -64,8 +63,8 @@ const List = (props) => {
                                             <FeatherIcons name={item.category_icon} color="#fff" style={{ marginRight: 20 }} size={30}/>
                                         </View>
                                         <View>
-                                            <Text style={[styles.listItemText, { color: '#fff' }]}>{ item.category_name }</Text>
-                                            <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify' }]}>{ item.category_desc }</Text>
+                                            <Text style={[styles.listItemText, { color: '#fff', fontSize: 18 }]}>{ item.category_name }</Text>
+                                            <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify', fontSize: 15 }]}>{ item.category_desc }</Text>
                                         </View>
                                     </TouchableOpacity>
                             ))
@@ -80,8 +79,8 @@ const List = (props) => {
                                     <FeatherIcons name="plus" color="#fff" style={{ marginRight: 20 }} size={30}/>
                                 </View>
                                 <View>
-                                    <Text style={[styles.listItemText, { color: '#fff' }]}>Add Category</Text>
-                                    <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify' }]}>Add Transaction category</Text>
+                                    <Text style={[styles.listItemText, { color: '#fff', fontSize: 18 }]}>Add Category</Text>
+                                    <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify', fontSize: 15 }]}>Add Transaction category</Text>
                                </View>
                         </TouchableOpacity>
                     </ScrollView>
@@ -143,7 +142,6 @@ const List = (props) => {
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                             <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => { 
-                                // setCategoryModalVisible(true) 
                                 refRBSheet.current.close()
                                 refCategorySheet.current.open()
                             }}>
@@ -178,7 +176,6 @@ const List = (props) => {
                             onPress={() => {
                                 setSelectedItem(item)
                                 Vibration.vibrate(50)
-                                // setSelectedItem(item)
                                 refRBSheet.current.open()
                             }}>
                             <View style={{ width: '75%' }}>
