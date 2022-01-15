@@ -39,7 +39,7 @@ const List = (props) => {
         })
     }
 
-    const updateData = (query, param) => {
+    const executeSQLDB = (query, param) => {
         db.transaction((tx) => {
             tx.executeSql(query, param, (tx, results) => {
                 if (results.rowsAffected > 0) {
@@ -74,7 +74,7 @@ const List = (props) => {
                                 <TouchableOpacity 
                                     key={item.category_id + ""}
                                     onPress={() => {
-                                        updateData('UPDATE tbl_expense SET expense_category = ? WHERE expense_id = ?', [item.category_id, selectedItem.expense_id])
+                                        executeSQLDB('UPDATE tbl_expense SET expense_category = ? WHERE expense_id = ?', [item.category_id, selectedItem.expense_id])
                                         setSelectedItem(item)
                                         refCategorySheet.current.close()
                                     }} 
@@ -152,7 +152,11 @@ const List = (props) => {
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Edit</Text>
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
-                            <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
+                            <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => {
+                                executeSQLDB('DELETE FROM tbl_expense WHERE expense_id = ?', [selectedItem.expense_id])
+                                refRBSheet.current.close()
+                                refCategorySheet.current.close()
+                            }}>
                                 <Icon name="trash" size={20} color='#fff' style={{ marginRight: 20 }} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Delete</Text>
                             </TouchableOpacity>
