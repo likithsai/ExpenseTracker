@@ -23,7 +23,7 @@ const List = (props) => {
 
     const getCategoryData = (type) => {
         let filteredResponseJson = category.filter(item => item.category_id == type)
-        console.log(filteredResponseJson)
+        // console.log(filteredResponseJson)
         return filteredResponseJson
     }
 
@@ -104,7 +104,10 @@ const List = (props) => {
             }}>
                 <View style={{ width: '100%', height: '100%', backgroundColor: '#11998e', padding: 20 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <View style={{ width: '75%' }}>
+                        <View>
+                            <FeatherIcons name={ getCategoryData(selectedItem.expense_category)[0].category_icon || 'alert-triangle' } size={35} color="#fff" style={{ marginRight: 10 }} />
+                        </View>
+                        <View style={{ width: '55%' }}>
                             <Text style={[styles.listItemText, { color: '#fff' }]}>{selectedItem.expense_name}</Text>
                             <Text numberOfLines={2} style={[styles.listItemSubText, {color: '#fff', fontSize: 15}]}>{selectedItem.expense_desc}</Text>
                         </View>
@@ -180,6 +183,7 @@ const List = (props) => {
                 renderItem={({item}) => ( 
                         <TouchableOpacity style={styles.listItems} 
                             onPress={() => {
+                                console.log(item)
                                 setSelectedItem(item)
                                 Vibration.vibrate(50)
                                 refRBSheet.current.open()
@@ -187,7 +191,7 @@ const List = (props) => {
                             <View style={{ width: '75%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '75%' }}>
                                     <View>
-                                        <FeatherIcons name={ getCategoryData(item.expense_category)[0].category_icon } size={35} color="#11998e" style={{ marginRight: 20 }} />
+                                        <FeatherIcons name={ getCategoryData(item.expense_category)[0].category_icon || 'alert-triangle' } size={35} color="#11998e" style={{ marginRight: 20 }} />
                                     </View>
                                     <View>
                                         <Text numberOfLines={1} style={styles.listItemText}>{item.expense_name}</Text>
