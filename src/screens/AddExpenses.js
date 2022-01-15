@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
@@ -38,7 +38,25 @@ const AddExpense = ({ navigation }) => {
     const [ description, setDescription ] = useState()
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
     const [ invoiceType, setInvoiceType ] = useState('')
-    
+    const [ transactionCategory, setTransactionCategory ] = useState([])
+
+    useEffect(() => {
+        selectDataFromDatabase("SELECT * FROM tbl_category")
+    })
+
+    const selectDataFromDatabase = async (query, param) => {
+        await db.transaction((tx) => {
+            tx.executeSql(query, param, (tx, results) => {
+                var temp = []
+                for (let i = 0; i < results.rows.length; ++i) {
+                    temp.push(results.rows.item(i))
+                }
+                temp.push({ category_id: 'add_catgeory', category_name: 'Add Category', category_desc: 'Add Transaction category', category_icon: 'plus' })
+                setTransactionCategory(temp)
+            })
+        })
+    }
+
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
             txn.executeSql(        
@@ -155,18 +173,17 @@ const AddExpense = ({ navigation }) => {
                         />
                     </View>
                 </Card>
-
+                
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1, width: '100%' }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Type</Text>
                         <Dropdown 
-                            placeholderText = "Please Select Transaction Type"
+                            placeholderText = "Select Transaction Type"
                             modalTitle = "Transaction Type"
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
                             modalItems = {[{ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'credit-card' }, { category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'dollar-sign' }]}
-                            // modalItems = {category}
                             onItemSelected = {(item) => {
                                 // console.log(item.category_name)
                                 setInvoiceType(item.category_name.toString())
@@ -175,10 +192,8 @@ const AddExpense = ({ navigation }) => {
                         />
 
                         <View style={{ marginTop: 10 }}>
-                            {/* <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Amount</Text> */}
                             <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice amount</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', margin: 10 }}>
-                                {/* <Text style={{ fontSize: 30, color: '#000', marginRight: 10 }}></Text> */}
                                 <Text style={{ fontSize: 30, color: '#000' }}>{amount}</Text>
                             </View>
                             <FlatList
@@ -200,6 +215,27 @@ const AddExpense = ({ navigation }) => {
                                     )
                                 }} />
                         </View>
+                    </View>
+                </Card>
+
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Category</Text>
+                        <Dropdown 
+                            placeholderText = "Select Transaction Category"
+                            modalTitle = "Transaction Category"
+                            itemColor = '#555'
+                            modalItemBackgroundColor = "#11998e"
+                            modalItemTextColor = "#fff"
+                            modalItems = {transactionCategory}
+                            onItemSelected = {(item) => {
+                                if(item.category_id === 'add_catgeory') {
+                                    navigation.navigate("AddCategory", {})
+                                } else {
+                                    console.log('Category ID: ' + item.category_id)
+                                }
+                            }}
+                        />
                     </View>
                 </Card>
 

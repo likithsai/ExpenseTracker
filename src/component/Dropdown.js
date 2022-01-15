@@ -17,13 +17,13 @@ const Dropdown = (props) => {
                 customStyles={{
                     container: {
                         height: 240,
-                        elevation: 5,
+                        elevation: 10,
                         backgroundColor: '#11998e'
                     }
                 }}>
-                    <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', padding: 20 }}>Select {props.modalTitle}</Text>
-                    <View style={{ flex:1 }}>
-                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: props.modalItemBackgroundColor, elevation: 10, paddingHorizontal: 20 }}>
+                    <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 20, paddingTop: 20 }}>Select {props.modalTitle}</Text>
+                    <View style={{ flex:1, flexDirection: 'column' }}>
+                        <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', height: '100%', backgroundColor: props.modalItemBackgroundColor, paddingHorizontal: 20, minHeight: '70%' }}>
                             {
                                 props.modalItems.map(item => (
                                         <TouchableOpacity 
