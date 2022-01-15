@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
@@ -13,24 +13,24 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 
 const AddExpense = ({ navigation }) => {
     const calcButtons = [
-        { id: 'NUM_1', key: '1' },
-        { id: 'NUM_2', key: '2' },
-        { id: 'NUM_3', key: '3' },
-        { id: 'NUM_PLS', key: '+' },
-        { id: 'NUM_4', key: '4' },
-        { id: 'NUM_5', key: '5' },
-        { id: 'NUM_6', key: '6' },
-        { id: 'NUM_MIN', key: '-' },
-        { id: 'NUM_7', key: '7' },
-        { id: 'NUM_8', key: '8' },
-        { id: 'NUM_9', key: '9' },
-        { id: 'NUM_MUL', key: '*' },
-        { id: 'NUM_DOT', key: '.' },
-        { id: 'NUM_0', key: '0' },
-        { id: 'NUM_EQ', key: '=' },
-        { id: 'NUM_DIV', key: '/' },
-        { id: 'NUM_CLR', key: 'CE' },
-        { id: 'NUM_BCK', key: 'BCK' }
+        { id: 'NUM_1', key: '1', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_2', key: '2', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_3', key: '3', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_PLS', key: '+', color: '#11998e', textColor: '#fff' },
+        { id: 'NUM_4', key: '4', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_5', key: '5', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_6', key: '6', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_MIN', key: '-', color: '#11998e', textColor: '#fff' },
+        { id: 'NUM_7', key: '7', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_8', key: '8', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_9', key: '9', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_MUL', key: '*', color: '#11998e', textColor: '#fff' },
+        { id: 'NUM_DOT', key: '.', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_0', key: '0', color: '#ccc', textColor: '#666' },
+        { id: 'NUM_EQ', key: '=', color: '#11998e', textColor: '#fff' },
+        { id: 'NUM_DIV', key: '/', color: '#11998e', textColor: '#fff' },
+        { id: 'NUM_CLR', key: 'CE', color: '#11998e', textColor: '#fff' },
+        { id: 'NUM_BCK', key: 'BCK', color: '#11998e', textColor: '#fff' }
     ]
     const [ amount, setAmount ] = useState(0)
     const [ showDatePicker, setShowDatePicker] = useState(false)
@@ -194,8 +194,8 @@ const AddExpense = ({ navigation }) => {
                                                 Vibration.vibrate(50)
                                                 handlePress(item)
                                             }} 
-                                            style={{ flex: 1, margin: 5, backgroundColor: '#ddd', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
-                                            <Text style={{ fontSize: 20, color: '#666' }}>{item.key}</Text>
+                                            style={[{backgroundColor: item.color}, { flex: 1, margin: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10 }]}>
+                                            <Text style={{ fontSize: 20, color: item.textColor }}>{item.key}</Text>
                                         </TouchableOpacity>
                                     )
                                 }} />
