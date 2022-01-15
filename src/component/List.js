@@ -10,7 +10,6 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
 })
 
-
 const List = (props) => {
     const refRBSheet = useRef()
     const refCategorySheet = useRef()
@@ -21,6 +20,13 @@ const List = (props) => {
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_category")
     })
+
+    const getCategoryData = (type) => {
+        let filteredResponseJson = category.filter(item => item.category_id == type)
+        console.log(filteredResponseJson)
+        return filteredResponseJson
+    }
+
 
     const selectDataFromDatabase = async (query, param) => {
         await db.transaction((tx) => {
@@ -181,16 +187,19 @@ const List = (props) => {
                             <View style={{ width: '75%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '75%' }}>
                                     <View>
-                                        <Icon name={ item.expense_type === 'income' ? 'card' : 'cash' } size={35} color="#11998e" style={{ marginRight: 20 }} />
+                                        <FeatherIcons name={ getCategoryData(item.expense_category)[0].category_icon } size={35} color="#11998e" style={{ marginRight: 20 }} />
                                     </View>
                                     <View>
                                         <Text numberOfLines={1} style={styles.listItemText}>{item.expense_name}</Text>
                                         <Text numberOfLines={2} style={styles.listItemSubText}>{item.expense_desc}</Text>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginTop: 10, minWidth: 10 }}>
+                                            <FeatherIcons name={ getCategoryData(item.expense_category)[0].category_icon } size={20} color="#11998e" style={{ marginRight: 10 }} />
+                                            <Text style={{ color: '#000' }}>{ getCategoryData(item.expense_category)[0].category_name }</Text>
+                                        </View>             */}
                                     </View>
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                {/* { console.log(item.expense_type) } */}
                                 <Text style={ item.expense_type === 'income' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>{item.expense_type === 'income' ? '+ ' + item.expense_amt : '- ' + item.expense_amt }</Text>
                             </View>
                         </TouchableOpacity>
