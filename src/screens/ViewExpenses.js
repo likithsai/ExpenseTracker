@@ -9,7 +9,7 @@ import QRCode from 'react-native-qrcode-svg'
 
 const ViewExpenses = ({ route }) => {
     const navigation = useNavigation()
-    const { name, desc, type, amount, date } = route.params.data
+    const { name, desc, type, amount, category, date } = route.params.data
 
     return (
         <View style={{ flex: 1 }}>
@@ -50,8 +50,14 @@ const ViewExpenses = ({ route }) => {
                 </Card>
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                     <View style={{ flex: 1 }}>
-                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Invoice Amount</Text>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Amount</Text>
                         <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ amount|| '-' }</Text>
+                    </View>
+                </Card>
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Category</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ category || '-' }</Text>
                     </View>
                 </Card>
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>

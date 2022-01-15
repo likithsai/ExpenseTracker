@@ -39,6 +39,21 @@ const List = (props) => {
         })
     }
 
+    const updateData = (query, param) => {
+        db.transaction((tx) => {
+            tx.executeSql(query, param, (tx, results) => {
+                if (results.rowsAffected > 0) {
+                    console.log('User updated successfully')
+                } else {
+                    console.log('Updation Failed')
+                }
+            },
+            (err) => {
+                console.log(err.message)
+            })
+        })
+    }
+
     return (
         <>
         <RBSheet
@@ -59,8 +74,8 @@ const List = (props) => {
                                 <TouchableOpacity 
                                     key={item.category_id + ""}
                                     onPress={() => {
+                                        updateData('UPDATE tbl_expense SET expense_category = ? WHERE expense_id = ?', [item.category_id, selectedItem.expense_id])
                                         setSelectedItem(item)
-                                        // setCategoryModalVisible(false)
                                         refCategorySheet.current.close()
                                     }} 
                                     style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
@@ -182,7 +197,6 @@ const List = (props) => {
                 renderItem={({item}) => ( 
                         <TouchableOpacity style={styles.listItems} 
                             onPress={() => {
-                                console.log(item)
                                 setSelectedItem(item)
                                 Vibration.vibrate(50)
                                 refRBSheet.current.open()
