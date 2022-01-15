@@ -39,6 +39,7 @@ const AddExpense = ({ navigation }) => {
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
     const [ invoiceType, setInvoiceType ] = useState('')
     const [ transactionCategory, setTransactionCategory ] = useState([])
+    const [ categoryInvoice, setCategoryInvoice ] = useState()
 
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_category")
@@ -60,8 +61,8 @@ const AddExpense = ({ navigation }) => {
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
             txn.executeSql(        
-                'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_date) VALUES (?, ?, ?, ?, ?)',
-                [ title, description, invoiceType.toLowerCase(), eval(amount), date ],
+                'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_category, expense_date) VALUES (?, ?, ?, ?, ?, ?)',
+                [ title, description, invoiceType.toLowerCase(), eval(amount), categoryInvoice, date ],
                 (tx, results) => {               
                     console.log('Results', results.rowsAffected)
                     if(results.rowsAffected > 0) {
@@ -232,6 +233,7 @@ const AddExpense = ({ navigation }) => {
                                 if(item.category_id === 'add_catgeory') {
                                     navigation.navigate("AddCategory", {})
                                 } else {
+                                    setCategoryInvoice(item.category_id)
                                     console.log('Category ID: ' + item.category_id)
                                 }
                             }}

@@ -13,27 +13,6 @@ var db = openDatabase({ name: 'data.db' }, () => {
 const ExpenseTracker = () => {
     // Setup database
     useEffect(() => {
-        db.transaction(function(txn) {
-            txn.executeSql(
-              `CREATE TABLE IF NOT EXISTS tbl_expense(
-                  expense_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                  expense_name VARCHAR(20) DEFAULT NULL, 
-                  expense_desc VARCHAR(500) DEFAULT NULL, 
-                  expense_type VARCHAR(20) DEFAULT NULL, 
-                  expense_amt DECIMAL(6.3) DEFAULT NULL, 
-                  expense_date TIMESTAMP DEFAULT NULL, 
-                  expense_created_date timestamp default CURRENT_TIMESTAMP
-              )`,
-              [],
-              () => {
-                  console.log('table expenses created !')
-              }, 
-              (err) => {
-                  console.log('Error: ' + err.message)
-              }
-          )
-        })
-
         //  category table
         db.transaction(function(txn) {
             txn.executeSql(
@@ -53,6 +32,29 @@ const ExpenseTracker = () => {
               }
           )
         })
+
+        db.transaction(function(txn) {
+          txn.executeSql(
+            `CREATE TABLE IF NOT EXISTS tbl_expense(
+                expense_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                expense_name VARCHAR(20) DEFAULT NULL, 
+                expense_desc VARCHAR(500) DEFAULT NULL, 
+                expense_type VARCHAR(20) DEFAULT NULL, 
+                expense_amt DECIMAL(6.3) DEFAULT NULL, 
+                expense_date TIMESTAMP DEFAULT NULL, 
+                expense_category INTEGER,
+                expense_created_date timestamp default CURRENT_TIMESTAMP,
+                FOREIGN KEY (expense_category) REFERENCES tbl_category(category_id)
+            )`,
+            [],
+            () => {
+                console.log('table expenses created !')
+            }, 
+            (err) => {
+                console.log('Error: ' + err.message)
+            }
+        )
+      })
     }, [])
     
     return (
