@@ -13,7 +13,7 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 const List = (props) => {
     const refRBSheet = useRef()
     const refCategorySheet = useRef()
-    const [selectedItem, setSelectedItem] = useState([])
+    const [ selectedItem, setSelectedItem ] = useState([])
     const [ category, setCategory ] = useState([])
     const navigation = useNavigation()
 
@@ -22,9 +22,8 @@ const List = (props) => {
     })
 
     const getCategoryData = (type) => {
-        let filteredResponseJson = category.filter(item => item.category_id == type)
-        // console.log(filteredResponseJson)
-        return filteredResponseJson
+        let filteredResponseJson = category.filter(item => item.category_id === type)
+        return (filteredResponseJson.length > 0) ? filteredResponseJson : "[{ category_icon: 'plus' }]"
     }
 
 
@@ -105,7 +104,7 @@ const List = (props) => {
                 <View style={{ width: '100%', height: '100%', backgroundColor: '#11998e', padding: 20 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View>
-                            <FeatherIcons name={ getCategoryData(selectedItem.expense_category)[0].category_icon || 'alert-triangle' } size={35} color="#fff" style={{ marginRight: 10 }} />
+                            <FeatherIcons name={ getCategoryData(selectedItem.expense_category)[0].category_icon } size={35} color="#fff" style={{ marginRight: 10 }} />
                         </View>
                         <View style={{ width: '55%' }}>
                             <Text style={[styles.listItemText, { color: '#fff' }]}>{selectedItem.expense_name}</Text>
