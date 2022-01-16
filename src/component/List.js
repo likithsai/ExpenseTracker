@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react'
-import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration } from 'react-native'
+import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration, Alert } from 'react-native'
 import Icon from 'react-native-ionicons'
 import RBSheet from "react-native-raw-bottom-sheet"
 import { useNavigation } from '@react-navigation/native'
@@ -153,7 +153,16 @@ const List = (props) => {
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                             <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => {
-                                executeSQLDB('DELETE FROM tbl_expense WHERE expense_id = ?', [selectedItem.expense_id])
+                                Alert.alert("Delete Item", "Do you want to delete item :\n" + selectedItem.expense_name, [{
+                                    text: 'Cancel',
+                                    onPress: () => {},
+                                    style: 'cancel'
+                                }, {
+                                    text: 'Ok',
+                                    onPress: () => {
+                                        executeSQLDB('DELETE FROM tbl_expense WHERE expense_id = ?', [selectedItem.expense_id])
+                                    }
+                                }])
                                 refRBSheet.current.close()
                                 refCategorySheet.current.close()
                             }}>
