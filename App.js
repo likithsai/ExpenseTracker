@@ -42,8 +42,8 @@ const ExpenseTracker = () => {
                 expense_type VARCHAR(20) DEFAULT NULL, 
                 expense_amt DECIMAL(6.3) DEFAULT NULL, 
                 expense_date TIMESTAMP DEFAULT NULL, 
-                expense_category INTEGER,
-                expense_created_date timestamp default CURRENT_TIMESTAMP,
+                expense_category INTEGER DEFAULT NULL,
+                expense_created_date timestamp DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (expense_category) REFERENCES tbl_category(category_id)
             )`,
             [],

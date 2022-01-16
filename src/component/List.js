@@ -139,6 +139,7 @@ const List = (props) => {
                                         desc : selectedItem.expense_desc,
                                         type : selectedItem.expense_type,
                                         amount : selectedItem.expense_amt,
+                                        category : selectedItem.expense_category,
                                         date : selectedItem.expense_date
                                     }
                                 })
