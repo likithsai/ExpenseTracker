@@ -148,7 +148,12 @@ const List = (props) => {
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>View</Text>
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
-                            <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
+                            <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => {
+                                console.log(selectedItem)
+                                navigation.navigate('AddExpenses', {
+                                    data: selectedItem
+                                })
+                            }}>
                                 <Icon name="create" size={20} color='#fff' style={{ marginRight: 20 }} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Edit</Text>
                             </TouchableOpacity>

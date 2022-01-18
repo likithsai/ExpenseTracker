@@ -11,7 +11,7 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
 })
 
-const AddExpense = ({ navigation }) => {
+const AddExpense = ({ route, navigation }) => {
     const calcButtons = [
         { id: 'NUM_1', key: '1', color: '#ccc', textColor: '#666' },
         { id: 'NUM_2', key: '2', color: '#ccc', textColor: '#666' },
@@ -43,6 +43,15 @@ const AddExpense = ({ navigation }) => {
 
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_category")
+
+        if(route.params.data) {
+            setTitle(route.params.data.expense_name)
+            setDescription(route.params.data.expense_desc)
+            setInvoiceType(route.params.data.expense_type)
+            setAmount(route.params.data.expense_amt)
+            setCategoryInvoice(route.params.data.expense_category)
+            setDate(route.params.data.expense_date)
+        }
     })
 
     const selectDataFromDatabase = async (query, param) => {
@@ -55,6 +64,21 @@ const AddExpense = ({ navigation }) => {
                 temp.push({ category_id: 'add_catgeory', category_name: 'Add Category', category_desc: 'Add Transaction category', category_icon: 'plus' })
                 setTransactionCategory(temp)
             })
+        })
+    }
+
+    const updateDataToDatabase = () => {
+        db.transaction(function(txn) {
+            txn.executeSql(        
+                'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_category, expense_date) VALUES (?, ?, ?, ?, ?, ?)',
+                [ title, description, invoiceType.toLowerCase(), eval(amount), categoryInvoice, date ],
+                (tx, results) => {               
+                    console.log('Results', results.rowsAffected)
+                    if(results.rowsAffected > 0) {
+                        navigation.pop()
+                    }
+                }
+            )
         })
     }
 
@@ -142,7 +166,11 @@ const AddExpense = ({ navigation }) => {
                 }}
                 onSucessPressed = {() => {
                     Vibration.vibrate(50)
-                    insertDataToDatabase()
+                    if(route.params.data) {
+                        updateDataToDatabase()
+                    } else {
+                        insertDataToDatabase()
+                    }
                 }} 
             />
             
