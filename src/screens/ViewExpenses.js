@@ -9,7 +9,6 @@ import QRCode from 'react-native-qrcode-svg'
 
 const ViewExpenses = ({ route }) => {
     const navigation = useNavigation()
-    // const { id, name, desc, type, amount, category, date } = route.params.data
 
     return (
         <View style={{ flex: 1 }}>
