@@ -1,19 +1,25 @@
-import React from 'react'
-import {View, TouchableOpacity, FlatList, StyleSheet, ScrollView} from 'react-native'
+import React, { useState } from 'react'
+import {View, TouchableOpacity, FlatList, StyleSheet, Text} from 'react-native'
 import Icon from 'react-native-vector-icons/Feather'
 
 const IconList = (props) => {
+    const [ selectedIcon, setSelectedIcon ] = useState([{"iconKey": 2, "iconName": "airplay", "iconType": "feather"}])
+
     return (
         <View style={styles.MainContainer}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginBottom: 20, borderRadius: 10 }}>
+                <Icon name={selectedIcon.iconName} size={30} color='#000' />
+            </View>
             <FlatList  
                 style = {{ padding: 0, margin: 0, marginBottom: 50 }}
                 data={props.iconList}
                 renderItem={({item}) =>
-                    <TouchableOpacity style={styles.GridViewBlockStyle} onPress={() => {
+                    <TouchableOpacity style={[styles.GridViewBlockStyle]} onPress={() => {
                         props.onIconPressed(item)
+                        setSelectedIcon(item)
+                        console.log(selectedIcon)
                     }}>
                         <Icon name={item.iconName} size={20} color='#fff' />
-                        {/* <Text style={styles.GridViewInsideTextItemStyle}>{item.iconName}</Text> */}
                     </TouchableOpacity>
                 }
                 numColumns={props.iconNumber}
@@ -36,7 +42,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
         paddingVertical: 20,
-        borderRadius: 20,
+        borderRadius: 10,
         backgroundColor: '#11998ecc'
     },
     GridViewInsideTextItemStyle: { 
@@ -44,7 +50,13 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 18,
         justifyContent: 'center',
-    } 
+    },
+    selectedItem : {
+        opacity: 0.5
+    },
+    deSelectItem : {
+        opacity: 1
+    }
 });
 
 
