@@ -43,7 +43,9 @@ const AddExpense = ({ route, navigation }) => {
 
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_category")
+    })
 
+    useEffect(() => {
         if(route.params.data) {
             setTitle(route.params.data.expense_name)
             setDescription(route.params.data.expense_desc)
@@ -52,7 +54,7 @@ const AddExpense = ({ route, navigation }) => {
             setCategoryInvoice(route.params.data.expense_category)
             setDate(route.params.data.expense_date)
         }
-    })
+    }, [])
 
     const selectDataFromDatabase = async (query, param) => {
         await db.transaction((tx) => {
@@ -67,12 +69,12 @@ const AddExpense = ({ route, navigation }) => {
         })
     }
 
-    const updateDataToDatabase = () => {
-        db.transaction(function(txn) {
-            txn.executeSql(        
-                'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_category, expense_date) VALUES (?, ?, ?, ?, ?, ?)',
-                [ title, description, invoiceType.toLowerCase(), eval(amount), categoryInvoice, date ],
-                (tx, results) => {               
+    const updateDataToDatabase = async() => {
+        await db.transaction((tx) => {
+            tx.executeSql(
+                'UPDATE tbl_expense SET expense_name = ?, expense_desc = ?, expense_amt = ?, expense_date = ? WHERE expense_id = ?', 
+                [ title, description, eval(amount), date, route.params.data.expense_id ], 
+                (tx, results) => {
                     console.log('Results', results.rowsAffected)
                     if(results.rowsAffected > 0) {
                         navigation.pop()
