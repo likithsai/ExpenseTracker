@@ -134,14 +134,16 @@ const List = (props) => {
                             <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => {
                                 refRBSheet.current.close()
                                 navigation.navigate('ViewExpenses', {
-                                    data: {
-                                        name : selectedItem.expense_name,
-                                        desc : selectedItem.expense_desc,
-                                        type : selectedItem.expense_type,
-                                        amount : selectedItem.expense_amt,
-                                        category : selectedItem.expense_category,
-                                        date : selectedItem.expense_date
-                                    }
+                                    list: selectedItem,
+                                    // data: {
+                                    //     id: selectedItem.expense_id,
+                                    //     name : selectedItem.expense_name,
+                                    //     desc : selectedItem.expense_desc,
+                                    //     type : selectedItem.expense_type,
+                                    //     amount : selectedItem.expense_amt,
+                                    //     category : selectedItem.expense_category,
+                                    //     date : selectedItem.expense_date
+                                    // }
                                 })
                             }}>
                                 <Icon name="eye" size={20} color='#fff' style={{ marginRight: 20 }} />

@@ -9,7 +9,7 @@ import QRCode from 'react-native-qrcode-svg'
 
 const ViewExpenses = ({ route }) => {
     const navigation = useNavigation()
-    const { name, desc, type, amount, category, date } = route.params.data
+    // const { id, name, desc, type, amount, category, date } = route.params.data
 
     return (
         <View style={{ flex: 1 }}>
@@ -23,47 +23,50 @@ const ViewExpenses = ({ route }) => {
                 }}
                 onSucessPressed = {() => {
                     Vibration.vibrate(50)
-                    navigation.pop()
+                    console.log(route.params.data)
+                    navigation.navigate('AddExpenses', {
+                        data: route.params.list
+                    })
                 }} 
             />
             <View style={{ padding: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <QRCode value={[{ itemName: name, itemDesc: desc, itemType: type, itemAmount: amount, itemDate: date }]} size={120} />
+                <QRCode value={[route.params.list]} size={120} />
             </View>
             <ScrollView>    
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Title</Text>
-                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ name || '-' }</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ route.params.list.expense_name || '-' }</Text>
                     </View>
                 </Card>
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Description</Text>
-                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ desc|| '-' }</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ route.params.list.expense_desc || '-' }</Text>
                     </View>
                 </Card>
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Type</Text>
-                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ type|| '-' }</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ route.params.list.expense_type || '-' }</Text>
                     </View>
                 </Card>
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Amount</Text>
-                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ amount|| '-' }</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ route.params.list.expense_amt || '-' }</Text>
                     </View>
                 </Card>
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Category</Text>
-                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ category || '-' }</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ route.params.list.expense_category || '-' }</Text>
                     </View>
                 </Card>
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Date</Text>
-                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ date|| '-' }</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ route.params.list.expense_date || '-' }</Text>
                     </View>
                 </Card>
             </ScrollView>
