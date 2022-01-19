@@ -119,7 +119,7 @@ const List = (props) => {
                 <View style={{ width: '100%', height: '100%', backgroundColor: '#11998e', padding: 20 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View>
-                            <FeatherIcons name={ getCategoryData(selectedItem.expense_category)[0].category_icon } size={35} color="#fff" style={{ marginRight: 10 }} />
+                            <FeatherIcons name={ getCategoryData(selectedItem.expense_category)[0].category_icon || 'alert-triangle' } size={35} color="#fff" style={{ marginRight: 10 }} />
                         </View>
                         <View style={{ width: '55%' }}>
                             <Text style={[styles.listItemText, { color: '#fff' }]}>{selectedItem.expense_name}</Text>
