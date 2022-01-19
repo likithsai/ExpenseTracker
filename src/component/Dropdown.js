@@ -9,11 +9,8 @@ const Dropdown = (props) => {
     const refDropdownModal = useRef()
 
     useEffect(() =>{
-        if (props.selectedItem) {
-            // console.log(props.selectedItem)
-            setSelectedItem(props.selectedItem)
-        }
-    }, [])
+        setSelectedItem(props.selectedItem)
+    }, [props.selectedItem])
 
     return (
         <>
@@ -37,8 +34,8 @@ const Dropdown = (props) => {
                                             key={item.category_id + ""}
                                             onPress={() => {
                                                 props.onItemSelected(item)
-                                                setSelectedItem(item)
-                                                console.log(item)
+                                                // setSelectedItem(item)
+                                                // console.log(item)
                                                 refDropdownModal.current.close()
                                             }} 
                                             style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>

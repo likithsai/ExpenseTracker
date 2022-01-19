@@ -37,9 +37,9 @@ const AddExpense = ({ route, navigation }) => {
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
-    const [ invoiceType, setInvoiceType ] = useState('')
+    const [ invoiceType, setInvoiceType ] = useState([])
     const [ transactionCategory, setTransactionCategory ] = useState([])
-    const [ categoryInvoice, setCategoryInvoice ] = useState()
+    const [ categoryInvoice, setCategoryInvoice ] = useState([])
 
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_category")
@@ -49,8 +49,26 @@ const AddExpense = ({ route, navigation }) => {
         if(route.params.data) {
             setTitle(route.params.data.expense_name)
             setDescription(route.params.data.expense_desc)
-            setInvoiceType(route.params.data.expense_type)
+            
+            if (route.params.data.expense_type === 'income') {
+                setInvoiceType({ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'credit-card' }) 
+            } else {
+                setInvoiceType({ category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'dollar-sign' })
+            }
+
             setAmount(route.params.data.expense_amt)
+
+            db.transaction(function(txn) {
+                txn.executeSql(        
+                    'SELECT * FROM tbl_category WHERE category_id = ?',
+                    [ route.params.data.expense_category ],
+                    (tx, results) => {               
+                        console.log('Results', results.rows.item(0))
+                        setCategoryInvoice(results.rows.item(0))
+                    }
+                )
+            })
+
             setCategoryInvoice(route.params.data.expense_category)
             setDate(route.params.data.expense_date)
         }
@@ -63,17 +81,23 @@ const AddExpense = ({ route, navigation }) => {
                 for (let i = 0; i < results.rows.length; ++i) {
                     temp.push(results.rows.item(i))
                 }
-                temp.push({ category_id: 'add_catgeory', category_name: 'Add Category', category_desc: 'Add Transaction category', category_icon: 'plus' })
+                temp.push({ 
+                    category_id: 'add_catgeory', 
+                    category_name: 'Add Category', 
+                    category_desc: 'Add Transaction category', 
+                    category_icon: 'plus' 
+                })
                 setTransactionCategory(temp)
             })
         })
     }
 
     const updateDataToDatabase = async() => {
+        console.log(categoryInvoice)
         await db.transaction((tx) => {
             tx.executeSql(
-                'UPDATE tbl_expense SET expense_name = ?, expense_desc = ?, expense_amt = ?, expense_date = ? WHERE expense_id = ?', 
-                [ title, description, eval(amount), date, route.params.data.expense_id ], 
+                'UPDATE tbl_expense SET expense_name = ?, expense_desc = ?, expense_type = ?, expense_amt = ?, expense_date = ?, expense_category = ? WHERE expense_id = ?', 
+                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), date, categoryInvoice.category_id, route.params.data.expense_id ], 
                 (tx, results) => {
                     console.log('Results', results.rowsAffected)
                     if(results.rowsAffected > 0) {
@@ -88,7 +112,7 @@ const AddExpense = ({ route, navigation }) => {
         db.transaction(function(txn) {
             txn.executeSql(        
                 'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_category, expense_date) VALUES (?, ?, ?, ?, ?, ?)',
-                [ title, description, invoiceType.toLowerCase(), eval(amount), categoryInvoice, date ],
+                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), categoryInvoice.category_id, date ],
                 (tx, results) => {               
                     console.log('Results', results.rowsAffected)
                     if(results.rowsAffected > 0) {
@@ -213,10 +237,12 @@ const AddExpense = ({ route, navigation }) => {
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
-                            selectedItem = {{ category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null }}
+                            // selectedItem = {{ category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null }}
+                            selectedItem = {invoiceType || { category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null }}
                             modalItems = {[{ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'credit-card' }, { category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'dollar-sign' }]}
                             onItemSelected = {(item) => {
-                                setInvoiceType(item.category_name.toString())
+                                setInvoiceType(item)
+                                // setInvoiceType(item.category_name.toString())
                                 console.log(invoiceType)
                             }}
                         />
@@ -256,14 +282,15 @@ const AddExpense = ({ route, navigation }) => {
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
-                            selectedItem = {{ category_id: 10, category_name: 'Select Transaction Category', category_desc: 'Select Transaction Type', category_icon: null }}
+                            // selectedItem = {{ category_id: 10, category_name: 'Select Transaction Category', category_desc: 'Select Transaction Type', category_icon: null }}
+                            selectedItem = {categoryInvoice || { category_id: 10, category_name: 'Select Transaction Category', category_desc: 'Select Transaction Type', category_icon: null }}
                             modalItems = {transactionCategory}
                             onItemSelected = {(item) => {
                                 if(item.category_id === 'add_catgeory') {
                                     navigation.navigate("AddCategory", {})
                                 } else {
-                                    setCategoryInvoice(item.category_id)
-                                    console.log('Category ID: ' + item.category_id)
+                                    // setCategoryInvoice(item.category_id)
+                                    setCategoryInvoice(item)
                                 }
                             }}
                         />
