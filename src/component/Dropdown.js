@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { StyleSheet, TouchableOpacity, Text, ScrollView, View } from 'react-native'
 import Icon from 'react-native-ionicons'
 import FeatherIcons from 'react-native-vector-icons/Feather'
@@ -7,6 +7,13 @@ import RBSheet from "react-native-raw-bottom-sheet"
 const Dropdown = (props) => {
     const [selectedItem, setSelectedItem] = useState([])
     const refDropdownModal = useRef()
+
+    useEffect(() =>{
+        if (props.selectedItem) {
+            // console.log(props.selectedItem)
+            setSelectedItem(props.selectedItem)
+        }
+    }, [])
 
     return (
         <>
@@ -31,6 +38,7 @@ const Dropdown = (props) => {
                                             onPress={() => {
                                                 props.onItemSelected(item)
                                                 setSelectedItem(item)
+                                                console.log(item)
                                                 refDropdownModal.current.close()
                                             }} 
                                             style={{ backgroundColor: props.modalItemBackgroundColor, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
@@ -56,8 +64,7 @@ const Dropdown = (props) => {
             >
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '80%' }}>
                     <FeatherIcons name={selectedItem.category_icon} size={30} color={props.itemColor} style={{ marginRight: 10, marginTop: 5 }} />
-                    <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.category_name || "Select " + props.modalTitle ]}</Text>
-                    {/* <Text style={{ color: props.itemColor, fontSize: 15 }}>{[ selectedItem.itemDesc || null ]}</Text> */}
+                    <Text style={{ color: props.itemColor, fontSize: 20 }}>{[ selectedItem.category_name ]}</Text>
                 </View>
                 <Icon name="arrow-dropdown-circle" color={props.itemColor} style={{ marginRight: 10 }} />
             </TouchableOpacity>

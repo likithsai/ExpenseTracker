@@ -210,13 +210,12 @@ const AddExpense = ({ route, navigation }) => {
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Type</Text>
                         <Dropdown 
                             placeholderText = "Select Transaction Type"
-                            modalTitle = "Transaction Type"
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
+                            selectedItem = {{ category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null }}
                             modalItems = {[{ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'credit-card' }, { category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'dollar-sign' }]}
                             onItemSelected = {(item) => {
-                                // console.log(item.category_name)
                                 setInvoiceType(item.category_name.toString())
                                 console.log(invoiceType)
                             }}
@@ -254,10 +253,10 @@ const AddExpense = ({ route, navigation }) => {
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Category</Text>
                         <Dropdown 
                             placeholderText = "Select Transaction Category"
-                            modalTitle = "Transaction Category"
                             itemColor = '#555'
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
+                            selectedItem = {{ category_id: 10, category_name: 'Select Transaction Category', category_desc: 'Select Transaction Type', category_icon: null }}
                             modalItems = {transactionCategory}
                             onItemSelected = {(item) => {
                                 if(item.category_id === 'add_catgeory') {
