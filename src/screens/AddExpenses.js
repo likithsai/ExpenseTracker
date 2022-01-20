@@ -37,9 +37,9 @@ const AddExpense = ({ route, navigation }) => {
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
     const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
-    const [ invoiceType, setInvoiceType ] = useState([])
+    const [ invoiceType, setInvoiceType ] = useState({ category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null })
     const [ transactionCategory, setTransactionCategory ] = useState([])
-    const [ categoryInvoice, setCategoryInvoice ] = useState([])
+    const [ categoryInvoice, setCategoryInvoice ] = useState({ category_id: 10, category_name: 'Select Transaction Category', category_desc: 'Select Transaction Type', category_icon: null })
 
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_category")
@@ -238,7 +238,7 @@ const AddExpense = ({ route, navigation }) => {
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
                             // selectedItem = {{ category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null }}
-                            selectedItem = {invoiceType || { category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null }}
+                            selectedItem = {invoiceType}
                             modalItems = {[{ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'credit-card' }, { category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'dollar-sign' }]}
                             onItemSelected = {(item) => {
                                 setInvoiceType(item)
@@ -283,7 +283,7 @@ const AddExpense = ({ route, navigation }) => {
                             modalItemBackgroundColor = "#11998e"
                             modalItemTextColor = "#fff"
                             // selectedItem = {{ category_id: 10, category_name: 'Select Transaction Category', category_desc: 'Select Transaction Type', category_icon: null }}
-                            selectedItem = {categoryInvoice || { category_id: 10, category_name: 'Select Transaction Category', category_desc: 'Select Transaction Type', category_icon: null }}
+                            selectedItem = {categoryInvoice}
                             modalItems = {transactionCategory}
                             onItemSelected = {(item) => {
                                 if(item.category_id === 'add_catgeory') {
