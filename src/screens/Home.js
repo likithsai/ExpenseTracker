@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, SafeAreaView, Vibration, Share } from 'react-native'
+import { StyleSheet, View, SafeAreaView, Vibration, Share, Text } from 'react-native'
 import Header from '../component/Header'
 import List from '../component/List'
 import { openDatabase } from 'react-native-sqlite-storage'
 import DatePicker from 'react-native-neat-date-picker'
 import Utils from '../utils/Utils'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import Icon from 'react-native-vector-icons/Feather'
+
+const Tab = createBottomTabNavigator()
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
@@ -29,7 +33,13 @@ const shareItem = async (item) => {
     }
 }
 
-const ExpenseTracker = ({ navigation }) => {
+const AddCategoryScreen = () => {
+    return (
+        <Text>Goto Settings</Text>
+    )
+}
+
+const HomeScreen = ({ navigation }) => {
     const [ showDatePicker, setShowDatePicker ] = useState(false)
     const [ selectedData, setSelectedDate ] = useState(Utils.dateFormatter(new Date()))
     const [ income, setIncome ] = useState(0.0)
@@ -83,8 +93,6 @@ const ExpenseTracker = ({ navigation }) => {
         })
     }
 
-    // selectDataFromDatabase("SELECT * FROM tbl_expense", [])
-
     return (
         <SafeAreaView style={styles.container}>
             <DatePicker
@@ -126,6 +134,33 @@ const ExpenseTracker = ({ navigation }) => {
                     </View>
             </View>
         </SafeAreaView>
+    )
+}
+
+const ExpenseTracker = () => {
+    return (
+        <Tab.Navigator 
+            screenOptions={({ route }) => ({
+                headerShown: false,
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+        
+                    if (route.name === 'Expenses') {
+                        iconName = 'dollar-sign';
+                    } else if (route.name === 'Categories') {
+                        iconName = 'list';
+                    }
+        
+                    // You can return any component that you like here!
+                    return <Icon name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: '#11998e',
+                tabBarInactiveTintColor: 'gray',
+            })}
+        >
+            <Tab.Screen name="Expenses" component={HomeScreen} />
+            <Tab.Screen name="Categories" component={AddCategoryScreen} />
+        </Tab.Navigator>
     )
 }
 
