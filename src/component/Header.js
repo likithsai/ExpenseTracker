@@ -8,60 +8,24 @@ const Header = (props) => {
 
     return (
         <>
-        <RBSheet
-            ref={refRBSheet}
-            height={200}
-            openDuration={250}
-            customStyles={{
-                wrapper: {
-                    backgroundColor: "transparent"
-                },
-                container: {
-                    justifyContent: "center",
-                    alignItems: "flex-start",
-                    position: 'absolute',
-                    top: 70,
-                    borderTopWidth: 1,
-                    borderTopColor: '#ccc',
-                    elevation: 5
-                }
-            }}>
-                <View style={{ width: '100%' }}>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingVertical: 10, paddingHorizontal: 20 }}>
-                        <Icon name="grid" size={35} color='#666' style={{ marginRight: 25 }} />
-                        <Text style={{ color: '#000' }}>Categories</Text>
-                    </TouchableOpacity>
-                    <View style={{ borderBottomWidth: 1, borderBottomColor: '#ccc' }}></View>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingVertical: 10, paddingHorizontal: 20 }}>
-                        <Icon name="download" size={40} color='#666' style={{ marginRight: 25 }} />
-                        <Text style={{ color: '#000' }}>Export</Text>
-                    </TouchableOpacity>
-                    <View style={{ borderBottomWidth: 1, borderBottomColor: '#ccc' }}></View>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingVertical: 10, paddingHorizontal: 20 }}>
-                        <Icon name="settings" size={30} color='#666' style={{ marginRight: 25 }} />
-                        <Text style={{ color: '#000' }}>Settings</Text>
-                    </TouchableOpacity>
-                </View>
-        </RBSheet>
-
         <View style={styles.boxBorder}>
             <View style={styles.headerContainer}>
-                <TouchableOpacity onPress={() => refRBSheet.current.open()}>
+                {/* <TouchableOpacity onPress={() => refRBSheet.current.open()}>
                     <Icon name="menu" size={30} color='#fff' />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View style={[styles.headerBarContent]}>
                     <Text style={styles.headerTitle}>{props.headerTitle}</Text>
                 </View>
                 <TouchableOpacity onPress={props.onRightIconPressed}>
-                    <Icon name="calendar" size={30} color='#fff' />
+                    <Icon name="settings" size={25} color='#fff' />
                 </TouchableOpacity>
             </View>
             <View>
                 <View style={[styles.boxBorder, { backgroundColor: '#11998e', paddingTop: 25, paddingBottom: 30, paddingHorizontal: 20, elevation: 5 }]}>
-                    <View style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <TouchableOpacity style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} onPress={() => { props.onDateSelected() }}>
                         {/* <Text style={{ fontWeight: '900', color: '#ff0' }}>DATE : </Text> */}
                         <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 16 }}>{props.dateText}</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <TouchableOpacity style={{ flexDirection: 'column', alignItems: 'center', borderRightColor: '#ccc' }}>
                             <Icon name="card" size={40} color='#fff' style={{ paddingVertical: 5}} />

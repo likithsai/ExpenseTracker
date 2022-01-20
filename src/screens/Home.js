@@ -35,7 +35,7 @@ const shareItem = async (item) => {
 
 const AddCategoryScreen = () => {
     return (
-        <Text>Goto Settings</Text>
+        <Text style={{ color: '#999' }}>Goto Settings</Text>
     )
 }
 
@@ -115,6 +115,11 @@ const HomeScreen = ({ navigation }) => {
                     headerTitle="Expense Tracker"
                     onRightIconPressed = {() => {
                         Vibration.vibrate(50)
+                        // openDatePicker()
+                        navigation.navigate('Settings')
+                    }}
+                    onDateSelected = {() => {
+                        Vibration.vibrate(50)
                         openDatePicker()
                     }}
                     incomeValue = {income}
@@ -139,7 +144,7 @@ const HomeScreen = ({ navigation }) => {
 
 const ExpenseTracker = () => {
     return (
-        <Tab.Navigator 
+        <Tab.Navigator
             screenOptions={({ route }) => ({
                 headerShown: false,
                 tabBarIcon: ({ focused, color, size }) => {
@@ -155,7 +160,20 @@ const ExpenseTracker = () => {
                     return <Icon name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: '#11998e',
-                tabBarInactiveTintColor: 'gray',
+                tabBarInactiveTintColor: '#888',
+                // tabBarStyle: {backgroundColor: '#11998e', elevation: 10 },
+                tabBarLabelStyle: {
+                    fontWeight: '600',
+                    fontSize: 12,
+                    // color: '#fff',
+                    height: 20
+                },
+                tabBarItemStyle: {
+                    height: 53,
+                  },
+                  tabBarStyle: {
+                    height: 53,
+                  },
             })}
         >
             <Tab.Screen name="Expenses" component={HomeScreen} />
