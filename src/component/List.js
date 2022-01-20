@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react'
-import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration, Alert } from 'react-native'
+import { StyleSheet, Text, FlatList, View, TouchableOpacity, ScrollView, Vibration, Alert, RefreshControl } from 'react-native'
 import Icon from 'react-native-ionicons'
 import RBSheet from "react-native-raw-bottom-sheet"
 import { useNavigation } from '@react-navigation/native'
@@ -16,6 +16,7 @@ const List = (props) => {
     const [ selectedItem, setSelectedItem ] = useState([])
     const [ category, setCategory ] = useState([])
     const navigation = useNavigation()
+    const [refreshing, setRefreshing] = React.useState(true);
 
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_category")
@@ -35,6 +36,7 @@ const List = (props) => {
                     temp.push(results.rows.item(i))
                 }
                 setCategory(temp)
+                setRefreshing(false)
             })
         })
     }
@@ -53,6 +55,12 @@ const List = (props) => {
             })
         })
     }
+
+
+    const onListRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        selectDataFromDatabase("SELECT * FROM tbl_category")
+    }, [refreshing]);
 
     return (
         <>
@@ -234,6 +242,7 @@ const List = (props) => {
                         </TouchableOpacity>
                     )
                 }
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onListRefresh} />}
                 // keyExtractor={item => item.expense_id} 
                 />
         </View>
