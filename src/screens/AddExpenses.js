@@ -74,8 +74,8 @@ const AddExpense = ({ route, navigation }) => {
         }
     }, [])
 
-    const selectDataFromDatabase = async (query, param) => {
-        await db.transaction((tx) => {
+    const selectDataFromDatabase = (query, param) => {
+        db.transaction((tx) => {
             tx.executeSql(query, param, (tx, results) => {
                 var temp = []
                 for (let i = 0; i < results.rows.length; ++i) {

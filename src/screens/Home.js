@@ -59,18 +59,15 @@ const HomeScreen = ({ navigation }) => {
 
     // Setup database
     useEffect(() => {
-        setRefreshing(true)
         selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
     }, [selectedData])
 
     const loadExpenseData = () => {
-        setRefreshing(true)
         selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
         //  load KPI's
         setIncome(loadKPIS('income'))
         setExpense(loadKPIS('expense'))
         setBalance(income - expense)
-        setRefreshing(false)
     }
 
     useEffect(() => {
@@ -85,8 +82,8 @@ const HomeScreen = ({ navigation }) => {
         return item
     }
 
-    const selectDataFromDatabase = async (query, param) => {
-        await db.transaction(tx => {
+    const selectDataFromDatabase = (query, param) => {
+        db.transaction(tx => {
             tx.executeSql(query, param, (tx, results) => {
                 var temp = []
                 for (let i = 0; i < results.rows.length; ++i) {
