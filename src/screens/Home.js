@@ -68,6 +68,7 @@ const HomeScreen = ({ navigation }) => {
         setIncome(loadKPIS('income'))
         setExpense(loadKPIS('expense'))
         setBalance(income - expense)
+        setRefreshing(false)
     }
 
     useEffect(() => {
