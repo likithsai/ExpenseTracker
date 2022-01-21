@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text, Vibration } from 'react-native'
-import HeaderComp from '../component/HeaderComp'
+import HeaderCompStart from '../component/HeaderCompStart'
 
 const Settings = ({ navigation }) => {
     return (
         <>
-            <HeaderComp 
+            <HeaderCompStart 
                 leftIcon = "arrow-back"
                 headerTitle="Settings"
                 onBackPressed = {() => {
