@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, SafeAreaView, Vibration, Share } from 'react-native'
+import { StyleSheet, View, SafeAreaView, Vibration, Share, RefreshControl } from 'react-native'
 import Header from '../component/Header'
 import HeaderWithIcons from '../component/HeaderWithIcons'
 import List from '../component/List'
@@ -42,6 +42,7 @@ const HomeScreen = ({ navigation }) => {
     const [ expense, setExpense ] = useState(0.0)
     const [ balance, setBalance ] = useState(0.0)
     const [ DATA, setDATA ] = useState([])
+    const [refreshing, setRefreshing] = React.useState(true)
 
     const openDatePicker = () => {
         setShowDatePicker(true)
@@ -58,15 +59,22 @@ const HomeScreen = ({ navigation }) => {
 
     // Setup database
     useEffect(() => {
+        setRefreshing(true)
         selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
     }, [selectedData])
 
-    useEffect(() => {
+    const loadExpenseData = () => {
+        setRefreshing(true)
         selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
         //  load KPI's
         setIncome(loadKPIS('income'))
         setExpense(loadKPIS('expense'))
         setBalance(income - expense)
+        setRefreshing(false)
+    }
+
+    useEffect(() => {
+        loadExpenseData()
     })
 
     const loadKPIS = (type) => {
@@ -88,6 +96,10 @@ const HomeScreen = ({ navigation }) => {
             })
         })
     }
+
+    const onListRefresh = React.useCallback(async () => {
+        loadExpenseData()
+    }, [refreshing]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -129,6 +141,7 @@ const HomeScreen = ({ navigation }) => {
                     }}/>
                     <View style={styles.scrollView}>
                         <List listData={DATA}
+                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onListRefresh} />}
                             onShareItem = {(item) => {
                                 // console.log(item)
                                 shareItem(item)
