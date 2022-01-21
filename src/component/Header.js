@@ -9,17 +9,6 @@ const Header = (props) => {
     return (
         <>
         <View style={styles.boxBorder}>
-            <View style={styles.headerContainer}>
-                {/* <TouchableOpacity onPress={() => refRBSheet.current.open()}>
-                    <Icon name="menu" size={30} color='#fff' />
-                </TouchableOpacity> */}
-                <View style={[styles.headerBarContent]}>
-                    <Text style={styles.headerTitle}>{props.headerTitle}</Text>
-                </View>
-                <TouchableOpacity onPress={props.onRightIconPressed}>
-                    <Icon name="settings" size={25} color='#fff' />
-                </TouchableOpacity>
-            </View>
             <View>
                 <View style={[styles.boxBorder, { backgroundColor: '#11998e', paddingTop: 25, paddingBottom: 30, paddingHorizontal: 20, elevation: 5 }]}>
                     <TouchableOpacity style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} onPress={() => { props.onDateSelected() }}>

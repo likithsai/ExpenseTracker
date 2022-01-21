@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, SafeAreaView, Vibration, Share, Text } from 'react-native'
+import { StyleSheet, View, SafeAreaView, Vibration, Share } from 'react-native'
 import Header from '../component/Header'
+import HeaderWithIcons from '../component/HeaderWithIcons'
 import List from '../component/List'
 import { openDatabase } from 'react-native-sqlite-storage'
 import DatePicker from 'react-native-neat-date-picker'
-import Utils from '../utils/Utils'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Icon from 'react-native-vector-icons/Feather'
+import CategoryScreens from './CategoryScreen'
+import Utils from '../utils/Utils'
 
 const Tab = createBottomTabNavigator()
 
@@ -31,12 +33,6 @@ const shareItem = async (item) => {
     } catch (error) {
       console.log(error.message)
     }
-}
-
-const AddCategoryScreen = () => {
-    return (
-        <Text style={{ color: '#999' }}>Goto Settings</Text>
-    )
 }
 
 const HomeScreen = ({ navigation }) => {
@@ -111,13 +107,14 @@ const HomeScreen = ({ navigation }) => {
             />
 
             <View style={styles.container}>
-                <Header 
+                <HeaderWithIcons
                     headerTitle="Expense Tracker"
                     onRightIconPressed = {() => {
                         Vibration.vibrate(50)
-                        // openDatePicker()
                         navigation.navigate('Settings')
                     }}
+                />
+                <Header 
                     onDateSelected = {() => {
                         Vibration.vibrate(50)
                         openDatePicker()
@@ -177,7 +174,7 @@ const ExpenseTracker = () => {
             })}
         >
             <Tab.Screen name="Expenses" component={HomeScreen} />
-            <Tab.Screen name="Categories" component={AddCategoryScreen} />
+            <Tab.Screen name="Categories" component={CategoryScreens} />
         </Tab.Navigator>
     )
 }
