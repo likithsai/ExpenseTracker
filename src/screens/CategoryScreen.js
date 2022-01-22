@@ -3,7 +3,7 @@ import { View, Vibration, FlatList, Text, TouchableOpacity, RefreshControl } fro
 import HeaderWithIcons from '../component/HeaderWithIcons'
 import { openDatabase } from 'react-native-sqlite-storage'
 import FeatherIcons from 'react-native-vector-icons/Feather'
-import Icon from 'react-native-ionicons'
+import Icon from 'react-native-vector-icons/Feather'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
@@ -44,11 +44,16 @@ const CategoryScreens= ({ navigation }) => {
                     navigation.navigate('Settings')
                 }}
             />  
+            <View style={{ padding: 20, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#11998e', elevation: 5 }}>
+                <Icon name="list" size={40} color='#fff' style={{ paddingVertical: 5}} />
+                <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Categories</Text>
+                <Text style={{ fontSize: 15, color: '#fff' }}>200</Text>
+            </View>
             <FlatList
                 data={DATA}
                 keyExtractor={item => item.category_id}
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={{ padding: 20, elevation: 10, backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <TouchableOpacity style={{ padding: 20, elevation: 5, backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <FeatherIcons name={item.category_icon} color="#11998e" style={{ marginTop: 5, marginRight: 20 }} size={40}/>
                             <View>
