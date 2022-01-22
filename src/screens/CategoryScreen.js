@@ -82,7 +82,7 @@ const CategoryScreens= ({ navigation }) => {
                                             executeSQLDB('DELETE FROM tbl_expense WHERE expense_id = ?', [selectedCategories.expense_id])
                                         }
                                     }])
-                                    refCategorySheet.current.close()
+                                    refCategoryOptionSheet.current.close()
                                 }}>
                                     <Icon name="trash" size={20} color='#fff' style={{ marginRight: 20 }} />
                                     <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Delete</Text>

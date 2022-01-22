@@ -8,6 +8,7 @@ import DatePicker from 'react-native-neat-date-picker'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Icon from 'react-native-vector-icons/Feather'
 import CategoryScreens from './CategoryScreen'
+import DashboardScreen from './DashboardScreeen'
 import Utils from '../utils/Utils'
 
 const Tab = createBottomTabNavigator()
@@ -159,9 +160,11 @@ const ExpenseTracker = () => {
                     let iconName;
         
                     if (route.name === 'Expenses') {
-                        iconName = 'dollar-sign';
+                        iconName = 'dollar-sign'
                     } else if (route.name === 'Categories') {
-                        iconName = 'list';
+                        iconName = 'list'
+                    } else if (route.name === 'Dashboard') {
+                        iconName = 'home'
                     }
         
                     // You can return any component that you like here!
@@ -184,6 +187,7 @@ const ExpenseTracker = () => {
                   },
             })}
         >
+            <Tab.Screen name="Dashboard" component={DashboardScreen} />
             <Tab.Screen name="Expenses" component={HomeScreen} />
             <Tab.Screen name="Categories" component={CategoryScreens} />
         </Tab.Navigator>
