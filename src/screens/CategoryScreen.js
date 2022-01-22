@@ -45,9 +45,19 @@ const CategoryScreens= ({ navigation }) => {
                 }}
             />  
             <View style={{ padding: 20, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#11998e', elevation: 5 }}>
-                <Icon name="list" size={40} color='#fff' style={{ paddingVertical: 5}} />
+                <Icon name="copy" size={40} color='#fff' style={{ paddingVertical: 5}} />
                 <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Categories</Text>
-                <Text style={{ fontSize: 15, color: '#fff' }}>200</Text>
+                <Text style={{ fontSize: 15, color: '#fff' }}>{DATA.length}</Text>
+                <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 5 }}>
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('AddCategory')
+                    }}>
+                        <View style={{ backgroundColor: '#fff', borderRadius: 30, paddingHorizontal: 20, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+                            <Icon name="copy" size={16} color='#555' style={{ marginRight: 10 }} />
+                            <Text style={{ fontWeight: 'bold', color: '#555', fontSize: 14 }}>Add Categories</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
             <FlatList
                 data={DATA}
