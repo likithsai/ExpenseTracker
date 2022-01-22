@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, TextInput, Vibration, ToastAndroid } from 'react-native'
 import Card from '../component/Card'
 import { useNavigation } from '@react-navigation/native'
@@ -28,11 +28,19 @@ const insertIntoDatabase = (name, desc, icon) => {
     })
 }
 
-const AddCategory = () => {
-    const navigation = useNavigation()
+const AddCategory = ({ route, navigation }) => {
+
     const [ categoryName, setCategoryName ] = useState()
     const [ categoryDesc, setCategoryDesc ] = useState()
     const [ selectedCategoryIcon, setSelectedCategoryIcon ] = useState([])
+
+    useEffect(() => {
+        if(route.params.data) {
+            setCategoryName(route.params.data.category_name)
+            setCategoryDesc(route.params.data.category_desc)
+            setSelectedCategoryIcon({ iconKey: 'selected_category', iconType: 'feather', iconName: route.params.data.category_icon })
+        }
+    })
 
     const categoryIcon = [
         { iconKey: 1, iconType: 'feather', iconName: 'activity' },
@@ -214,6 +222,7 @@ const AddCategory = () => {
                     <IconList
                         iconNumber = {4}
                         iconList = { categoryIcon }
+                        selectedIcon= { selectedCategoryIcon }
                         onIconPressed = {(item) => {
                             console.log(item)
                             setSelectedCategoryIcon(item)
