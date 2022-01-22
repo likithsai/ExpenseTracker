@@ -104,7 +104,7 @@ const CategoryScreens= ({ navigation }) => {
                 <Text style={{ fontSize: 15, color: '#fff' }}>{DATA.length}</Text>
                 <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 5 }}>
                     <TouchableOpacity onPress={() => {
-                        navigation.navigate('AddCategory')
+                        navigation.navigate('AddCategory', {})
                     }}>
                         <View style={{ backgroundColor: '#fff', borderRadius: 30, paddingHorizontal: 20, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
                             <Icon name="copy" size={16} color='#555' style={{ marginRight: 10 }} />

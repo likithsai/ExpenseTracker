@@ -18,6 +18,7 @@
     "@react-navigation/stack": "^6.0.11",
     "react": "17.0.2",
     "react-native": "0.66.4",
+    "react-native-charts-wrapper": "^0.5.7",
     "react-native-gesture-handler": "^2.1.0",
     "react-native-ionicons": "^4.6.5",
     "react-native-neat-date-picker": "^1.1.4",

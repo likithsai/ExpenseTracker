@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, TextInput, Vibration, ToastAndroid } from 'react-native'
 import Card from '../component/Card'
-import { useNavigation } from '@react-navigation/native'
 import HeaderComp from '../component/HeaderComp'
 import IconList from '../component/IconList'
 import { openDatabase } from 'react-native-sqlite-storage'
