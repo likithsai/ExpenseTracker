@@ -131,7 +131,7 @@ const CategoryScreens= ({ navigation }) => {
                         </View>
                     </TouchableOpacity>
                 )}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onListRefresh} />}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onListRefresh} tintColor="#fff" titleColor="#fff" colors={["#11998e"]} />}
             />
         </>
     )

@@ -140,7 +140,7 @@ const HomeScreen = ({ navigation }) => {
                     }}/>
                     <View style={styles.scrollView}>
                         <List listData={DATA}
-                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onListRefresh} />}
+                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onListRefresh} tintColor="#fff" titleColor="#fff" colors={["#11998e"]} />}
                             onShareItem = {(item) => {
                                 // console.log(item)
                                 shareItem(item)
