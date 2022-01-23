@@ -72,14 +72,14 @@ const CategoryScreens= ({ navigation }) => {
                                 </TouchableOpacity>
                                 <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                                 <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => {
-                                    Alert.alert("Delete Item", "Do you want to delete item :\n" + selectedCategories.expense_name, [{
+                                    Alert.alert("Delete Item", "Do you want to delete item :\n" + selectedCategories.category_name, [{
                                         text: 'Cancel',
                                         onPress: () => {},
                                         style: 'cancel'
                                     }, {
                                         text: 'Ok',
                                         onPress: () => {
-                                            executeSQLDB('DELETE FROM tbl_expense WHERE expense_id = ?', [selectedCategories.expense_id])
+                                            
                                         }
                                     }])
                                     refCategoryOptionSheet.current.close()

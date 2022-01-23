@@ -27,6 +27,24 @@ const insertIntoDatabase = (name, desc, icon) => {
     })
 }
 
+const updateIntoDatabase = (name, desc, icon) => {
+    db.transaction((txn) => {
+        txn.executeSql(        
+            'UPDATE tbl_category SET category_name=?, category_desc=?, category_icon=? WHERE category_id = ?',
+            [name, desc, icon, route.params.data.category_id],
+            (tx, results) => {               
+                console.log('Results', results.rowsAffected)
+                if(results.rowsAffected > 0) {
+                    navigation.pop()
+                }
+            },
+            (err) => {
+                console.log('Error: ' + err.message)
+            }
+        )
+    })
+}
+
 const AddCategory = ({ route, navigation }) => {
 
     const [ categoryName, setCategoryName ] = useState()
@@ -39,7 +57,7 @@ const AddCategory = ({ route, navigation }) => {
             setCategoryDesc(route.params.data.category_desc)
             setSelectedCategoryIcon({ iconKey: 'selected_category', iconType: 'feather', iconName: route.params.data.category_icon })
         }
-    })
+    }, [])
 
     const categoryIcon = [
         { iconKey: 1, iconType: 'feather', iconName: 'activity' },
@@ -183,7 +201,11 @@ const AddCategory = ({ route, navigation }) => {
                 }}
                 onSucessPressed = {() => {
                     Vibration.vibrate(50)
-                    insertIntoDatabase(categoryName, categoryDesc, selectedCategoryIcon.iconName)
+                    if(route.params.data) {
+                        updateIntoDatabase(categoryName, categoryDesc, selectedCategoryIcon.iconName)
+                    } else {
+                        insertIntoDatabase(categoryName, categoryDesc, selectedCategoryIcon.iconName)
+                    }
                     navigation.pop()
                 }} 
             />
