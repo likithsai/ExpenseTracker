@@ -37,6 +37,13 @@ const CategoryScreens= ({ navigation }) => {
         })
     }
 
+    const deleteRecord = (query, param) => {
+        db.transaction((tx) => {
+            tx.executeSql(query, param, (tx, results) => {
+            })
+        })
+    }
+
     return (
         <>
             <RBSheet
@@ -72,14 +79,14 @@ const CategoryScreens= ({ navigation }) => {
                                 </TouchableOpacity>
                                 <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                                 <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => {
-                                    Alert.alert("Delete Item", "Do you want to delete item :\n" + selectedCategories.category_name, [{
+                                    Alert.alert("Delete Item", "Do you want to delete item :\n" + selectedCategories.category_name + "\n NOTE: On categories delete, item catrgories will be set to null", [{
                                         text: 'Cancel',
                                         onPress: () => {},
                                         style: 'cancel'
                                     }, {
                                         text: 'Ok',
                                         onPress: () => {
-                                            
+                                            deleteRecord("DELETE FROM tbl_category WHERE category_id = ?", [selectedCategories.category_id])
                                         }
                                     }])
                                     refCategoryOptionSheet.current.close()
