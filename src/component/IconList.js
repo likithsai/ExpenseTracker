@@ -17,7 +17,6 @@ const IconList = (props) => {
                     <TouchableOpacity style={[styles.GridViewBlockStyle]} onPress={() => {
                         props.onIconPressed(item)
                         setSelectedIcon(item)
-                        console.log(selectedIcon)
                     }}>
                         <Icon name={item.iconName} size={20} color='#fff' />
                     </TouchableOpacity>

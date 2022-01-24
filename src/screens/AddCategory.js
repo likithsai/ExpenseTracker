@@ -27,24 +27,6 @@ const insertIntoDatabase = (name, desc, icon) => {
     })
 }
 
-const updateIntoDatabase = (name, desc, icon) => {
-    db.transaction((txn) => {
-        txn.executeSql(        
-            'UPDATE tbl_category SET category_name=?, category_desc=?, category_icon=? WHERE category_id = ?',
-            [name, desc, icon, route.params.data.category_id],
-            (tx, results) => {               
-                console.log('Results', results.rowsAffected)
-                if(results.rowsAffected > 0) {
-                    navigation.pop()
-                }
-            },
-            (err) => {
-                console.log('Error: ' + err.message)
-            }
-        )
-    })
-}
-
 const AddCategory = ({ route, navigation }) => {
 
     const [ categoryName, setCategoryName ] = useState()
@@ -55,9 +37,37 @@ const AddCategory = ({ route, navigation }) => {
         if(route.params.data) {
             setCategoryName(route.params.data.category_name)
             setCategoryDesc(route.params.data.category_desc)
-            setSelectedCategoryIcon({ iconKey: 'selected_category', iconType: 'feather', iconName: route.params.data.category_icon })
+            // setSelectedCategoryIcon({ iconKey: 'selected_category', iconType: 'feather', iconName: route.params.data.category_icon })
         }
     }, [])
+
+    const updateIntoDatabase = (name) => {
+        // db.transaction((txn) => {
+        //     txn.executeSql(        
+        //         'UPDATE tbl_category SET category_name = ?, category_desc = ?, category_icon = ? WHERE category_id = ?',
+        //         [categoryName, categoryDesc, selectedCategoryIcon.iconName, route.params.data.category_id],
+        //         (tx, results) => {               
+        //             console.log('Rows Affected: ' + results.rowsAffected)
+        //             if(results.rowsAffected > 0) {
+        //                 navigation.pop()
+        //             }
+        //         }
+        //     )
+        // })
+    
+        db.transaction((tx) => {
+            tx.executeSql(
+                "UPDATE tbl_category SET category_name = ?, category_desc = ?, category_icon = ? WHERE category_id = ?", 
+                [categoryName, categoryDesc, selectedCategoryIcon.iconName, route.params.data.category_id], 
+                (tx, results) => {
+                    console.log('Results', results.rowsAffected)
+                    if(results.rowsAffected > 0) {
+                        navigation.pop()
+                    }
+                }
+            )
+        })
+    }
 
     const categoryIcon = [
         { iconKey: 1, iconType: 'feather', iconName: 'activity' },
@@ -245,7 +255,6 @@ const AddCategory = ({ route, navigation }) => {
                         iconList = { categoryIcon }
                         selectedIcon= { selectedCategoryIcon }
                         onIconPressed = {(item) => {
-                            console.log(item)
                             setSelectedCategoryIcon(item)
                         }}
                     />
