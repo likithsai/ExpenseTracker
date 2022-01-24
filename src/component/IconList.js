@@ -8,7 +8,7 @@ const IconList = (props) => {
     return (
         <View style={styles.MainContainer}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginBottom: 20, borderRadius: 10 }}>
-                <Icon name={selectedIcon.iconName} size={30} color='#000' />
+                <Icon name={selectedIcon.iconName | props.selectedIcon} size={30} color='#000' />
             </View>
             <FlatList  
                 style = {{ padding: 0, margin: 0, marginBottom: 50 }}

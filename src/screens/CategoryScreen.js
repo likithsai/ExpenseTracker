@@ -3,7 +3,7 @@ import { View, Vibration, FlatList, Text, TouchableOpacity, RefreshControl, Scro
 import HeaderWithIcons from '../component/HeaderWithIcons'
 import { openDatabase } from 'react-native-sqlite-storage'
 import FeatherIcons from 'react-native-vector-icons/Feather'
-import Icon from 'react-native-vector-icons/Feather'
+import Icon from 'react-native-ionicons'
 import RBSheet from "react-native-raw-bottom-sheet"
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
@@ -126,8 +126,8 @@ const CategoryScreens= ({ navigation }) => {
                 ListEmptyComponent={() => {
                     return (
                         <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent:'center', paddingTop: '40%' }}>
-                            <FeatherIcons name="slash" size={50} color='#666' style={{ marginBottom: 10 }} />
-                            <Text style={{ fontSize: 15, color: '#555' }}>There is no category items</Text>
+                            <Icon name="snow" size={50} color='#666' style={{ marginBottom: 10 }} />
+                            <Text style={{ fontSize: 15, color: '#555' }}>There is no items</Text>
                         </View>
                     )
                 }}
