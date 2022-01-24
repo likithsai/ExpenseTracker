@@ -123,6 +123,14 @@ const CategoryScreens= ({ navigation }) => {
             <FlatList
                 data={DATA}
                 keyExtractor={item => item.category_id}
+                ListEmptyComponent={() => {
+                    return (
+                        <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent:'center', paddingTop: '40%' }}>
+                            <FeatherIcons name="slash" size={50} color='#666' style={{ marginBottom: 10 }} />
+                            <Text style={{ fontSize: 15, color: '#555' }}>There is no category items</Text>
+                        </View>
+                    )
+                }}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={{ padding: 20, elevation: 5, backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} onPress={() => {
                         setSelectedCategories(item)
