@@ -74,12 +74,12 @@ const CategoryScreens= ({ navigation }) => {
                                         data: selectedCategories
                                     })
                                 }}>
-                                    <Icon name="edit" size={20} color='#fff' style={{ marginRight: 20 }} />
+                                    <FeatherIcons name="edit" size={20} color='#fff' style={{ marginRight: 20 }} />
                                     <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Edit</Text>
                                 </TouchableOpacity>
                                 <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
                                 <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => {
-                                    Alert.alert("Delete Item", "Do you want to delete item :\n" + selectedCategories.category_name + "\n NOTE: On categories delete, item catrgories will be set to null", [{
+                                    Alert.alert("Delete Item", "Do you want to delete item :\n" + selectedCategories.category_name, [{
                                         text: 'Cancel',
                                         onPress: () => {},
                                         style: 'cancel'
@@ -91,7 +91,7 @@ const CategoryScreens= ({ navigation }) => {
                                     }])
                                     refCategoryOptionSheet.current.close()
                                 }}>
-                                    <Icon name="trash" size={20} color='#fff' style={{ marginRight: 20 }} />
+                                    <FeatherIcons name="trash" size={20} color='#fff' style={{ marginRight: 20 }} />
                                     <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Delete</Text>
                                 </TouchableOpacity>
                             </View>
