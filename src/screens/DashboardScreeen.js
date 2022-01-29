@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Vibration, ScrollView, processColor } from 'react-native'
+import { Text, Vibration, ScrollView, processColor } from 'react-native'
 import HeaderWithIcons from '../component/HeaderWithIcons'
 import {BarChart, PieChart} from 'react-native-charts-wrapper'
 import Card from '../component/Card'
@@ -27,18 +27,18 @@ const DashboardScreen = ({ navigation }) => {
                         data={{
                             dataSets: [{
                                 values: [
-                                    {y: [ 10, 20 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 105, 30 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 102, 26 ], marker: ["row1", "row2"]},
-                                    {y: [ 110, 10 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 114, 20 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 109, 30 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 105, 45 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 99, 32 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 95, 12 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 105, 2 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 99, 22 ], marker: ["row1", "row2"]}, 
-                                    {y: [ 95, 20 ], marker: ["row1", "row2"]}
+                                    { y: [ 10, 20 ] }, 
+                                    { y: [ 105, 30 ] }, 
+                                    { y: [ 102, 26 ] },
+                                    { y: [ 110, 10 ] }, 
+                                    { y: [ 114, 20 ] }, 
+                                    { y: [ 109, 30 ] }, 
+                                    { y: [ 105, 45 ] }, 
+                                    { y: [ 99, 32 ] }, 
+                                    { y: [ 95, 12 ] }, 
+                                    { y: [ 105, 2 ] }, 
+                                    { y: [ 99, 22 ] }, 
+                                    { y: [ 95, 20 ] }
                                 ],
                                 label: '',
                                 config: {
@@ -105,12 +105,12 @@ const DashboardScreen = ({ navigation }) => {
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Category Expenses</Text>
                     <Text style={{ fontSize: 15, color: '#999' }}>Representation of overall category expense</Text>
                     <PieChart
-                        style={{ width: '100%', height: '100%' }}
+                        style={{ width: '100%', height: '80%', marginVertical: 20 }}
                         data={{
                             dataSets: [{
                                 values: [
-                                    {value: 45, label: 'Sandwiches'},
-                                    {value: 21, label: 'Salads'},
+                                    { value: 45, label: 'example 1' },
+                                    { value: 21, label: 'example 2' }
                                 ],
                                 config: {
                                     colors: [
@@ -122,7 +122,6 @@ const DashboardScreen = ({ navigation }) => {
                                     ],
                                     valueTextSize: 15,
                                     valueTextColor: '#fff',
-                                    selectionShift: 20,
                                     valueFormatter: "#.#'%'",
                                     valueLinePart1Length: 0.5
                                 }
@@ -131,17 +130,31 @@ const DashboardScreen = ({ navigation }) => {
                         chartDescription={{
                             text: ''
                         }}
-                        extraOffsets={{left: 20, top: 20, right: 20, bottom: 20}}
+                        extraOffsets={{ left: 20, top: 20, right: 20, bottom: 20 }}
                         entryLabelColor={processColor('#fffs')}
                         entryLabelTextSize={20}
-                        drawEntryLabels={true}
-                        rotationEnabled={true}
+                        drawEntryLabels={false}
+                        rotationEnabled={false}
                         usePercentValues={true}
-                        holeRadius={0}
+                        holeRadius={50}
                         maxAngle={360}
                         animation={{
                             durationY: 1000,
                             easingX: 'EaseInExpo'
+                        }}
+                        legend={{
+                            enabled: true,
+                            textSize: 15,
+                            form: 'SQUARE',
+                            horizontalAlignment: "CENTER",
+                            verticalAlignment: "BOTTOM",
+                            wordWrapEnabled: true,
+                            fontWeight: 'bold',
+                            textSize: 12,
+                            xEntrySpace: 10,
+                            yEntrySpace: 5,
+                            maxSizePercent: 0.5,
+                            formToTextSpace: 12
                         }}
                         onChange={(event) => console.log(event.nativeEvent)}
                     />
