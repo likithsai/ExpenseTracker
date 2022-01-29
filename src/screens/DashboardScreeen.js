@@ -3,8 +3,7 @@ import { View, Text, Vibration, ScrollView, processColor } from 'react-native'
 import HeaderWithIcons from '../component/HeaderWithIcons'
 import {BarChart, PieChart} from 'react-native-charts-wrapper'
 import Card from '../component/Card'
-import Header from '../component/Header'
-import FeatherIcons from 'react-native-vector-icons/Feather'
+import HeaderWithoutAddExpense from '../component/Header'
 
 const DashboardScreen = ({ navigation }) => {
     return (
@@ -16,17 +15,17 @@ const DashboardScreen = ({ navigation }) => {
                     navigation.navigate('Settings')
                 }}
             />
+            <HeaderWithoutAddExpense
+                onDateSelected = {() => {
+                    Vibration.vibrate(50)
+                }}
+                incomeValue = {10}
+                expenseValue = {20}
+                balanceValue = {30}
+                dateText = {'Month: DEC'}
+                AddExpenseEnabled = {false}
+            />
             <ScrollView>
-                <Header
-                    onDateSelected = {() => {
-                        Vibration.vibrate(50)
-                    }}
-                    incomeValue = {10}
-                    expenseValue = {20}
-                    balanceValue = {30}
-                    dateText = {'Month: DEC'}
-                    AddExpenseEnabled = {false}
-                />
                 <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 300, paddingVertical: 20, marginBottom: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
                     <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#999' }}>Representation of annual expenses in bar chart</Text>
@@ -77,7 +76,7 @@ const DashboardScreen = ({ navigation }) => {
                         onChange={(event) => console.log(event.nativeEvent)}
                     />
                 </Card>
-                <Card style={{ elevation: 5, height: 300, paddingVertical: 20, marginBottom: 1 }}>
+                <Card style={{ elevation: 5, height: 300, paddingVertical: 20 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Expense By Category</Text>
                     <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#999' }}>Representation of overall category expense</Text>
                     <PieChart
@@ -87,9 +86,6 @@ const DashboardScreen = ({ navigation }) => {
                                 values: [
                                     {value: 45, label: 'Sandwiches'},
                                     {value: 21, label: 'Salads'},
-                                    {value: 15, label: 'Soup'},
-                                    {value: 9, label: 'Beverages'},
-                                    {value: 15, label: 'Desserts'}
                                 ],
                                 config: {
                                     colors: [

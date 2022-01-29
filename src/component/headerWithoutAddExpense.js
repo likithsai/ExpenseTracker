@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Vibration, ScrollView } from 'react-native'
 import Icon from 'react-native-ionicons'
 
-const Header = (props) => {
+const HeaderWithoutAddExpense = (props) => {
     return (
         <>
         <View style={styles.boxBorder}>
@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Header
+export default HeaderWithoutAddExpense
