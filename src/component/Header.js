@@ -30,6 +30,14 @@ const Header = (props) => {
                             <Text style={{ fontSize: 15, color: '#fff' }}>{props.balanceValue}</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={{ marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 5 }}>
+                        <TouchableOpacity onPress={props.onAddExpensesClicked}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 30, paddingHorizontal: 20, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+                                <Icon name="wallet" size={16} color='#555' style={{ marginRight: 10 }} />
+                                <Text style={{ fontWeight: 'bold', color: '#555', fontSize: 14 }}>Add Expenses</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>

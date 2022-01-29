@@ -67,7 +67,7 @@ const DashboardScreen = ({ navigation }) => {
                     />
                 </Card>
                 <Card style={{ elevation: 5, height: 300, paddingVertical: 20 }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Expense By Category</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Category Expenses</Text>
                     <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#999' }}>Representation of overall category expense</Text>
                     <PieChart
                         style={{ width: '100%', height: '100%' }}
