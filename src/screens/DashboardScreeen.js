@@ -18,7 +18,7 @@ const DashboardScreen = ({ navigation }) => {
             <ScrollView>
                 <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 300, paddingVertical: 20, marginBottom: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
-                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#999' }}>Representation of expenses anually</Text>
+                    <Text style={{ fontSize: 15, color: '#999' }}>Representation of expenses anually</Text>
                     <BarChart
                         extraOffsets={{
                             bottom: 10
@@ -103,7 +103,7 @@ const DashboardScreen = ({ navigation }) => {
                 </Card>
                 <Card style={{ elevation: 5, height: 300, paddingVertical: 20 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Category Expenses</Text>
-                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#999' }}>Representation of overall category expense</Text>
+                    <Text style={{ fontSize: 15, color: '#999' }}>Representation of overall category expense</Text>
                     <PieChart
                         style={{ width: '100%', height: '100%' }}
                         data={{
