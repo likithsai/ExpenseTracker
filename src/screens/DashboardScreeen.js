@@ -123,7 +123,9 @@ const DashboardScreen = ({ navigation }) => {
                             dataSets: [{
                                 values: [
                                     { value: 45, label: 'example 1' },
-                                    { value: 21, label: 'example 2' }
+                                    { value: 21, label: 'example 2' },
+                                    { value: 45, label: 'example 3' },
+                                    { value: 21, label: 'example 4' }
                                 ],
                                 config: {
                                     colors: [
@@ -164,8 +166,8 @@ const DashboardScreen = ({ navigation }) => {
                             wordWrapEnabled: true,
                             fontWeight: 'bold',
                             textSize: 12,
-                            xEntrySpace: 10,
-                            yEntrySpace: 5,
+                            // xEntrySpace: 10,
+                            // yEntrySpace: 5,
                             maxSizePercent: 0.5,
                             formToTextSpace: 12
                         }}
