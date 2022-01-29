@@ -101,7 +101,7 @@ const DashboardScreen = ({ navigation }) => {
                         onChange={(event) => console.log(event.nativeEvent)}
                     />
                 </Card>
-                <Card style={{ elevation: 5, height: 350, flex: 1 }}>
+                <Card style={{ elevation: 5, height: 350, flex: 1, borderBottomWidth: 0.7, borderBottomColor: '#ccc' }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Category Expenses</Text>
                     <Text style={{ fontSize: 15, color: '#999' }}>Representation of overall category expense</Text>    
                     <PieChart
