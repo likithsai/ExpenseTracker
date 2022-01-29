@@ -1,10 +1,12 @@
-import React from 'react'
-import { Text, Vibration, ScrollView, processColor, View } from 'react-native'
+import React, { useState } from 'react'
+import { Text, Vibration, ScrollView, processColor, RefreshControl } from 'react-native'
 import HeaderWithIcons from '../component/HeaderWithIcons'
-import {BarChart, PieChart} from 'react-native-charts-wrapper'
+import { BarChart, PieChart } from 'react-native-charts-wrapper'
 import Card from '../component/Card'
 
 const DashboardScreen = ({ navigation }) => {
+    const [ refreshing, setRefreshing ] = useState()
+
     return (
         <>
             <HeaderWithIcons
@@ -15,7 +17,18 @@ const DashboardScreen = ({ navigation }) => {
                     navigation.navigate('Settings')
                 }}
             />
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={() => {
+                          setRefreshing(true)
+                          setInterval(() => {
+                            setRefreshing(false)
+                          }, 5000)
+                      }}
+                    />
+                }>
                 <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 300, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
                     <Text style={{ fontSize: 15, color: '#999' }}>Representation of expenses anually</Text>
@@ -101,7 +114,7 @@ const DashboardScreen = ({ navigation }) => {
                         onChange={(event) => console.log(event.nativeEvent)}
                     />
                 </Card>
-                <Card style={{ elevation: 5, height: 350, flex: 1, borderBottomWidth: 0.7, borderBottomColor: '#ccc' }}>
+                <Card style={{ elevation: 5, height: 400, flex: 1, borderBottomWidth: 0.7, borderBottomColor: '#ccc' }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Category Expenses</Text>
                     <Text style={{ fontSize: 15, color: '#999' }}>Representation of overall category expense</Text>    
                     <PieChart
