@@ -6,7 +6,7 @@ const HeaderWithIcons= (props) => {
     return (
         <>
         <View>
-            <View style={styles.headerContainer}>
+            <View style={[props.style, styles.headerContainer]}>
                 <View style={[styles.headerBarContent]}>
                     <Text style={styles.headerTitle}>{props.headerTitle}</Text>
                 </View>

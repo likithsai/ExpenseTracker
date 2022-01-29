@@ -8,6 +8,7 @@ const DashboardScreen = ({ navigation }) => {
     return (
         <>
             <HeaderWithIcons
+                style={{ elevation: 10 }}
                 headerTitle="Expense Tracker"
                 onRightIconPressed = {() => {
                     Vibration.vibrate(50)
@@ -17,7 +18,7 @@ const DashboardScreen = ({ navigation }) => {
             <ScrollView>
                 <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 300, paddingVertical: 20, marginBottom: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
-                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#999' }}>Representation of annual expenses in bar chart</Text>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#999' }}>Representation of expenses anually</Text>
                     <BarChart
                         style={{ width: '100%', height: '80%' }}
                         data={{
@@ -69,7 +70,7 @@ const DashboardScreen = ({ navigation }) => {
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Expense By Category</Text>
                     <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#999' }}>Representation of overall category expense</Text>
                     <PieChart
-                        style={{ width: '100%', height: '100%', padding: 20 }}
+                        style={{ width: '100%', height: '100%' }}
                         data={{
                             dataSets: [{
                                 values: [
