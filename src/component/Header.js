@@ -9,7 +9,6 @@ const Header = (props) => {
             <View>
                 <View style={[styles.boxBorder, { backgroundColor: '#11998e', paddingTop: 25, paddingBottom: 30, paddingHorizontal: 20, elevation: 5 }]}>
                     <TouchableOpacity style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} onPress={() => { props.onDateSelected() }}>
-                        {/* <Text style={{ fontWeight: '900', color: '#ff0' }}>DATE : </Text> */}
                         <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 16 }}>{props.dateText}</Text>
                     </TouchableOpacity>
                     <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>

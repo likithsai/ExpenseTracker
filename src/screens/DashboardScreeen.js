@@ -3,7 +3,6 @@ import { View, Text, Vibration, ScrollView, processColor } from 'react-native'
 import HeaderWithIcons from '../component/HeaderWithIcons'
 import {BarChart, PieChart} from 'react-native-charts-wrapper'
 import Card from '../component/Card'
-import HeaderWithoutAddExpense from '../component/Header'
 
 const DashboardScreen = ({ navigation }) => {
     return (
@@ -14,16 +13,6 @@ const DashboardScreen = ({ navigation }) => {
                     Vibration.vibrate(50)
                     navigation.navigate('Settings')
                 }}
-            />
-            <HeaderWithoutAddExpense
-                onDateSelected = {() => {
-                    Vibration.vibrate(50)
-                }}
-                incomeValue = {10}
-                expenseValue = {20}
-                balanceValue = {30}
-                dateText = {'Month: DEC'}
-                AddExpenseEnabled = {false}
             />
             <ScrollView>
                 <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 300, paddingVertical: 20, marginBottom: 1 }}>
