@@ -23,10 +23,26 @@ const DashboardScreen = ({ navigation }) => {
                         style={{ width: '100%', height: '80%' }}
                         data={{
                             dataSets: [{
-                                values: [{y: 100}, {y: 105}, {y: 102}, {y: 110}, {y: 114}, {y: 109}, {y: 105}, {y: 99}, {y: 95}, {y: 105}, {y: 99}, {y: 95}],
+                                values: [
+                                    {y: [ 100, 20 ]}, 
+                                    {y: [ 105, 30 ]}, 
+                                    {y: [ 102, 0 ]},
+                                    {y: [ 110, 10 ]}, 
+                                    {y: [ 114, 20 ]}, 
+                                    {y: [ 109, 30 ]}, 
+                                    {y: [ 105, 45 ]}, 
+                                    {y: [ 99, 32 ]}, 
+                                    {y: [ 95, 12 ]}, 
+                                    {y: [ 105, 2 ]}, 
+                                    {y: [ 99, 22 ]}, 
+                                    {y: [ 95, 20 ]}
+                                ],
                                 label: '',
                                 config: {
-                                    color: processColor('#11998ecc'), 
+                                    colors: [
+                                        processColor('#11998e'), 
+                                        processColor('#11998ecc')
+                                    ],
                                     barShadowColor: processColor('lightgrey'),
                                     highlightAlpha: 90,
                                     highlightColor: processColor('#ffff00'),
@@ -79,15 +95,15 @@ const DashboardScreen = ({ navigation }) => {
                                 ],
                                 config: {
                                     colors: [
-                                        processColor('#C0FF8C'), 
-                                        processColor('#FFF78C'), 
-                                        processColor('#FFD08C'), 
-                                        processColor('#8CEAFF'), 
-                                        processColor('#FF8C9D')
+                                        processColor('#11998eff'), 
+                                        processColor('#11998ecc'), 
+                                        processColor('#11998e99'), 
+                                        processColor('#11998e66'), 
+                                        processColor('#11998e33')
                                     ],
                                     valueTextSize: 15,
-                                    sliceSpace: 5,
-                                    selectionShift: 13,
+                                    valueTextColor: '#fff',
+                                    selectionShift: 20,
                                     valueFormatter: "#.#'%'",
                                     valueLinePart1Length: 0.5
                                 }
@@ -97,7 +113,7 @@ const DashboardScreen = ({ navigation }) => {
                             text: ''
                         }}
                         extraOffsets={{left: 20, top: 20, right: 20, bottom: 20}}
-                        entryLabelColor={processColor('#11998e')}
+                        entryLabelColor={processColor('#fffs')}
                         entryLabelTextSize={20}
                         drawEntryLabels={true}
                         rotationEnabled={true}
