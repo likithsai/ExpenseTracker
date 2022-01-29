@@ -20,22 +20,25 @@ const DashboardScreen = ({ navigation }) => {
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
                     <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#999' }}>Representation of expenses anually</Text>
                     <BarChart
-                        style={{ width: '100%', height: '80%' }}
+                        extraOffsets={{
+                            bottom: 10
+                        }}
+                        style={{ width: '100%', height: '83%' }}
                         data={{
                             dataSets: [{
                                 values: [
-                                    {y: [ 100, 20 ]}, 
-                                    {y: [ 105, 30 ]}, 
-                                    {y: [ 102, 0 ]},
-                                    {y: [ 110, 10 ]}, 
-                                    {y: [ 114, 20 ]}, 
-                                    {y: [ 109, 30 ]}, 
-                                    {y: [ 105, 45 ]}, 
-                                    {y: [ 99, 32 ]}, 
-                                    {y: [ 95, 12 ]}, 
-                                    {y: [ 105, 2 ]}, 
-                                    {y: [ 99, 22 ]}, 
-                                    {y: [ 95, 20 ]}
+                                    {y: [ 10, 20 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 105, 30 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 102, 26 ], marker: ["row1", "row2"]},
+                                    {y: [ 110, 10 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 114, 20 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 109, 30 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 105, 45 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 99, 32 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 95, 12 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 105, 2 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 99, 22 ], marker: ["row1", "row2"]}, 
+                                    {y: [ 95, 20 ], marker: ["row1", "row2"]}
                                 ],
                                 label: '',
                                 config: {
@@ -46,6 +49,7 @@ const DashboardScreen = ({ navigation }) => {
                                     barShadowColor: processColor('lightgrey'),
                                     highlightAlpha: 90,
                                     highlightColor: processColor('#ffff00'),
+                                    stackLabels: ['Income', 'Expense']
                                 }
                             }]
                         }}
@@ -55,8 +59,7 @@ const DashboardScreen = ({ navigation }) => {
                             },
                             right : {
                                 enabled: false
-                            },
-                            textColor: '#fff'
+                            }
                         }}
                         xAxis={{
                             position: 'BOTTOM',
@@ -65,14 +68,30 @@ const DashboardScreen = ({ navigation }) => {
                             valueFormatter: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                             granularityEnabled: true,
                             granularity : 1,
-                            textColor: '#fff'
+                            textColor: '#fff',
+                            axisLineColor: '#fff',
+                            axisLineWidth: 0
                         }}
                         chartDescription={{
                             text: ''
                         }}
-                        legend={{
-                            enabled: false,
+                        animation={{
+                            durationY: 1000,
+                            easingX: 'EaseInExpo'
                         }}
+                        legend={{
+                            enabled: true,
+                            fontWeight: 'bold',
+                            textSize: 12,
+                            xEntrySpace: 10,
+                            yEntrySpace: 5,
+                            form: 'SQUARE',
+                            maxSizePercent: 0.5,
+                            wordWrapEnabled: true,
+                            horizontalAlignment: 'CENTER',
+                            formToTextSpace: 12
+                        }}
+                        drawAxisLines={false}
                         drawBarShadow={false}
                         drawValueAboveBar={false}
                         drawHighlightArrow={false}
@@ -120,6 +139,10 @@ const DashboardScreen = ({ navigation }) => {
                         usePercentValues={true}
                         holeRadius={0}
                         maxAngle={360}
+                        animation={{
+                            durationY: 1000,
+                            easingX: 'EaseInExpo'
+                        }}
                         onChange={(event) => console.log(event.nativeEvent)}
                     />
                 </Card>
