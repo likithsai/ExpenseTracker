@@ -36,12 +36,18 @@ const DashboardScreen = ({ navigation }) => {
                                 values: [{y: 100}, {y: 105}, {y: 102}, {y: 110}, {y: 114}, {y: 109}, {y: 105}, {y: 99}, {y: 95}, {y: 105}, {y: 99}, {y: 95}],
                                 label: '',
                                 config: {
-                                    color: processColor('#11998e'),
+                                    color: [ 
+                                        processColor('#C0FF8C'), 
+                                        processColor('#FFF78C'), 
+                                        processColor('#FFD08C'), 
+                                        processColor('#11998ecc'), 
+                                        processColor('#FF8C9D')
+                                    ],
                                     barShadowColor: processColor('lightgrey'),
                                     highlightAlpha: 90,
                                     highlightColor: processColor('#11998ecc'),
                                 }
-                            }],
+                            }]
                         }}
                         yAxis={{
                             left : {
