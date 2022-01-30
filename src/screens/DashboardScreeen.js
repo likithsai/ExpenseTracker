@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Text, Vibration, ScrollView, processColor, RefreshControl, View } from 'react-native'
+import { Text, Vibration, ScrollView, processColor, RefreshControl, TouchableOpacity } from 'react-native'
 import HeaderWithIcons from '../component/HeaderWithIcons'
 import { BarChart, PieChart } from 'react-native-charts-wrapper'
 import Card from '../component/Card'
+import FeatherIcons from 'react-native-vector-icons/Feather'
 
 const DashboardScreen = ({ navigation }) => {
     const [ refreshing, setRefreshing ] = useState()
@@ -30,14 +31,14 @@ const DashboardScreen = ({ navigation }) => {
                       }}
                     />
                 }>
-                <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 300, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
+                <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 400, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
                     <Text style={{ fontSize: 15, color: '#999' }}>Representation of expenses anually</Text>
                     <BarChart
                         extraOffsets={{
                             bottom: 10
                         }}
-                        style={{ width: '100%', height: '83%' }}
+                        style={{ width: '100%', height: '75%' }}
                         data={{
                             dataSets: [{
                                 values: [
@@ -114,6 +115,10 @@ const DashboardScreen = ({ navigation }) => {
                         }}
                         onChange={(event) => console.log(event.nativeEvent)}
                     />
+                    <TouchableOpacity style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
+                        <FeatherIcons name="plus" color="#000" size={15}/>
+                        <Text style={{ color: '#555', padding: 10, fontWeight: 'bold' }}>ADD EXPENSE</Text>
+                    </TouchableOpacity>
                 </Card>
                 <Card style={{ elevation: 5, height: 400, flex: 1, borderBottomWidth: 0.7, borderBottomColor: '#ccc' }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Category Expenses</Text>
@@ -139,7 +144,7 @@ const DashboardScreen = ({ navigation }) => {
                                     valueTextSize: 15,
                                     valueTextColor: '#fff',
                                     valueFormatter: "#.#'%'",
-                                    valueLinePart1Length: 0.5
+                                    // valueLinePart1Length: 0.5
                                 }
                             }],
                         }}
@@ -167,10 +172,8 @@ const DashboardScreen = ({ navigation }) => {
                             wordWrapEnabled: true,
                             fontWeight: 'bold',
                             textSize: 12,
-                            // xEntrySpace: 10,
-                            // yEntrySpace: 5,
-                            maxSizePercent: 0.5,
-                            formToTextSpace: 12
+                            // maxSizePercent: 0.5,
+                            formToTextSpace: 10
                         }}
                         onSelect={(event) => {
                             setSelectedPieChart(event.nativeEvent.label + '\n' + event.nativeEvent.value)
@@ -180,7 +183,7 @@ const DashboardScreen = ({ navigation }) => {
                         styledCenterText={{
                             text: selectedPieChart, 
                             color: processColor('#000'),
-                            size: 18
+                            size: 15
                         }}
                     />
                 </Card>
