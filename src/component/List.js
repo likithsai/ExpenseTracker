@@ -96,7 +96,7 @@ const List = (props) => {
                             }} 
                             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
                                 <View>
-                                    <FeatherIcons name="plus" color="#fff" style={{ marginRight: 20 }} size={30}/>
+                                    <FeatherIcons name="plus" color="#fff" style={{ marginRight: 20, elevation: 10 }} size={30}/>
                                 </View>
                                 <View>
                                     <Text style={[styles.listItemText, { color: '#fff', fontSize: 18 }]}>Add Category</Text>
