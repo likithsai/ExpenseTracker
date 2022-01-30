@@ -216,7 +216,7 @@ const List = (props) => {
                             <View style={{ width: '75%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '75%' }}>
                                     <View>
-                                        <FeatherIcons name={ getCategoryData(item.expense_category)[0].category_icon || 'alert-triangle' } size={35} color="#11998e" style={{ marginRight: 20 }} />
+                                        <FeatherIcons name={ getCategoryData(item.expense_category)[0].category_icon || 'alert-triangle' } size={30} color="#fff" style={{ marginRight: 15, backgroundColor: '#11998e', padding:12, borderRadius: 50, marginTop: 5 }} />
                                     </View>
                                     <View>
                                         <Text numberOfLines={1} style={styles.listItemText}>{item.expense_name}</Text>
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     listItemSubText : {
-        fontSize: 15,
+        fontSize: 14,
         color: '#555'
     },
     listItemAmt: {

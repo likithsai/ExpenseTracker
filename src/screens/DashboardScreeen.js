@@ -29,7 +29,7 @@ const DashboardScreen = ({ navigation }) => {
                       }}
                     />
                 }>
-                <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 300, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
+                <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 400, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
                     <Text style={{ fontSize: 15, color: '#999' }}>Representation of expenses anually</Text>
                     <BarChart
