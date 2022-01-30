@@ -115,7 +115,9 @@ const DashboardScreen = ({ navigation }) => {
                         }}
                         onChange={(event) => console.log(event.nativeEvent)}
                     />
-                    <TouchableOpacity style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
+                    <TouchableOpacity style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10 }} onPress={() => {
+                        navigation.navigate('AddExpenses', {})
+                    }}>
                         <FeatherIcons name="plus" color="#000" size={15}/>
                         <Text style={{ color: '#555', padding: 10, fontWeight: 'bold' }}>ADD EXPENSE</Text>
                     </TouchableOpacity>
