@@ -173,14 +173,14 @@ const DashboardScreen = ({ navigation }) => {
                             formToTextSpace: 12
                         }}
                         onSelect={(event) => {
-                            setSelectedPieChart(event.nativeEvent.data.label + '\n' + event.nativeEvent.data.value || "ALL\n 100")
+                            setSelectedPieChart(event.nativeEvent.label + '\n' + event.nativeEvent.value)
                             console.log(event.nativeEvent)
                         }}
                         onChange={(event) => console.log(event.nativeEvent)}
                         styledCenterText={{
                             text: selectedPieChart, 
                             color: processColor('#000'),
-                            size: 20
+                            size: 18
                         }}
                     />
                 </Card>
