@@ -138,7 +138,7 @@ const CategoryScreens= ({ navigation }) => {
                         refCategoryOptionSheet.current.open()
                     }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <FeatherIcons name={item.category_icon || 'alert-triangle'} color="#11998e" style={{ marginTop: 5, marginRight: 20 }} size={40}/>
+                            <FeatherIcons name={item.category_icon || 'alert-triangle'} size={30} color="#fff" style={{ marginRight: 15, backgroundColor: '#11998e', padding:12, borderRadius: 50, marginTop: 5 }} />
                             <View>
                                 <Text style={{ color: '#000', fontSize: 20, fontWeight: 'bold' }}>{ item.category_name }</Text>
                                 <Text style={{ color: '#555', fontSize: 15 }}>{ item.category_desc }</Text>
