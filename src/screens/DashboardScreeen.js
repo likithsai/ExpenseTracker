@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Text, Vibration, ScrollView, processColor, RefreshControl } from 'react-native'
+import { Text, Vibration, ScrollView, processColor, RefreshControl, View } from 'react-native'
 import HeaderWithIcons from '../component/HeaderWithIcons'
 import { BarChart, PieChart } from 'react-native-charts-wrapper'
 import Card from '../component/Card'
 
 const DashboardScreen = ({ navigation }) => {
     const [ refreshing, setRefreshing ] = useState()
+    const [ selectedPieChart, setSelectedPieChart ] = useState('ALL\n100')
 
     return (
         <>
@@ -29,7 +30,7 @@ const DashboardScreen = ({ navigation }) => {
                       }}
                     />
                 }>
-                <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 400, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
+                <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 300, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
                     <Text style={{ fontSize: 15, color: '#999' }}>Representation of expenses anually</Text>
                     <BarChart
@@ -171,7 +172,16 @@ const DashboardScreen = ({ navigation }) => {
                             maxSizePercent: 0.5,
                             formToTextSpace: 12
                         }}
+                        onSelect={(event) => {
+                            setSelectedPieChart(event.nativeEvent.data.label + '\n' + event.nativeEvent.data.value || "ALL\n 100")
+                            console.log(event.nativeEvent)
+                        }}
                         onChange={(event) => console.log(event.nativeEvent)}
+                        styledCenterText={{
+                            text: selectedPieChart, 
+                            color: processColor('#000'),
+                            size: 20
+                        }}
                     />
                 </Card>
             </ScrollView>
