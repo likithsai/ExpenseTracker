@@ -4,16 +4,17 @@ import HeaderWithIcons from '../component/HeaderWithIcons'
 import { BarChart, PieChart } from 'react-native-charts-wrapper'
 import Card from '../component/Card'
 import FeatherIcons from 'react-native-vector-icons/Feather'
+import Icon from 'react-native-ionicons'
 // import Icon from 'react-native-ionicons'
 
 const DashboardScreen = ({ navigation }) => {
     const [ refreshing, setRefreshing ] = useState()
-    const [ selectedPieChart, setSelectedPieChart ] = useState('ALL\n100')
+    const [ selectedPieChart, setSelectedPieChart ] = useState('Categories\n100')
 
     return (
         <>
             <HeaderWithIcons
-                style={{ elevation: 10 }}
+                style={{ elevation: 10, borderBottomWidth: 0 }}
                 headerTitle="Expense Tracker"
                 onRightIconPressed = {() => {
                     Vibration.vibrate(50)
@@ -54,11 +55,11 @@ const DashboardScreen = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                         <View>
-                            <TouchableOpacity style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#11998e', borderRadius: 40, maxHeight: 50, paddingHorizontal: 10 }} onPress={() => {
+                            <TouchableOpacity style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#11998e', borderRadius: 40, maxHeight: 50, paddingVertical: 10, paddingHorizontal: 20 }} onPress={() => {
                                 navigation.navigate('AddExpenses', {})
                             }}>
-                                <FeatherIcons name="plus" color="#fff" size={15}/>
-                                <Text style={{ color: '#fff', padding: 10, fontWeight: 'bold' }}>ADD EXPENSE</Text>
+                                <Icon name="wallet" color="#fff" size={20} style={{ marginRight: 10 }}/>
+                                <Text style={{ color: '#fff', fontWeight: 'bold' }}>ADD EXPENSE</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -98,10 +99,17 @@ const DashboardScreen = ({ navigation }) => {
                         }}
                         yAxis={{
                             left : {
-                                enabled: false
+                                spaceBottom: 0.0,
+                                enabled: false,
+                                zeroLine: {
+                                    enabled: true
+                                }
                             },
                             right : {
-                                enabled: false
+                                enabled: false,
+                                zeroLine: {
+                                    enabled: true
+                                }
                             }
                         }}
                         xAxis={{
@@ -146,7 +154,7 @@ const DashboardScreen = ({ navigation }) => {
                 </Card>
                 <Card style={{ elevation: 5, height: 400, flex: 1, borderBottomWidth: 0.7, borderBottomColor: '#ccc' }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Category Expenses</Text>
-                    <Text style={{ fontSize: 15, color: '#999' }}>Representation of overall category expense</Text>    
+                    <Text style={{ fontSize: 15, color: '#555' }}>Representation of overall category expense</Text>    
                     <PieChart
                         style={{ width: '100%', height: '80%', marginVertical: 20 }}
                         data={{
@@ -199,10 +207,10 @@ const DashboardScreen = ({ navigation }) => {
                             // maxSizePercent: 0.5,
                             formToTextSpace: 10
                         }}
-                        onSelect={(event) => {
-                            setSelectedPieChart(event.nativeEvent.label + '\n' + event.nativeEvent.value)
-                            console.log(event.nativeEvent)
-                        }}
+                        // onSelect={(event) => {
+                        //     setSelectedPieChart(event.nativeEvent.label + '\n' + event.nativeEvent.value)
+                        //     console.log(event.nativeEvent)
+                        // }}
                         onChange={(event) => console.log(event.nativeEvent)}
                         styledCenterText={{
                             text: selectedPieChart, 
