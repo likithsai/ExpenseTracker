@@ -26,19 +26,38 @@ const Settings = ({ navigation }) => {
             <ScrollView>
                 <Card style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <FeatherIcons name="download" size={30} color='#666' style={{ marginRight: 15 }} />
+                        <FeatherIcons name="upload" size={30} color='#666' style={{ marginRight: 20 }} />
+                        <View>
+                            <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>Import</Text>
+                            <Text style={{ color: '#777' }}>Import Database</Text>
+                        </View>
+                    </View>
+                </Card>
+                <Card style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <FeatherIcons name="download" size={30} color='#666' style={{ marginRight: 20 }} />
                         <View>
                             <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>Export</Text>
                             <Text style={{ color: '#777' }}>Export Database</Text>
                         </View>
                     </View>
                 </Card>
-                <Card style={{ padding: 20 }} onPress={() => {}}>
+                <Text style={{ color: '#777', fontWeight: 'bold', marginHorizontal: 20, marginVertical: 10, fontSize: 15 }}>App Information</Text>
+                <Card style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <FeatherIcons name="info" size={30} color='#666' style={{ marginRight: 15 }} />
+                        <FeatherIcons name="info" size={30} color='#666' style={{ marginRight: 20 }} />
                         <View>
                             <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>About</Text>
                             <Text style={{ color: '#777' }}>Show the details about the app</Text>
+                        </View>
+                    </View>
+                </Card>
+                <Card style={{ padding: 20 }} onPress={() => {}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <FeatherIcons name="mail" size={30} color='#666' style={{ marginRight: 20 }} />
+                        <View>
+                            <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>Crash Report</Text>
+                            <Text style={{ color: '#777' }}>Send crash report to developers</Text>
                         </View>
                     </View>
                 </Card>
