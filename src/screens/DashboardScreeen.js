@@ -48,7 +48,7 @@ const DashboardScreen = ({ navigation }) => {
                                     <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>200</Text>
                                 </View>
                             </TouchableOpacity>
-                            <View style={{ borderWidth: 1, height: '100%', borderColor: '#ccc', marginHorizontal: 20 }} />
+                            <View style={{ borderWidth: 1, height: 50, borderColor: '#ccc', marginHorizontal: 20 }} />
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 {/* <Icon name="cash" size={30} color='#555' style={{ marginRight: 20 }} /> */}
                                 <View>
