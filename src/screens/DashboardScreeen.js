@@ -4,7 +4,7 @@ import HeaderWithIcons from '../component/HeaderWithIcons'
 import { BarChart, PieChart } from 'react-native-charts-wrapper'
 import Card from '../component/Card'
 import FeatherIcons from 'react-native-vector-icons/Feather'
-import Icon from 'react-native-ionicons'
+// import Icon from 'react-native-ionicons'
 
 const DashboardScreen = ({ navigation }) => {
     const [ refreshing, setRefreshing ] = useState()
@@ -32,29 +32,39 @@ const DashboardScreen = ({ navigation }) => {
                       }}
                     />
                 }>
-                <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 500, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
+                <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 400, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
                     <Text style={{ fontSize: 15, color: '#555' }}>Representation of expenses anually</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginVertical: 20 }}>
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <Icon name="card" size={30} color='#555' style={{ marginRight: 20 }} />
-                            <View>
-                                <Text style={{ color: '#555', fontSize: 15 }}>Income</Text>
-                                <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>200</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={{ borderWidth: 1, height: '100%', borderColor: '#ccc', marginHorizontal: 20 }} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <Icon name="cash" size={30} color='#555' style={{ marginRight: 20 }} />
-                            <View>
-                                <Text style={{ color: '#555', fontSize: 15 }}>Expense</Text>
-                                <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>200</Text>
-                            </View>
-                        </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginVertical: 20 }}>
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                                {/* <Icon name="card" size={30} color='#555' style={{ marginRight: 20 }} /> */}
+                                <View>
+                                    <Text style={{ color: '#555', fontSize: 15 }}>Income</Text>
+                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>200</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <View style={{ borderWidth: 1, height: '100%', borderColor: '#ccc', marginHorizontal: 20 }} />
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                                {/* <Icon name="cash" size={30} color='#555' style={{ marginRight: 20 }} /> */}
+                                <View>
+                                    <Text style={{ color: '#555', fontSize: 15 }}>Expense</Text>
+                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>200</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <TouchableOpacity style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#11998e', borderRadius: 40, maxHeight: 50, paddingHorizontal: 10 }} onPress={() => {
+                                navigation.navigate('AddExpenses', {})
+                            }}>
+                                <FeatherIcons name="plus" color="#fff" size={15}/>
+                                <Text style={{ color: '#fff', padding: 10, fontWeight: 'bold' }}>ADD EXPENSE</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <BarChart
                         extraOffsets={{
-                            bottom: 10
+                            bottom: 20
                         }}
                         style={{ width: '100%', height: '60%' }}
                         data={{
@@ -133,12 +143,6 @@ const DashboardScreen = ({ navigation }) => {
                         }}
                         onChange={(event) => console.log(event.nativeEvent)}
                     />
-                    <TouchableOpacity style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10 }} onPress={() => {
-                        navigation.navigate('AddExpenses', {})
-                    }}>
-                        <FeatherIcons name="plus" color="#000" size={15}/>
-                        <Text style={{ color: '#555', padding: 10, fontWeight: 'bold' }}>ADD EXPENSE</Text>
-                    </TouchableOpacity>
                 </Card>
                 <Card style={{ elevation: 5, height: 400, flex: 1, borderBottomWidth: 0.7, borderBottomColor: '#ccc' }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Category Expenses</Text>
