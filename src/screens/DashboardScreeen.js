@@ -31,6 +31,9 @@ const DashboardScreen = ({ navigation }) => {
                             setRefreshing(false)
                           }, 5000)
                       }}
+                      tintColor="#fff" 
+                      titleColor="#fff" 
+                      colors={["#11998e"]}
                     />
                 }>
                 <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 400, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
