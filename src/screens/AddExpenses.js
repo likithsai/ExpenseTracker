@@ -6,6 +6,7 @@ import DatePicker from 'react-native-neat-date-picker'
 import { openDatabase } from 'react-native-sqlite-storage'
 import Utils from '../utils/Utils'
 import Dropdown from '../component/Dropdown'
+import Snackbar from 'react-native-snackbar'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
@@ -99,8 +100,16 @@ const AddExpense = ({ route, navigation }) => {
                 'UPDATE tbl_expense SET expense_name = ?, expense_desc = ?, expense_type = ?, expense_amt = ?, expense_date = ?, expense_category = ? WHERE expense_id = ?', 
                 [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), date, categoryInvoice.category_id, route.params.data.expense_id ], 
                 (tx, results) => {
-                    console.log('Results', results.rowsAffected)
                     if(results.rowsAffected > 0) {
+                        Snackbar.show({
+                            text: 'Expense Updated',
+                            duration: Snackbar.LENGTH_LONG,
+                            action: {
+                              text: 'CLOSE',
+                              textColor: 'green',
+                              onPress: () => {},
+                            },
+                        })
                         navigation.pop()
                     }
                 }
@@ -114,8 +123,16 @@ const AddExpense = ({ route, navigation }) => {
                 'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_category, expense_date) VALUES (?, ?, ?, ?, ?, ?)',
                 [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), categoryInvoice.category_id, date ],
                 (tx, results) => {               
-                    console.log('Results', results.rowsAffected)
                     if(results.rowsAffected > 0) {
+                        Snackbar.show({
+                            text: 'Expense Added',
+                            duration: Snackbar.LENGTH_LONG,
+                            action: {
+                              text: 'CLOSE',
+                              textColor: 'green',
+                              onPress: () => {},
+                            },
+                        })
                         navigation.pop()
                     }
                 }

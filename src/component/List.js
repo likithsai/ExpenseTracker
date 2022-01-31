@@ -44,6 +44,15 @@ const List = (props) => {
             tx.executeSql(query, param, (tx, results) => {
                 if (results.rowsAffected > 0) {
                     console.log('User updated successfully')
+                    Snackbar.show({
+                        text: 'Expense Deleted',
+                        duration: Snackbar.LENGTH_LONG,
+                        action: {
+                          text: 'CLOSE',
+                          textColor: 'green',
+                          onPress: () => {},
+                        },
+                    })
                 } else {
                     console.log('Updation Failed')
                 }

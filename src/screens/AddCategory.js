@@ -4,6 +4,7 @@ import Card from '../component/Card'
 import HeaderComp from '../component/HeaderComp'
 import IconList from '../component/IconList'
 import { openDatabase } from 'react-native-sqlite-storage'
+import Snackbar from 'react-native-snackbar'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
@@ -15,8 +16,16 @@ const insertIntoDatabase = (name, desc, icon) => {
             'INSERT INTO tbl_category(category_name, category_desc, category_icon) VALUES (?, ?, ?)',
             [name, desc, icon],
             (tx, results) => {               
-                console.log('Results', results.rowsAffected)
                 if(results.rowsAffected > 0) {
+                    Snackbar.show({
+                        text: 'Category Added',
+                        duration: Snackbar.LENGTH_LONG,
+                        action: {
+                          text: 'CLOSE',
+                          textColor: 'green',
+                          onPress: () => {},
+                        },
+                    })
                     navigation.pop()
                 }
             },
@@ -42,26 +51,21 @@ const AddCategory = ({ route, navigation }) => {
     }, [])
 
     const updateIntoDatabase = (name) => {
-        // db.transaction((txn) => {
-        //     txn.executeSql(        
-        //         'UPDATE tbl_category SET category_name = ?, category_desc = ?, category_icon = ? WHERE category_id = ?',
-        //         [categoryName, categoryDesc, selectedCategoryIcon.iconName, route.params.data.category_id],
-        //         (tx, results) => {               
-        //             console.log('Rows Affected: ' + results.rowsAffected)
-        //             if(results.rowsAffected > 0) {
-        //                 navigation.pop()
-        //             }
-        //         }
-        //     )
-        // })
-    
         db.transaction((tx) => {
             tx.executeSql(
                 "UPDATE tbl_category SET category_name = ?, category_desc = ?, category_icon = ? WHERE category_id = ?", 
                 [categoryName, categoryDesc, selectedCategoryIcon.iconName, route.params.data.category_id], 
                 (tx, results) => {
-                    console.log('Results', results.rowsAffected)
                     if(results.rowsAffected > 0) {
+                        Snackbar.show({
+                            text: 'Category Updated',
+                            duration: Snackbar.LENGTH_LONG,
+                            action: {
+                              text: 'CLOSE',
+                              textColor: 'green',
+                              onPress: () => {},
+                            },
+                        })
                         navigation.pop()
                     }
                 }
