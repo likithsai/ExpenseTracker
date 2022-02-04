@@ -1,15 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, Vibration, ScrollView, processColor, RefreshControl, TouchableOpacity, View } from 'react-native'
 import HeaderWithIcons from '../component/HeaderWithIcons'
 import { BarChart, PieChart } from 'react-native-charts-wrapper'
 import Card from '../component/Card'
-import FeatherIcons from 'react-native-vector-icons/Feather'
 import Icon from 'react-native-ionicons'
-// import Icon from 'react-native-ionicons'
+import { openDatabase } from 'react-native-sqlite-storage'
+
+var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
+    console.log('SQL Error : ' + err.message)
+})
 
 const DashboardScreen = ({ navigation }) => {
     const [ refreshing, setRefreshing ] = useState()
     const [ selectedPieChart, setSelectedPieChart ] = useState('Categories\n100')
+
+    db.transaction(tx => {
+        tx.executeSql("SELECT c.category_name Category, SUM(e.expense_amt) Amount FROM tbl_category c INNER JOIN tbl_expense e ON e.expense_category = c.category_id GROUP BY c.category_id", [], (tx, results) => {
+            console.log("items: " + results.rows.length)
+            for (let i = 0; i < results.rows.length; ++i) {
+                console.log(results.rows.item(i))
+            }
+        })
+    })
 
     return (
         <>
