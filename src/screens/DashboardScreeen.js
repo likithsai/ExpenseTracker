@@ -48,8 +48,8 @@ const DashboardScreen = ({ navigation }) => {
                       onRefresh={() => {
                           setRefreshing(true)
                           setInterval(() => {
-                            setRefreshing(false)
-                          }, 5000)
+                              setRefreshing(false)
+                          }, 3000)
                       }}
                       tintColor="#fff" 
                       titleColor="#fff" 
@@ -180,12 +180,6 @@ const DashboardScreen = ({ navigation }) => {
                         style={{ width: '100%', height: '80%', marginVertical: 20 }}
                         data={{
                             dataSets: [{
-                                // values: [
-                                //     { value: 45, label: 'example 1' },
-                                //     { value: 21, label: 'example 2' },
-                                //     { value: 45, label: 'example 3' },
-                                //     { value: 21, label: 'example 4' }
-                                // ],
                                 values: categoryPieChartData,
                                 config: {
                                     colors: [
@@ -197,8 +191,7 @@ const DashboardScreen = ({ navigation }) => {
                                     ],
                                     valueTextSize: 15,
                                     valueTextColor: '#fff',
-                                    valueFormatter: "#.#'%'",
-                                    // valueLinePart1Length: 0.5
+                                    valueFormatter: "#.#'%'"
                                 }
                             }],
                         }}
@@ -229,10 +222,6 @@ const DashboardScreen = ({ navigation }) => {
                             // maxSizePercent: 0.5,
                             formToTextSpace: 10
                         }}
-                        // onSelect={(event) => {
-                        //     setSelectedPieChart(event.nativeEvent.label + '\n' + event.nativeEvent.value)
-                        //     console.log(event.nativeEvent)
-                        // }}
                         onChange={(event) => console.log(event.nativeEvent)}
                         styledCenterText={{
                             text: 'Categories:\n' + categoryPieChartData.length, 

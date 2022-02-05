@@ -39,17 +39,20 @@ const Settings = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <Card style={{ elevation: 5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <FeatherIcons name="dollar-sign" size={30} color='#666' style={{ marginRight: 20 }} />
-                        <View>
-                            <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>Currency</Text>
-                            <Text style={{ color: '#777' }}>Selected Currency: INR</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <FeatherIcons name="dollar-sign" size={30} color='#777' style={{ marginRight: 20 }} />
+                            <View>
+                                <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>Currency</Text>
+                                <Text style={{ color: '#777' }}>Selected Currency:</Text>
+                            </View>
                         </View>
+                        <Text style={{ fontSize: 20, color: '#777', fontWeight: 'bold' }}>INR</Text>
                     </View>
                 </Card>
                 <Card style={{ elevation: 5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <FeatherIcons name="upload" size={30} color='#666' style={{ marginRight: 20 }} />
+                        <FeatherIcons name="upload" size={30} color='#777' style={{ marginRight: 20 }} />
                         <View>
                             <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>Import data</Text>
                             <Text style={{ color: '#777' }}>Import data from excel</Text>
@@ -58,7 +61,7 @@ const Settings = ({ navigation }) => {
                 </Card>
                 <Card style={{ elevation:5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <FeatherIcons name="download" size={30} color='#666' style={{ marginRight: 20 }} />
+                        <FeatherIcons name="download" size={30} color='#777' style={{ marginRight: 20 }} />
                         <View>
                             <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>Export data</Text>
                             <Text style={{ color: '#777' }}>Export Database to Excel, PDF</Text>
@@ -68,7 +71,7 @@ const Settings = ({ navigation }) => {
                 <Text style={{ color: '#777', fontWeight: 'bold', margin: 20, fontSize: 15 }}>App Information</Text>
                 <Card style={{ elevation: 5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <FeatherIcons name="info" size={30} color='#666' style={{ marginRight: 20 }} />
+                        <FeatherIcons name="info" size={30} color='#777' style={{ marginRight: 20 }} />
                         <View>
                             <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>About</Text>
                             <Text style={{ color: '#777' }}>Show the details about the app</Text>
@@ -77,7 +80,7 @@ const Settings = ({ navigation }) => {
                 </Card>
                 <Card style={{ elevation: 5, padding: 20 }} onPress={() => {}}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <FeatherIcons name="mail" size={30} color='#666' style={{ marginRight: 20 }} />
+                        <FeatherIcons name="mail" size={30} color='#777' style={{ marginRight: 20 }} />
                         <View>
                             <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>Send Feedback</Text>
                             <Text style={{ color: '#777' }}>Send feedback to developers</Text>
