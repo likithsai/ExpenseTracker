@@ -225,15 +225,11 @@ const List = (props) => {
                             <View style={{ width: '75%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '75%' }}>
                                     <View>
-                                        <FeatherIcons name={ getCategoryData(item.expense_category)[0].category_icon || 'alert-triangle' } size={30} color="#fff" style={{ marginRight: 15, backgroundColor: '#11998e', padding:12, borderRadius: 50, marginTop: 5 }} />
+                                        <FeatherIcons name={ getCategoryData(item.expense_category)[0].category_icon || 'alert-triangle' } size={30} color="#fff" style={{ marginRight: 15, backgroundColor: '#11998e', padding:12, borderRadius: 10, marginTop: 5, elevation: 10 }} />
                                     </View>
                                     <View>
                                         <Text numberOfLines={1} style={styles.listItemText}>{item.expense_name}</Text>
                                         <Text numberOfLines={2} style={styles.listItemSubText}>{item.expense_desc}</Text>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginTop: 10, minWidth: 10 }}>
-                                            <FeatherIcons name={ getCategoryData(item.expense_category)[0].category_icon } size={20} color="#11998e" style={{ marginRight: 10 }} />
-                                            <Text style={{ color: '#000' }}>{ getCategoryData(item.expense_category)[0].category_name }</Text>
-                                        </View>             */}
                                     </View>
                                 </View>
                             </View>

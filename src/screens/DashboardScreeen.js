@@ -62,7 +62,6 @@ const DashboardScreen = ({ navigation }) => {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginVertical: 20 }}>
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                                {/* <Icon name="card" size={30} color='#555' style={{ marginRight: 20 }} /> */}
                                 <View>
                                     <Text style={{ color: '#555', fontSize: 15 }}>Income</Text>
                                     <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>200</Text>
@@ -70,7 +69,6 @@ const DashboardScreen = ({ navigation }) => {
                             </TouchableOpacity>
                             <View style={{ borderWidth: 1, height: 50, borderColor: '#ccc', marginHorizontal: 20 }} />
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                                {/* <Icon name="cash" size={30} color='#555' style={{ marginRight: 20 }} /> */}
                                 <View>
                                     <Text style={{ color: '#555', fontSize: 15 }}>Expense</Text>
                                     <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>200</Text>
