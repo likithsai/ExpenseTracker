@@ -12,17 +12,25 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 
 const DashboardScreen = ({ navigation }) => {
     const [ refreshing, setRefreshing ] = useState()
-    const [ selectedPieChart, setSelectedPieChart ] = useState('Categories\n100')
+    const [ categoryPieChartData, setCategoryPieChartData ] = useState([])
 
-    db.transaction(tx => {
-        tx.executeSql("SELECT c.category_name Category, SUM(e.expense_amt) Amount FROM tbl_category c INNER JOIN tbl_expense e ON e.expense_category = c.category_id GROUP BY c.category_id", [], (tx, results) => {
-            console.log("items: " + results.rows.length)
-            for (let i = 0; i < results.rows.length; ++i) {
-                console.log(results.rows.item(i))
-            }
+    const loadCategoryItem = () => {
+        let temp = []
+    
+        db.transaction(tx => {
+            tx.executeSql("SELECT c.category_name Category, SUM(e.expense_amt) Amount FROM tbl_category c INNER JOIN tbl_expense e ON e.expense_category = c.category_id GROUP BY c.category_id", [], (tx, results) => {
+                for (let i = 0; i < results.rows.length; ++i) {
+                    temp.push({ value: results.rows.item(i).Amount, label: results.rows.item(i).Category })
+                }
+                setCategoryPieChartData(temp)
+            })
         })
-    })
+    }
 
+    useEffect(() => {
+        loadCategoryItem()
+    })
+    
     return (
         <>
             <HeaderWithIcons
@@ -174,12 +182,13 @@ const DashboardScreen = ({ navigation }) => {
                         style={{ width: '100%', height: '80%', marginVertical: 20 }}
                         data={{
                             dataSets: [{
-                                values: [
-                                    { value: 45, label: 'example 1' },
-                                    { value: 21, label: 'example 2' },
-                                    { value: 45, label: 'example 3' },
-                                    { value: 21, label: 'example 4' }
-                                ],
+                                // values: [
+                                //     { value: 45, label: 'example 1' },
+                                //     { value: 21, label: 'example 2' },
+                                //     { value: 45, label: 'example 3' },
+                                //     { value: 21, label: 'example 4' }
+                                // ],
+                                values: categoryPieChartData,
                                 config: {
                                     colors: [
                                         processColor('#11998eff'), 
@@ -228,7 +237,7 @@ const DashboardScreen = ({ navigation }) => {
                         // }}
                         onChange={(event) => console.log(event.nativeEvent)}
                         styledCenterText={{
-                            text: selectedPieChart, 
+                            text: 'Categories:\n' + categoryPieChartData.length, 
                             color: processColor('#000'),
                             size: 15
                         }}
