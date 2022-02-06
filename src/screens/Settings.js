@@ -38,7 +38,9 @@ const Settings = ({ navigation }) => {
                         <Text style={{ color: '#fff' }}>BACKUP</Text>
                     </TouchableOpacity>
                 </View>
-                <Card style={{ elevation: 5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
+                <Card style={{ elevation: 5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {
+                    navigation.navigate('SelectCurrency', [])
+                }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <FeatherIcons name="dollar-sign" size={30} color='#777' style={{ marginRight: 20 }} />

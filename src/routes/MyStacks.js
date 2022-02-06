@@ -4,6 +4,7 @@ import AddExpense from '../screens/AddExpenses'
 import ViewExpenses from '../screens/ViewExpenses'
 import AddCategory from '../screens/AddCategory'
 import Settings from '../screens/Settings'
+import SelectCurrency from '../screens/SelectCurrency'
 import { createStackNavigator } from '@react-navigation/stack'
 
 const Stack = createStackNavigator()
@@ -16,6 +17,7 @@ const MyStacks = () => {
             <Stack.Screen name="ViewExpenses" component={ViewExpenses} />
             <Stack.Screen name="AddCategory" component={AddCategory} />
             <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="SelectCurrency" component={SelectCurrency} />
         </Stack.Navigator>
     )
 }

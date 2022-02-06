@@ -11,8 +11,36 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 })
 
 const DashboardScreen = ({ navigation }) => {
-    const [ refreshing, setRefreshing ] = useState()
     const [ categoryPieChartData, setCategoryPieChartData ] = useState([])
+
+    const loadAnnualData = () => {
+        let temp = []
+    
+        db.transaction(tx => {
+            tx.executeSql(`
+                WITH cte(month, month_name) AS (VALUES
+                    ('01', 'JAN'), ('02', 'FEB'), 
+                    ('03', 'MAR'), ('04', 'APR'), 
+                    ('05', 'MAY'), ('06', 'JUN'), 
+                    ('07', 'JUL'), ('08', 'AUG'), 
+                    ('09', 'SEP'), ('10', 'OCT'), 
+                    ('11', 'NOV'), ('12', 'DEC')
+                )
+                SELECT c.month_name,
+                        TOTAL(CASE WHEN expense_type = 'income' THEN expense_amt END) Income,
+                        TOTAL(CASE WHEN expense_type = 'expense' THEN expense_amt END) Expense
+                FROM cte c LEFT JOIN tbl_expense e
+                ON strftime('%m', e.expense_date, 'unixepoch') = c.month
+                AND strftime('%Y', e.expense_date, 'unixepoch') = strftime('%Y', CURRENT_DATE)
+                GROUP BY c.month_name
+                ORDER BY c.month;
+            `, [], (tx, results) => {
+                for (let i = 0; i < results.rows.length; ++i) {
+                    // console.log(results.rows.item(i))
+                }
+            })
+        })
+    }
 
     const loadCategoryItem = () => {
         let temp = []
@@ -28,6 +56,7 @@ const DashboardScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
+        loadAnnualData()
         loadCategoryItem()
     })
     
