@@ -42,20 +42,21 @@ const DashboardScreen = ({ navigation }) => {
                 }}
             />
             <ScrollView
-                refreshControl={
-                    <RefreshControl
-                      refreshing={refreshing}
-                      onRefresh={() => {
-                          setRefreshing(true)
-                          setInterval(() => {
-                              setRefreshing(false)
-                          }, 3000)
-                      }}
-                      tintColor="#fff" 
-                      titleColor="#fff" 
-                      colors={["#11998e"]}
-                    />
-                }>
+                // refreshControl={
+                //     <RefreshControl
+                //       refreshing={refreshing}
+                //       onRefresh={() => {
+                //           setRefreshing(true)
+                //           setInterval(() => {
+                //               setRefreshing(false)
+                //           }, 3000)
+                //       }}
+                //       tintColor="#fff" 
+                //       titleColor="#fff" 
+                //       colors={["#11998e"]}
+                //     />
+                // }
+            >
                 <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 400, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
                     <Text style={{ fontSize: 15, color: '#555' }}>Representation of expenses anually</Text>
