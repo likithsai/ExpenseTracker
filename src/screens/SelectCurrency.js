@@ -73,21 +73,6 @@ const SelectCurrency = ({ navigation }) => {
         { countryId: 64, countryName: 'El Salvador', countryCurrency: 'SVC', countryIcon: require('../../assets/flag/El-Salvador.gif') },
     ]
 
-    function listHeaderSearch() {
-        const [ text, onChangeText ] = useState();
-        return (
-            <View style={{ paddingHorizontal: 20, backgroundColor: '#fff', borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
-                <TextInput
-                    style={{ color: '#777' }}
-                    onChangeText={ onChangeText }
-                    placeholder="Click here to Search for Countries"
-                    placeholderTextColor={ "#777" }
-                    value={ text }
-                />
-            </View>
-        )
-    }
-
     return (
         <>
             <HeaderCompStart 
@@ -106,8 +91,6 @@ const SelectCurrency = ({ navigation }) => {
             />
             <FlatList
                 data={countries}
-                stickyHeaderIndices={[0]}
-                ListHeaderComponent={listHeaderSearch}
                 renderItem={({item}) => 
                     <Card onPress={() =>{
                         Vibration.vibrate(50)
