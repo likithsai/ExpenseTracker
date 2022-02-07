@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { FlatList, Text, View, Image, Vibration, ToastAndroid, TextInput } from 'react-native'
 import Card from '../component/Card'
 import HeaderCompStart from '../component/HeaderCompStart'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SelectCurrency = ({ navigation }) => {
     const countries = [
@@ -73,6 +74,14 @@ const SelectCurrency = ({ navigation }) => {
         { countryId: 64, countryName: 'El Salvador', countryCurrency: 'SVC', countryIcon: require('../../assets/flag/El-Salvador.gif') },
     ]
 
+    const storeCurrencyData = async(key, value) => {
+        try {
+            await AsyncStorage.setItem(key, value)
+        } catch (e) {
+
+        }
+    }
+
     return (
         <>
             <HeaderCompStart 
@@ -94,7 +103,7 @@ const SelectCurrency = ({ navigation }) => {
                 renderItem={({item}) => 
                     <Card onPress={() =>{
                         Vibration.vibrate(50)
-                        ToastAndroid.show(JSON.stringify(item), ToastAndroid.show)
+                        storeCurrencyData('SelectedCurrency', JSON.stringify(item))
                         navigation.pop()
                     }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>

@@ -1,13 +1,28 @@
-import React, { useRef } from 'react'
-import { View, Text, Vibration, ScrollView, TouchableOpacity } from 'react-native'
+import React, { useRef, useState, useEffect } from 'react'
+import { View, Text, Vibration, ScrollView, TouchableOpacity, ToastAndroid } from 'react-native'
 import HeaderCompStart from '../component/HeaderCompStart'
 import Card from '../component/Card'
 import Icon from 'react-native-ionicons'
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import RBSheet from "react-native-raw-bottom-sheet"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Settings = ({ navigation }) => {
     const refRBExport = useRef()
+    const [ selectedCurrency, setSelectedCurrency ] = useState('USD')
+
+    const getCurrency = async(key) => {
+        try {
+            const value = await AsyncStorage.getItem(key)
+            if(value !== null) {
+                setSelectedCurrency(JSON.parse(value).countryCurrency)
+            }
+        } catch(e) {}
+    }
+
+    useEffect(() => {
+        getCurrency('SelectedCurrency')
+    })
 
     return (
         <>
@@ -31,8 +46,8 @@ const Settings = ({ navigation }) => {
                                     <FeatherIcons name="database" color="#fff" style={{ marginRight: 20, elevation: 10 }} size={30}/>
                                 </View>
                                 <View>
-                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>SQLite</Text>
-                                    <Text style={{ color: '#fff', textAlign: 'justify', fontSize: 15 }}>Export Database to SQLite</Text>
+                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>JSON</Text>
+                                    <Text style={{ color: '#fff', textAlign: 'justify', fontSize: 15 }}>Export Database to JSON Format</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 15 }} onPress={() => {
@@ -43,7 +58,7 @@ const Settings = ({ navigation }) => {
                                 </View>
                                 <View>
                                     <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>Excel</Text>
-                                    <Text style={{ color: '#fff', textAlign: 'justify', fontSize: 15 }}>Export Database to Excel</Text>
+                                    <Text style={{ color: '#fff', textAlign: 'justify', fontSize: 15 }}>Export Database to Excel Format</Text>
                                 </View>
                             </TouchableOpacity>
                         </ScrollView>
@@ -89,7 +104,7 @@ const Settings = ({ navigation }) => {
                                 <Text style={{ color: '#777' }}>Select the currency to be displayed</Text>
                             </View>
                         </View>
-                        <Text style={{ fontSize: 20, color: '#777', fontWeight: 'bold' }}>INR</Text>
+                        <Text style={{ fontSize: 20, color: '#777', fontWeight: 'bold' }}>{ selectedCurrency }</Text>
                     </View>
                 </Card>
                 <Card style={{ elevation: 5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
