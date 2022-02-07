@@ -1,14 +1,54 @@
-import React from 'react'
-import { View, Text, Vibration, ScrollView, Touchable } from 'react-native'
+import React, { useRef } from 'react'
+import { View, Text, Vibration, ScrollView, TouchableOpacity } from 'react-native'
 import HeaderCompStart from '../component/HeaderCompStart'
 import Card from '../component/Card'
 import Icon from 'react-native-ionicons'
 import FeatherIcons from 'react-native-vector-icons/Feather'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import RBSheet from "react-native-raw-bottom-sheet"
 
 const Settings = ({ navigation }) => {
+    const refRBExport = useRef()
+
     return (
         <>
+            <RBSheet
+                ref={refRBExport}
+                height={100}
+                openDuration={250}
+                customStyles={{
+                    container: {
+                        height: 235,
+                        elevation: 5,
+                    }
+                }}>
+                    <View style={{ width: '100%', height: '100%', backgroundColor: '#11998e', padding: 20 }}>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#fff' }}>Select Export</Text>
+                        <ScrollView style={{ marginTop: 15 }}>
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 15, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }} onPress={() => {
+                                refRBExport.current.close()
+                            }}>
+                                <View>
+                                    <FeatherIcons name="database" color="#fff" style={{ marginRight: 20, elevation: 10 }} size={30}/>
+                                </View>
+                                <View>
+                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>SQLite</Text>
+                                    <Text style={{ color: '#fff', textAlign: 'justify', fontSize: 15 }}>Export Database to SQLite</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 15 }} onPress={() => {
+                                refRBExport.current.close()
+                            }}>
+                                <View>
+                                    <FeatherIcons name="calendar" color="#fff" style={{ marginRight: 20, elevation: 10 }} size={30}/>
+                                </View>
+                                <View>
+                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>Excel</Text>
+                                    <Text style={{ color: '#fff', textAlign: 'justify', fontSize: 15 }}>Export Database to Excel</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </ScrollView>
+                    </View>
+            </RBSheet>
             <HeaderCompStart 
                 leftIcon = "arrow-back"
                 headerTitle="Settings"
@@ -61,7 +101,9 @@ const Settings = ({ navigation }) => {
                         </View>
                     </View>
                 </Card>
-                <Card style={{ elevation:5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
+                <Card style={{ elevation:5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {
+                    refRBExport.current.open()
+                }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <FeatherIcons name="download" size={30} color='#777' style={{ marginRight: 20 }} />
                         <View>
