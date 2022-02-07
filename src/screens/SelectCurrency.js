@@ -1,12 +1,11 @@
 // https://fxtop.com/en/countries-currencies.php
 
-import React from 'react'
-import { FlatList, Text, View, Image, Vibration } from 'react-native'
+import React, { useState } from 'react'
+import { FlatList, Text, View, Image, Vibration, ToastAndroid, TextInput } from 'react-native'
 import Card from '../component/Card'
 import HeaderCompStart from '../component/HeaderCompStart'
 
 const SelectCurrency = ({ navigation }) => {
-
     const countries = [
         { countryId: 1, countryName: 'Afghanistan', countryCurrency: 'AFN', countryIcon: require('../../assets/flag/afghanistan.gif') },
         { countryId: 2, countryName: 'Albania', countryCurrency: 'ALL', countryIcon: require('../../assets/flag/albania.gif') },
@@ -39,7 +38,56 @@ const SelectCurrency = ({ navigation }) => {
         { countryId: 29, countryName: 'Bouvet Island', countryCurrency: 'NOK', countryIcon: require('../../assets/flag/Bouvet-Island.gif') },
         { countryId: 30, countryName: 'Brazil', countryCurrency: 'BRL', countryIcon: require('../../assets/flag/Brazil.gif') },
         { countryId: 31, countryName: 'British Indian O. Terr.', countryCurrency: 'GBP', countryIcon: require('../../assets/flag/British-Indian-O-Terr.gif') },
+        { countryId: 32, countryName: 'British Virgin Islands', countryCurrency: 'USD', countryIcon: require('../../assets/flag/British-Virgin-Islands.gif') },
+        { countryId: 33, countryName: 'Brunei Darussalam', countryCurrency: 'BND', countryIcon: require('../../assets/flag/Brunei-Darussalam.gif') },
+        { countryId: 34, countryName: 'Bulgaria', countryCurrency: 'BGN', countryIcon: require('../../assets/flag/Bulgaria.gif') },
+        { countryId: 35, countryName: 'Burkina Faso', countryCurrency: '', countryIcon: require('../../assets/flag/Burkina-Faso.gif') },
+        { countryId: 36, countryName: 'Burundi', countryCurrency: 'BIF', countryIcon: require('../../assets/flag/Burundi.gif') },
+        { countryId: 37, countryName: 'Cambodia', countryCurrency: 'KHR', countryIcon: require('../../assets/flag/Cambodia.gif') },
+        { countryId: 38, countryName: 'Cameroon', countryCurrency: '', countryIcon: require('../../assets/flag/Cameroon.gif') },
+        { countryId: 39, countryName: 'Canada', countryCurrency: 'CAD', countryIcon: require('../../assets/flag/Canada.gif') },
+        { countryId: 40, countryName: 'Cape Verde', countryCurrency: 'CVE', countryIcon: require('../../assets/flag/Cape-Verde.gif') },
+        { countryId: 41, countryName: 'Cayman Islands', countryCurrency: 'KYD', countryIcon: require('../../assets/flag/Cayman-Islands.gif') },
+        { countryId: 42, countryName: 'Central African Rep', countryCurrency: '', countryIcon: require('../../assets/flag/Central-African-Rep.gif') },
+        { countryId: 43, countryName: 'Chad', countryCurrency: '', countryIcon: require('../../assets/flag/Chad.gif') },
+        { countryId: 44, countryName: 'Chile', countryCurrency: 'CLP', countryIcon: require('../../assets/flag/Chile.gif') },
+        { countryId: 45, countryName: 'China', countryCurrency: 'CNY', countryIcon: require('../../assets/flag/China.gif') },
+        { countryId: 46, countryName: 'Christmas Island', countryCurrency: 'AUD', countryIcon: require('../../assets/flag/Christmas-Island.gif') },
+        { countryId: 47, countryName: 'Cocos (Keeling) Islands', countryCurrency: 'AUD', countryIcon: require('../../assets/flag/Cocos.gif') },
+        { countryId: 48, countryName: 'Colombia', countryCurrency: 'COP', countryIcon: require('../../assets/flag/Colombia.gif') },
+        { countryId: 49, countryName: 'Comoros', countryCurrency: 'KMF', countryIcon: require('../../assets/flag/Comoros.gif') },
+        { countryId: 50, countryName: 'Congo', countryCurrency: '', countryIcon: require('../../assets/flag/Congo.gif') },
+        { countryId: 51, countryName: 'Cook Islands', countryCurrency: 'CAD', countryIcon: require('../../assets/flag/Cook-Islands.gif') },
+        { countryId: 52, countryName: 'Costa Rica', countryCurrency: 'CRC', countryIcon: require('../../assets/flag/Costa-Rica.gif') },
+        { countryId: 53, countryName: 'Croatia', countryCurrency: 'HRK', countryIcon: require('../../assets/flag/Croatia.gif') },
+        { countryId: 54, countryName: 'Cuba', countryCurrency: 'CUC', countryIcon: require('../../assets/flag/Cuba.gif') },
+        { countryId: 55, countryName: 'Cyprus', countryCurrency: 'EUR', countryIcon: require('../../assets/flag/Cyprus.gif') },
+        { countryId: 56, countryName: 'Czech Republic', countryCurrency: 'CZK', countryIcon: require('../../assets/flag/Czech-Republic.gif') },
+        { countryId: 57, countryName: 'Democratic Republic of Congo', countryCurrency: 'CDF', countryIcon: require('../../assets/flag/Democratic-Republic-of-Congo.gif') },
+        { countryId: 58, countryName: 'Denmark', countryCurrency: 'DKK', countryIcon: require('../../assets/flag/Denmark.gif') },
+        { countryId: 59, countryName: 'Djibouti', countryCurrency: 'DJF', countryIcon: require('../../assets/flag/Djibouti.gif') },
+        { countryId: 60, countryName: 'Dominica', countryCurrency: 'XCD', countryIcon: require('../../assets/flag/Dominica.gif') },
+        { countryId: 61, countryName: 'Dominican Republic', countryCurrency: 'DOP', countryIcon: require('../../assets/flag/Dominican-Republic.gif') },
+        { countryId: 62, countryName: 'Ecuador', countryCurrency: 'USD', countryIcon: require('../../assets/flag/Ecuador.gif') },
+        { countryId: 63, countryName: 'Egypt', countryCurrency: 'EGP', countryIcon: require('../../assets/flag/Egypt.gif') },
+        { countryId: 64, countryName: 'El Salvador', countryCurrency: 'SVC', countryIcon: require('../../assets/flag/El-Salvador.gif') },
     ]
+
+    function listHeaderSearch() {
+        const [ text, onChangeText ] = useState();
+        return (
+            <View style={{ paddingHorizontal: 20, backgroundColor: '#fff', borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
+                <TextInput
+                    style={{ color: '#777' }}
+                    onChangeText={ onChangeText }
+                    placeholder="Click here to Search for Countries"
+                    placeholderTextColor={ "#777" }
+                    value={ text }
+                />
+            </View>
+        )
+    }
+
     return (
         <>
             <HeaderCompStart 
@@ -58,14 +106,17 @@ const SelectCurrency = ({ navigation }) => {
             />
             <FlatList
                 data={countries}
+                stickyHeaderIndices={[0]}
+                ListHeaderComponent={listHeaderSearch}
                 renderItem={({item}) => 
                     <Card onPress={() =>{
                         Vibration.vibrate(50)
+                        ToastAndroid.show(JSON.stringify(item), ToastAndroid.show)
                         navigation.pop()
                     }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                             <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                                <Image source={ item.countryIcon } style={{ height: 20, width: 30, resizeMode : 'stretch', marginRight: 20, elevation: 10, borderWidth: 1, borderColor: '#777' }}/>
+                                <Image source={ item.countryIcon } style={{ height: 20, width: 30, resizeMode : 'stretch', marginRight: 15, elevation: 10, borderWidth: 1, borderColor: '#777' }}/>
                                 <Text style={{ fontSize: 15, color: '#000', fontWeight: 'bold' }}>{ item.countryName }</Text>
                             </View>
                             <Text style={{ fontSize: 15, color: '#777', fontWeight: 'bold' }}>{ item.countryCurrency }</Text>

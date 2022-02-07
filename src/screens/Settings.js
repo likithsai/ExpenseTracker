@@ -46,7 +46,7 @@ const Settings = ({ navigation }) => {
                             <FeatherIcons name="dollar-sign" size={30} color='#777' style={{ marginRight: 20 }} />
                             <View>
                                 <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20 }}>Currency</Text>
-                                <Text style={{ color: '#777' }}>Selected Currency:</Text>
+                                <Text style={{ color: '#777' }}>Select the currency to be displayed</Text>
                             </View>
                         </View>
                         <Text style={{ fontSize: 20, color: '#777', fontWeight: 'bold' }}>INR</Text>
