@@ -37,7 +37,7 @@ const AddExpense = ({ route, navigation }) => {
     const [ showDatePicker, setShowDatePicker] = useState(false)
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
-    const [ date, setDate] = useState(Utils.dateFormatter(new Date()))
+    const [ date, setDate] = useState(Utils.formatDate(new Date().toISOString()))
     const [ invoiceType, setInvoiceType ] = useState({ category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null })
     const [ transactionCategory, setTransactionCategory ] = useState([])
     const [ categoryInvoice, setCategoryInvoice ] = useState({ category_id: 10, category_name: 'Select Transaction Category', category_desc: 'Select Transaction Type', category_icon: null })
@@ -48,6 +48,8 @@ const AddExpense = ({ route, navigation }) => {
 
     useEffect(() => {
         if(route.params.data) {
+            console.log(JSON.stringify(route.params.data))
+
             setTitle(route.params.data.expense_name)
             setDescription(route.params.data.expense_desc)
             
@@ -145,14 +147,12 @@ const AddExpense = ({ route, navigation }) => {
     }
 
     const onCancel = () => {
-        // You should close the modal in here
         setShowDatePicker(false)
     }
 
-    const onConfirm = ( date ) => {
-        // You should close the modal in here
+    const onConfirm = (date) => {
         setShowDatePicker(false)
-        setDate(Utils.dateFormatter(date))
+        setDate(Utils.formatDate(date.toISOString()))
     }
 
     const handlePress = (item) => {
@@ -320,7 +320,7 @@ const AddExpense = ({ route, navigation }) => {
                 }}>
                     <View>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Date</Text>
-                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 10 }}>{date}</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 10 }}>{ Utils.dateFormatter(new Date(date)) }</Text>
                     </View>
                 </Card>
             </ScrollView>

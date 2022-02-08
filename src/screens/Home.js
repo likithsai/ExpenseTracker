@@ -38,7 +38,7 @@ const shareItem = async (item) => {
 
 const HomeScreen = ({ navigation }) => {
     const [ showDatePicker, setShowDatePicker ] = useState(false)
-    const [ selectedData, setSelectedDate ] = useState(Utils.dateFormatter(new Date()))
+    const [ selectedData, setSelectedDate ] = useState(Utils.formatDate(new Date().toISOString()))
     const [ income, setIncome ] = useState(0.0)
     const [ expense, setExpense ] = useState(0.0)
     const [ balance, setBalance ] = useState(0.0)
@@ -55,16 +55,16 @@ const HomeScreen = ({ navigation }) => {
 
     const onConfirm = ( date ) => {
         setShowDatePicker(false)
-        setSelectedDate(Utils.dateFormatter(date))
+        setSelectedDate(Utils.formatDate(date.toISOString()))
     }
 
     // Setup database
     useEffect(() => {
-        selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
+        selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ?", [selectedData])
     }, [selectedData])
 
     const loadExpenseData = () => {
-        selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ? ORDER BY expense_created_date DESC", [selectedData])
+        selectDataFromDatabase("SELECT * FROM tbl_expense WHERE expense_date = ?", [selectedData])
         //  load KPI's
         setIncome(loadKPIS('income'))
         setExpense(loadKPIS('expense'))
@@ -133,7 +133,7 @@ const HomeScreen = ({ navigation }) => {
                     incomeValue = {income}
                     expenseValue = {expense}
                     balanceValue = {balance}
-                    dateText = {selectedData}
+                    dateText = { Utils.dateFormatter(new Date(selectedData)) }
                     onAddExpensesClicked = {() => {
                         Vibration.vibrate(50)
                         navigation.navigate('AddExpenses', {})

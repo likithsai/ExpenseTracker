@@ -6,12 +6,15 @@ import Card from '../component/Card'
 import Icon from 'react-native-ionicons'
 import { openDatabase } from 'react-native-sqlite-storage'
 
+
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
 })
 
 const DashboardScreen = ({ navigation }) => {
+    const [annualBarChart, setAnnualBarChart] = useState([])
     const [ categoryPieChartData, setCategoryPieChartData ] = useState([])
+    const [refreshing, setRefreshing] = useState(false)
 
     const loadAnnualData = () => {
         let temp = []
@@ -19,25 +22,24 @@ const DashboardScreen = ({ navigation }) => {
         db.transaction(tx => {
             tx.executeSql(`
                 WITH cte(month, month_name) AS (VALUES
-                    ('01', 'JAN'), ('02', 'FEB'), 
-                    ('03', 'MAR'), ('04', 'APR'), 
-                    ('05', 'MAY'), ('06', 'JUN'), 
-                    ('07', 'JUL'), ('08', 'AUG'), 
-                    ('09', 'SEP'), ('10', 'OCT'), 
-                    ('11', 'NOV'), ('12', 'DEC')
+                    ('01', 'JAN'), ('02', 'FEB'), ('03', 'MAR'), ('04', 'APR'), ('05', 'MAY'), ('06', 'JUN'), 
+                    ('07', 'JUL'), ('08', 'AUG'), ('09', 'SEP'), ('10', 'OCT'), ('11', 'NOV'), ('12', 'DEC')
                 )
-                SELECT c.month_name,
-                        TOTAL(CASE WHEN expense_type = 'income' THEN expense_amt END) Income,
-                        TOTAL(CASE WHEN expense_type = 'expense' THEN expense_amt END) Expense
+                SELECT 
+                c.month_name as "Month",
+                TOTAL(CASE WHEN LOWER(expense_type) = 'income' THEN expense_amt END) as 'Income',
+                TOTAL(CASE WHEN LOWER(expense_type) = 'expense' THEN expense_amt END) as 'Expense'
                 FROM cte c LEFT JOIN tbl_expense e
-                ON strftime('%m', e.expense_date, 'unixepoch') = c.month
-                AND strftime('%Y', e.expense_date, 'unixepoch') = strftime('%Y', CURRENT_DATE)
+                ON strftime('%m', e.expense_date) = c.month
                 GROUP BY c.month_name
-                ORDER BY c.month;
+                ORDER BY c.month
             `, [], (tx, results) => {
                 for (let i = 0; i < results.rows.length; ++i) {
                     // console.log(results.rows.item(i))
+                    temp.push({ y: [ results.rows.item(i).Income, results.rows.item(i).Expense ] })
                 }
+                console.log(temp)
+                setAnnualBarChart(temp)
             })
         })
     }
@@ -58,7 +60,7 @@ const DashboardScreen = ({ navigation }) => {
     useEffect(() => {
         loadAnnualData()
         loadCategoryItem()
-    })
+    }, [refreshing])
     
     return (
         <>
@@ -71,20 +73,18 @@ const DashboardScreen = ({ navigation }) => {
                 }}
             />
             <ScrollView
-                // refreshControl={
-                //     <RefreshControl
-                //       refreshing={refreshing}
-                //       onRefresh={() => {
-                //           setRefreshing(true)
-                //           setInterval(() => {
-                //               setRefreshing(false)
-                //           }, 3000)
-                //       }}
-                //       tintColor="#fff" 
-                //       titleColor="#fff" 
-                //       colors={["#11998e"]}
-                //     />
-                // }
+                refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={() => {
+                          setRefreshing(true)
+                          setRefreshing(false)
+                      }}
+                      tintColor="#fff" 
+                      titleColor="#fff" 
+                      colors={["#11998e"]}
+                    />
+                }
             >
                 <Card style={{ elevation: 5, borderBottomWidth: 0.7, borderBottomColor: '#ccc', height: 400, paddingVertical: 20, marginBottom: 1, flex: 1 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Annual Expense</Text>
@@ -121,20 +121,21 @@ const DashboardScreen = ({ navigation }) => {
                         style={{ width: '100%', height: '60%' }}
                         data={{
                             dataSets: [{
-                                values: [
-                                    { y: [ 10, 20 ] }, 
-                                    { y: [ 105, 30 ] }, 
-                                    { y: [ 102, 26 ] },
-                                    { y: [ 110, 10 ] }, 
-                                    { y: [ 114, 20 ] }, 
-                                    { y: [ 109, 30 ] }, 
-                                    { y: [ 105, 45 ] }, 
-                                    { y: [ 99, 32 ] }, 
-                                    { y: [ 95, 12 ] }, 
-                                    { y: [ 105, 2 ] }, 
-                                    { y: [ 99, 22 ] }, 
-                                    { y: [ 95, 20 ] }
-                                ],
+                                // values: [
+                                //     { y: [ 10, 20 ] }, 
+                                //     { y: [ 105, 30 ] }, 
+                                //     { y: [ 102, 26 ] },
+                                //     { y: [ 110, 10 ] }, 
+                                //     { y: [ 114, 20 ] }, 
+                                //     { y: [ 109, 30 ] }, 
+                                //     { y: [ 105, 45 ] }, 
+                                //     { y: [ 99, 32 ] }, 
+                                //     { y: [ 95, 12 ] }, 
+                                //     { y: [ 105, 2 ] }, 
+                                //     { y: [ 99, 22 ] }, 
+                                //     { y: [ 95, 20 ] }
+                                // ],
+                                values: annualBarChart,
                                 label: '',
                                 config: {
                                     colors: [

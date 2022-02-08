@@ -50,7 +50,7 @@ const Settings = ({ navigation }) => {
                                     <Text style={{ color: '#fff', textAlign: 'justify', fontSize: 15 }}>Export Database to JSON Format</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 15 }} onPress={() => {
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 15, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }} onPress={() => {
                                 refRBExport.current.close()
                             }}>
                                 <View>
@@ -59,6 +59,17 @@ const Settings = ({ navigation }) => {
                                 <View>
                                     <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>Excel</Text>
                                     <Text style={{ color: '#fff', textAlign: 'justify', fontSize: 15 }}>Export Database to Excel Format</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 15 }} onPress={() => {
+                                refRBExport.current.close()
+                            }}>
+                                <View>
+                                    <FeatherIcons name="code" color="#fff" style={{ marginRight: 20, elevation: 10 }} size={30}/>
+                                </View>
+                                <View>
+                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>XML</Text>
+                                    <Text style={{ color: '#fff', textAlign: 'justify', fontSize: 15 }}>Export Database to XML Format</Text>
                                 </View>
                             </TouchableOpacity>
                         </ScrollView>
