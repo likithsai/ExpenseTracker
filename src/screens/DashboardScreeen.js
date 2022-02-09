@@ -12,11 +12,12 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 })
 
 const DashboardScreen = ({ navigation }) => {
+    const [ currentYear, setCurrentYear ] = useState(new Date().getFullYear())
     const [annualBarChart, setAnnualBarChart] = useState([])
     const [ categoryPieChartData, setCategoryPieChartData ] = useState([])
     const [refreshing, setRefreshing] = useState(false)
 
-    const loadAnnualData = () => {
+    const loadAnnualData = (currentYear) => {
         let temp = []
     
         db.transaction(tx => {
@@ -31,14 +32,13 @@ const DashboardScreen = ({ navigation }) => {
                 TOTAL(CASE WHEN LOWER(expense_type) = 'expense' THEN expense_amt END) as 'Expense'
                 FROM cte c LEFT JOIN tbl_expense e
                 ON strftime('%m', e.expense_date) = c.month
+                AND strftime('%Y', e.expense_date) = '${currentYear}'
                 GROUP BY c.month_name
                 ORDER BY c.month
             `, [], (tx, results) => {
                 for (let i = 0; i < results.rows.length; ++i) {
-                    // console.log(results.rows.item(i))
                     temp.push({ y: [ results.rows.item(i).Income, results.rows.item(i).Expense ] })
                 }
-                console.log(temp)
                 setAnnualBarChart(temp)
             })
         })
@@ -58,9 +58,10 @@ const DashboardScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        loadAnnualData()
+        console.log('called')
+        loadAnnualData(currentYear)
         loadCategoryItem()
-    }, [refreshing])
+    }, [refreshing, currentYear])
     
     return (
         <>
@@ -106,12 +107,19 @@ const DashboardScreen = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                         <View>
-                            <TouchableOpacity style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#11998e', borderRadius: 40, maxHeight: 50, paddingVertical: 10, paddingHorizontal: 20 }} onPress={() => {
-                                navigation.navigate('AddExpenses', {})
-                            }}>
-                                <Icon name="wallet" color="#fff" size={20} style={{ marginRight: 10 }}/>
-                                <Text style={{ color: '#fff', fontWeight: 'bold' }}>ADD EXPENSE</Text>
-                            </TouchableOpacity>
+                            <View style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                                <TouchableOpacity style={{ marginRight: 20 }} onPress={() => {
+                                    setCurrentYear(currentYear - 1)
+                                }}>
+                                    <Icon name="arrow-dropleft" color="#777" size={40} />
+                                </TouchableOpacity>
+                                <Text style={{ color: '#000', fontSize: 20 }}>{ currentYear }</Text>
+                                <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => {
+                                    setCurrentYear(currentYear + 1)
+                                }}>
+                                    <Icon name="arrow-dropright" color="#777" size={40}/>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                     <BarChart
@@ -121,20 +129,6 @@ const DashboardScreen = ({ navigation }) => {
                         style={{ width: '100%', height: '60%' }}
                         data={{
                             dataSets: [{
-                                // values: [
-                                //     { y: [ 10, 20 ] }, 
-                                //     { y: [ 105, 30 ] }, 
-                                //     { y: [ 102, 26 ] },
-                                //     { y: [ 110, 10 ] }, 
-                                //     { y: [ 114, 20 ] }, 
-                                //     { y: [ 109, 30 ] }, 
-                                //     { y: [ 105, 45 ] }, 
-                                //     { y: [ 99, 32 ] }, 
-                                //     { y: [ 95, 12 ] }, 
-                                //     { y: [ 105, 2 ] }, 
-                                //     { y: [ 99, 22 ] }, 
-                                //     { y: [ 95, 20 ] }
-                                // ],
                                 values: annualBarChart,
                                 label: '',
                                 config: {
