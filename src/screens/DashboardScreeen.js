@@ -13,12 +13,14 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 
 const DashboardScreen = ({ navigation }) => {
     const [ currentYear, setCurrentYear ] = useState(new Date().getFullYear())
+    const [ annualIncome, setAnnualIncome ] = useState(0)
+    const [ annualExpense, setAnnualExpense ] = useState(0)
     const [annualBarChart, setAnnualBarChart] = useState([])
     const [ categoryPieChartData, setCategoryPieChartData ] = useState([])
     const [refreshing, setRefreshing] = useState(false)
 
     const loadAnnualData = (currentYear) => {
-        let temp = []
+        let temp = [], income = 0, expense = 0
     
         db.transaction(tx => {
             tx.executeSql(`
@@ -38,17 +40,28 @@ const DashboardScreen = ({ navigation }) => {
             `, [], (tx, results) => {
                 for (let i = 0; i < results.rows.length; ++i) {
                     temp.push({ y: [ results.rows.item(i).Income, results.rows.item(i).Expense ] })
+                    income = income + results.rows.item(i).Income
+                    expense = expense + results.rows.item(i).Expense
+                    setAnnualIncome(income)
+                    setAnnualExpense(expense)
                 }
                 setAnnualBarChart(temp)
             })
         })
     }
 
-    const loadCategoryItem = () => {
+    const loadCategoryItem = (currentYear) => {
         let temp = []
     
         db.transaction(tx => {
-            tx.executeSql("SELECT c.category_name Category, SUM(e.expense_amt) Amount FROM tbl_category c INNER JOIN tbl_expense e ON e.expense_category = c.category_id GROUP BY c.category_id", [], (tx, results) => {
+            tx.executeSql(`
+                SELECT c.category_name Category, SUM(e.expense_amt) Amount 
+                FROM tbl_category c 
+                INNER JOIN tbl_expense e 
+                ON e.expense_category = c.category_id 
+                AND strftime('%Y', e.expense_date) = '${currentYear}' 
+                GROUP BY c.category_id
+            `, [], (tx, results) => {
                 for (let i = 0; i < results.rows.length; ++i) {
                     temp.push({ value: results.rows.item(i).Amount, label: results.rows.item(i).Category })
                 }
@@ -60,19 +73,37 @@ const DashboardScreen = ({ navigation }) => {
     useEffect(() => {
         console.log('called')
         loadAnnualData(currentYear)
-        loadCategoryItem()
+        loadCategoryItem(currentYear)
     }, [refreshing, currentYear])
     
     return (
         <>
             <HeaderWithIcons
-                style={{ elevation: 10, borderBottomWidth: 0 }}
                 headerTitle="Expense Tracker"
                 onRightIconPressed = {() => {
                     Vibration.vibrate(50)
                     navigation.navigate('Settings')
                 }}
             />
+            <Card style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#11998e', elevation: 10, paddingVertical: 15, borderWidth: 0 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon name="calendar" color="#fff" size={20} style={{ marginRight: 10 }} />
+                    <Text style={{ color: '#fff', fontSize: 18 }}>Year</Text>
+                </View>
+                <View style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <TouchableOpacity style={{ marginRight: 20 }} onPress={() => {
+                        setCurrentYear(currentYear - 1)
+                    }}>
+                        <Icon name="arrow-dropleft" color="#fff" size={30} />
+                    </TouchableOpacity>
+                    <Text style={{ color: '#fff', fontSize: 18 }}>{ currentYear }</Text>
+                    <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => {
+                        setCurrentYear(currentYear + 1)
+                    }}>
+                        <Icon name="arrow-dropright" color="#fff" size={30}/>
+                    </TouchableOpacity>
+                </View>
+            </Card>
             <ScrollView
                 refreshControl={
                     <RefreshControl
@@ -95,33 +126,18 @@ const DashboardScreen = ({ navigation }) => {
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 <View>
                                     <Text style={{ color: '#555', fontSize: 15 }}>Income</Text>
-                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>200</Text>
+                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ annualIncome}</Text>
                                 </View>
                             </TouchableOpacity>
                             <View style={{ borderWidth: 1, height: 50, borderColor: '#ccc', marginHorizontal: 20 }} />
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 <View>
                                     <Text style={{ color: '#555', fontSize: 15 }}>Expense</Text>
-                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>200</Text>
+                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ annualExpense }</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <View>
-                            <View style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                                <TouchableOpacity style={{ marginRight: 20 }} onPress={() => {
-                                    setCurrentYear(currentYear - 1)
-                                }}>
-                                    <Icon name="arrow-dropleft" color="#777" size={40} />
-                                </TouchableOpacity>
-                                <Text style={{ color: '#000', fontSize: 20 }}>{ currentYear }</Text>
-                                <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => {
-                                    setCurrentYear(currentYear + 1)
-                                }}>
-                                    <Icon name="arrow-dropright" color="#777" size={40}/>
-                                </TouchableOpacity>
-                            </View>
                         </View>
-                    </View>
                     <BarChart
                         extraOffsets={{
                             bottom: 20
