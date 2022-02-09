@@ -12,7 +12,7 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 
 const List = (props) => {
     const refRBSheet = useRef()
-    const refCategorySheet = useRef()
+    // const refCategorySheet = useRef()
     const [ selectedItem, setSelectedItem ] = useState([])
     const [ category, setCategory ] = useState([])
     const navigation = useNavigation()
@@ -65,7 +65,7 @@ const List = (props) => {
 
     return (
         <>
-        <RBSheet
+        {/* <RBSheet
             ref={refCategorySheet}
             height={200}
             openDuration={250}
@@ -114,7 +114,7 @@ const List = (props) => {
                         </TouchableOpacity>
                     </ScrollView>
                 </View>
-        </RBSheet>
+        </RBSheet> */}
         <RBSheet
             ref={refRBSheet}
             height={200}
@@ -172,7 +172,7 @@ const List = (props) => {
                                     }
                                 }])
                                 refRBSheet.current.close()
-                                refCategorySheet.current.close()
+                                // refCategorySheet.current.close()
                             }}>
                                 <Icon name="trash" size={20} color='#fff' style={{ marginRight: 20 }} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Delete</Text>
@@ -185,13 +185,13 @@ const List = (props) => {
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Share</Text>
                             </TouchableOpacity>
                             <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
-                            <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => { 
+                            {/* <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => { 
                                 refRBSheet.current.close()
                                 refCategorySheet.current.open()
                             }}>
                                 <Icon name="albums" size={20} color='#fff' style={{ marginRight: 20 }} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Add to category</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </ScrollView>
                 </View>
