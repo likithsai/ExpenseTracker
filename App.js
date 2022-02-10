@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { StyleSheet, SafeAreaView, StatusBar } from "react-native"
+import React, { useEffect, useState } from "react"
+import { StyleSheet, SafeAreaView, StatusBar, View, Text } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import MyStacks from "./src/routes/MyStacks"
 import { openDatabase } from 'react-native-sqlite-storage'
@@ -11,7 +11,8 @@ var db = openDatabase({ name: 'data.db' }, () => {
 })
 
 const ExpenseTracker = () => {
-    // Setup database
+    const [splashScreenLoad, setSplashScreenLoad] = useState(true)
+
     useEffect(() => {
         //  category table
         db.transaction(function(txn) {
@@ -56,17 +57,33 @@ const ExpenseTracker = () => {
             }
         )
       })
+
+
+      //  load splash screen
+      setTimeout(() => {
+          setSplashScreenLoad(false)
+      }, 5000)
     }, [])
     
-    return (
-        <SafeAreaView style={styles.container}>
-          <NavigationContainer>
-            {/* <StatusBar animated={true} backgroundColor="#11998e" /> */}
-            <StatusBar barStyle="light-content" backgroundColor="#11998e" />
-            <MyStacks />
-          </NavigationContainer>
-        </SafeAreaView>
-    )
+    if (!splashScreenLoad) {
+        return (
+            <SafeAreaView style={styles.container}>
+              <NavigationContainer>
+                <StatusBar barStyle="light-content" backgroundColor="#11998e" />
+                <MyStacks />
+              </NavigationContainer>
+            </SafeAreaView>
+        )
+    } else {
+        return (
+          <SafeAreaView style={styles.container}>
+              <StatusBar barStyle="light-content" backgroundColor="#11998e" />
+              <View style={{ flexDirection: 'row', alignItem: 'center', justifyContent: 'center', backgroundColor: '#11998e', width: '100%', height: '100%' }}>
+                  <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Sample example</Text>
+              </View>
+          </SafeAreaView>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
