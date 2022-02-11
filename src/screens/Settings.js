@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { View, Text, Vibration, ScrollView, TouchableOpacity, ToastAndroid } from 'react-native'
+import { View, Text, Vibration, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import HeaderCompStart from '../component/HeaderCompStart'
 import Card from '../component/Card'
 import Icon from 'react-native-ionicons'
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import RBSheet from "react-native-raw-bottom-sheet"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeviceInfo from 'react-native-device-info';
 
 const Settings = ({ navigation }) => {
     const refRBExport = useRef()
@@ -139,7 +140,24 @@ const Settings = ({ navigation }) => {
                     </View>
                 </Card>
                 <Text style={{ color: '#777', fontWeight: 'bold', margin: 20, fontSize: 15 }}>App Information</Text>
-                <Card style={{ elevation: 5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {}}>
+                <Card style={{ elevation: 5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {
+                    Alert.alert(
+                        DeviceInfo.getApplicationName(),
+                        "Version: " + DeviceInfo.getReadableVersion() + "\nUnique ID: " + DeviceInfo.getUniqueId() + "\nOS Version: " + DeviceInfo.getSystemVersion() ,
+                        [
+                            {
+                                text: "Goto Website",
+                                onPress: () => console.log("Ask me later pressed")
+                            },
+                            {},
+                            {
+                                text: "Cancel",
+                                onPress: () => console.log("Cancel Pressed"),
+                                style: "cancel"
+                            }
+                        ]
+                    );
+                }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <FeatherIcons name="info" size={30} color='#777' style={{ marginRight: 20 }} />
                         <View>

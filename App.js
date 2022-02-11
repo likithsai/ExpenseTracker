@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView, StatusBar, View, Text, ActivityIndicator } fr
 import { NavigationContainer } from "@react-navigation/native"
 import MyStacks from "./src/routes/MyStacks"
 import { openDatabase } from 'react-native-sqlite-storage'
+import DeviceInfo from 'react-native-device-info';
 
 var db = openDatabase({ name: 'data.db' }, () => {
   console.log('Database opened :)')
@@ -20,7 +21,7 @@ const SplashScreen = () => {
               backgroundColor: '#11998e',
               height: '100%',
             }}>
-            <Text style={{ textAlign: 'center', color: '#ffffff', fontSize: 25 }}>Expense Tracker</Text>
+              <Text style={{ textAlign: 'center', color: '#ffffff', fontSize: 25 }}>{ DeviceInfo.getApplicationName() }</Text>
             <ActivityIndicator size="large" color="#fff" style={{ paddingVertical: 20 }}/>
           </View>
       </SafeAreaView>
