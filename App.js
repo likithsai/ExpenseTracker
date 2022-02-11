@@ -10,6 +10,17 @@ var db = openDatabase({ name: 'data.db' }, () => {
   console.log('SQL Error : ' + err.message)
 })
 
+const SplashScreen = () => {
+    return (
+      <SafeAreaView style={styles.container}>
+          <StatusBar barStyle="light-content" backgroundColor="#11998e" />
+          <View style={{ flexDirection: 'row', alignItem: 'center', justifyContent: 'center', backgroundColor: '#11998e', width: '100%', height: '100%' }}>
+              <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Sample example</Text>
+          </View>
+      </SafeAreaView>
+    )
+}
+
 const ExpenseTracker = () => {
     const [splashScreenLoad, setSplashScreenLoad] = useState(true)
 
@@ -57,31 +68,36 @@ const ExpenseTracker = () => {
             }
         )
       })
+    }, [])
+    
+    return (
+        <SafeAreaView style={styles.container}>
+          <NavigationContainer>
+            <StatusBar barStyle="light-content" backgroundColor="#11998e" />
+            <MyStacks />
+          </NavigationContainer>
+        </SafeAreaView>
+    )
+}
 
 
+const App = () => {
+    const [splashScreenLoad, setSplashScreenLoad] = useState(true)
+
+    useEffect(() => {
       //  load splash screen
       setTimeout(() => {
           setSplashScreenLoad(false)
-      }, 5000)
+      }, 3000)
     }, [])
-    
+
     if (!splashScreenLoad) {
         return (
-            <SafeAreaView style={styles.container}>
-              <NavigationContainer>
-                <StatusBar barStyle="light-content" backgroundColor="#11998e" />
-                <MyStacks />
-              </NavigationContainer>
-            </SafeAreaView>
+            <ExpenseTracker />
         )
     } else {
         return (
-          <SafeAreaView style={styles.container}>
-              <StatusBar barStyle="light-content" backgroundColor="#11998e" />
-              <View style={{ flexDirection: 'row', alignItem: 'center', justifyContent: 'center', backgroundColor: '#11998e', width: '100%', height: '100%' }}>
-                  <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Sample example</Text>
-              </View>
-          </SafeAreaView>
+          <SplashScreen />
         )
     }
 }
@@ -93,4 +109,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default ExpenseTracker
+export default App
