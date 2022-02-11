@@ -143,9 +143,9 @@ const Settings = ({ navigation }) => {
                 <Card style={{ elevation: 5, padding: 20, borderBottomWidth: 0.5, borderBottomColor: '#ccc' }} onPress={() => {
                     Alert.alert(
                         DeviceInfo.getApplicationName(),
-                        "Version: " + DeviceInfo.getReadableVersion() + 
+                        "Application Version: " + DeviceInfo.getReadableVersion() + 
                         "\nUnique ID: " + DeviceInfo.getUniqueId() + 
-                        "\nOS Version: " + setOsVersion(DeviceInfo.getSystemName() + ' ' + DeviceInfo.getSystemVersion()) ,
+                        "\nOS: " + DeviceInfo.getSystemName() + ' ' + DeviceInfo.getSystemVersion(),
                         [
                             {
                                 text: "Goto Website",
