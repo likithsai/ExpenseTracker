@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, SafeAreaView, StatusBar, View, Text } from "react-native"
+import { StyleSheet, SafeAreaView, StatusBar, View, Text, ActivityIndicator } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import MyStacks from "./src/routes/MyStacks"
 import { openDatabase } from 'react-native-sqlite-storage'
@@ -14,15 +14,20 @@ const SplashScreen = () => {
     return (
       <SafeAreaView style={styles.container}>
           <StatusBar barStyle="light-content" backgroundColor="#11998e" />
-          <View style={{ flexDirection: 'row', alignItem: 'center', justifyContent: 'center', backgroundColor: '#11998e', width: '100%', height: '100%' }}>
-              <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Sample example</Text>
+          <View
+            style={{
+              justifyContent: 'center',
+              backgroundColor: '#11998e',
+              height: '100%',
+            }}>
+            <Text style={{ textAlign: 'center', color: '#ffffff', fontSize: 25 }}>Expense Tracker</Text>
+            <ActivityIndicator size="large" color="#fff" style={{ paddingVertical: 20 }}/>
           </View>
       </SafeAreaView>
     )
 }
 
 const ExpenseTracker = () => {
-    const [splashScreenLoad, setSplashScreenLoad] = useState(true)
 
     useEffect(() => {
         //  category table
@@ -85,7 +90,6 @@ const App = () => {
     const [splashScreenLoad, setSplashScreenLoad] = useState(true)
 
     useEffect(() => {
-      //  load splash screen
       setTimeout(() => {
           setSplashScreenLoad(false)
       }, 3000)
@@ -97,7 +101,7 @@ const App = () => {
         )
     } else {
         return (
-          <SplashScreen />
+            <SplashScreen />
         )
     }
 }
