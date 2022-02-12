@@ -16,7 +16,7 @@ const Settings = ({ navigation }) => {
         try {
             const value = await AsyncStorage.getItem(key)
             if(value !== null) {
-                setSelectedCurrency(JSON.parse(value).countryCurrency)
+                setSelectedCurrency(JSON.parse(value).isoName)
             }
         } catch(e) {}
     }
