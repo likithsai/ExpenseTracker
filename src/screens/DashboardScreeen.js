@@ -98,7 +98,6 @@ const DashboardScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        console.log('called')
         loadAnnualData(currentYear)
         loadCategoryItem(currentYear)
     }, [refreshing, currentYear])
@@ -125,7 +124,9 @@ const DashboardScreen = ({ navigation }) => {
                     </TouchableOpacity>
                     <Text style={{ color: '#fff', fontSize: 18 }}>{ currentYear }</Text>
                     <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => {
-                        setCurrentYear(currentYear + 1)
+                        if((currentYear + 1) <= new Date().getFullYear()) {
+                            setCurrentYear(currentYear + 1)
+                        }
                     }}>
                         <Icon name="arrow-dropright" color="#fff" size={35}/>
                     </TouchableOpacity>
