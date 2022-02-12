@@ -36,18 +36,18 @@ const DashboardScreen = ({ navigation }) => {
             tx.executeSql(`
                 SELECT 
                     CASE strftime('%m', expense_date) 
-                        when '01' then 'January' 
-                        when '02' then 'Febuary' 
-                        when '03' then 'March'
-                        when '04' then 'April'
+                        when '01' then 'Jan' 
+                        when '02' then 'Feb' 
+                        when '03' then 'Mar'
+                        when '04' then 'Apr'
                         when '05' then 'May' 
-                        when '06' then 'June' 
-                        when '07' then 'July' 
-                        when '08' then 'August' 
-                        when '09' then 'September' 
-                        when '10' then 'October' 
-                        when '11' then 'November' 
-                        when '12' then 'December' 
+                        when '06' then 'Jun' 
+                        when '07' then 'Jul' 
+                        when '08' then 'Aug' 
+                        when '09' then 'Sept' 
+                        when '10' then 'Oct' 
+                        when '11' then 'Nov' 
+                        when '12' then 'Dec' 
                         else '' 
                 end as 'Month' ,
                 TOTAL(CASE WHEN LOWER(expense_type) = 'income' THEN expense_amt END) as 'Income',
