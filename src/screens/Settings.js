@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { View, Text, Vibration, ScrollView, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Vibration, ScrollView, TouchableOpacity, Alert, Linking } from 'react-native'
 import HeaderCompStart from '../component/HeaderCompStart'
 import Card from '../component/Card'
 import Icon from 'react-native-ionicons'
@@ -168,7 +168,9 @@ const Settings = ({ navigation }) => {
                         </View>
                     </View>
                 </Card>
-                <Card style={{ elevation: 5, padding: 20 }} onPress={() => {}}>
+                <Card style={{ elevation: 5, padding: 20 }} onPress={() => {
+                    Linking.openURL('mailto:likithsai13@gmail.com?subject=SendMail&body=Description')
+                }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <FeatherIcons name="mail" size={30} color='#777' style={{ marginRight: 20 }} />
                         <View>
