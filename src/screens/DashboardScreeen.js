@@ -17,7 +17,7 @@ const DashboardScreen = ({ navigation }) => {
     const [ annualExpense, setAnnualExpense ] = useState(0)
     const [ annualBarChart, setAnnualBarChart ] = useState([])
     const [ categoryPieChartData, setCategoryPieChartData ] = useState([])
-    const [ ChartMonth, setChartMonth ] = useState([])
+    const [ AnnualChartMonth, setAnnualChartMonth ] = useState([])
     const [ refreshing, setRefreshing ] = useState(false)
 
     const loadAnnualData = (currentYear) => {
@@ -34,39 +34,45 @@ const DashboardScreen = ({ navigation }) => {
             //     GROUP BY c.month_name
             //     ORDER BY c.month
             tx.executeSql(`
-                SELECT 
-                    CASE strftime('%m', expense_date) 
-                        when '01' then 'Jan' 
-                        when '02' then 'Feb' 
-                        when '03' then 'Mar'
-                        when '04' then 'Apr'
-                        when '05' then 'May' 
-                        when '06' then 'Jun' 
-                        when '07' then 'Jul' 
-                        when '08' then 'Aug' 
-                        when '09' then 'Sept' 
-                        when '10' then 'Oct' 
-                        when '11' then 'Nov' 
-                        when '12' then 'Dec' 
-                        else '' 
-                end as 'Month' ,
+                SELECT CASE strftime('%m', expense_date) 
+                    when '01' then 'Jan' 
+                    when '02' then 'Feb' 
+                    when '03' then 'Mar'
+                    when '04' then 'Apr'
+                    when '05' then 'May' 
+                    when '06' then 'Jun' 
+                    when '07' then 'Jul' 
+                    when '08' then 'Aug' 
+                    when '09' then 'Sept' 
+                    when '10' then 'Oct' 
+                    when '11' then 'Nov' 
+                    when '12' then 'Dec' 
+                    else '' 
+                end as 'Month',
                 TOTAL(CASE WHEN LOWER(expense_type) = 'income' THEN expense_amt END) as 'Income',
                 TOTAL(CASE WHEN LOWER(expense_type) = 'expense' THEN expense_amt END) as 'Expense'
                 FROM tbl_expense
                 WHERE strftime('%Y', expense_date) = '${currentYear}'
                 GROUP BY strftime('%m', expense_date)
             `, [], (tx, results) => {
-                for (let i = 0; i < results.rows.length; ++i) {
-                    temp.push({ y: [ results.rows.item(i).Income, results.rows.item(i).Expense ] })
-                    income = income + results.rows.item(i).Income
-                    expense = expense + results.rows.item(i).Expense
-                    MonthLabels.push(results.rows.item(i).Month)
+                if(results.rows.length > 1) {
+                    for (let i = 0; i < results.rows.length; ++i) {
+                        temp.push({ y: [ results.rows.item(i).Income, results.rows.item(i).Expense ] })
+                        income = income + results.rows.item(i).Income
+                        expense = expense + results.rows.item(i).Expense
+                        MonthLabels.push(results.rows.item(i).Month)
+                    }
+
                     setAnnualIncome(income)
                     setAnnualExpense(expense)
+                    setAnnualBarChart(temp)
+                    setAnnualChartMonth(MonthLabels)
+                } else {
+                    setAnnualIncome(0)
+                    setAnnualExpense(0)
+                    setAnnualBarChart([])
+                    setAnnualChartMonth([])
                 }
-                setAnnualBarChart(temp)
-                setChartMonth(MonthLabels)
-                // console.log(JSON.stringify(MonthLabels))
             })
         })
     }
@@ -115,13 +121,13 @@ const DashboardScreen = ({ navigation }) => {
                     <TouchableOpacity style={{ marginRight: 20 }} onPress={() => {
                         setCurrentYear(currentYear - 1)
                     }}>
-                        <Icon name="arrow-dropleft" color="#fff" size={30} />
+                        <Icon name="arrow-dropleft" color="#fff" size={35} />
                     </TouchableOpacity>
                     <Text style={{ color: '#fff', fontSize: 18 }}>{ currentYear }</Text>
                     <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => {
                         setCurrentYear(currentYear + 1)
                     }}>
-                        <Icon name="arrow-dropright" color="#fff" size={30}/>
+                        <Icon name="arrow-dropright" color="#fff" size={35}/>
                     </TouchableOpacity>
                 </View>
             </Card>
@@ -199,7 +205,7 @@ const DashboardScreen = ({ navigation }) => {
                             position: 'BOTTOM',
                             drawAxisLines: false,
                             drawGridLines: false,
-                            valueFormatter: ChartMonth,
+                            valueFormatter: AnnualChartMonth,
                             granularityEnabled: true,
                             granularity : 1,
                             textColor: '#fff',

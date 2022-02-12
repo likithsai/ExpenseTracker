@@ -72,7 +72,6 @@ const SelectCurrency = ({ navigation }) => {
         { countryId: 62, countryName: 'Ecuador', countryCurrency: 'USD', countryIcon: require('../../assets/flag/Ecuador.gif') },
         { countryId: 63, countryName: 'Egypt', countryCurrency: 'EGP', countryIcon: require('../../assets/flag/Egypt.gif') },
         { countryId: 64, countryName: 'El Salvador', countryCurrency: 'SVC', countryIcon: require('../../assets/flag/El-Salvador.gif') },
-
         { countryId: 65, countryName: 'Eritrea', countryCurrency: 'ERN', countryIcon: require('../../assets/flag/Eritrea.gif') },
         { countryId: 66, countryName: 'Estonia', countryCurrency: 'EUR', countryIcon: require('../../assets/flag/Estonia.gif') },
         { countryId: 67, countryName: 'Ethiopia', countryCurrency: 'ETB', countryIcon: require('../../assets/flag/Ethiopia.gif') },
@@ -123,7 +122,6 @@ const SelectCurrency = ({ navigation }) => {
                                 <Image source={ item.countryIcon } style={{ height: 20, width: 30, resizeMode : 'stretch', marginRight: 15, elevation: 10, borderWidth: 1, borderColor: '#777' }}/>
                                 <Text style={{ fontSize: 15, color: '#000', fontWeight: 'bold' }}>{ item.countryName }</Text>
                             </View>
-                            {/* <Text style={{ fontSize: 15, color: '#777', fontWeight: 'bold' }}>{ item.countryCurrency }</Text> */}
                         </View>
                     </Card>
                 }
