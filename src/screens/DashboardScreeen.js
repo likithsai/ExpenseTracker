@@ -1,25 +1,3 @@
-// SELECT 
-// 	CASE strftime('%m', expense_date) 
-// 		when '01' then 'January' 
-// 		when '02' then 'Febuary' 
-// 		when '03' then 'March'
-// 		when '04' then 'April'
-// 		when '05' then 'May' 
-// 		when '06' then 'June' 
-// 		when '07' then 'July' 
-// 		when '08' then 'August' 
-// 		when '09' then 'September' 
-// 		when '10' then 'October' 
-// 		when '11' then 'November' 
-// 		when '12' then 'December' 
-// 		else '' 
-// end as 'Month' ,
-// TOTAL(CASE WHEN LOWER(expense_type) = 'income' THEN expense_amt END) as 'Income',
-// TOTAL(CASE WHEN LOWER(expense_type) = 'expense' THEN expense_amt END) as 'Expense'
-// FROM tbl_expense
-// WHERE strftime('%Y', expense_date) = '2022'
-// GROUP BY strftime('%m', expense_date)
-
 import React, { useState, useEffect } from 'react'
 import { Text, Vibration, ScrollView, processColor, RefreshControl, TouchableOpacity, View } from 'react-native'
 import HeaderWithIcons from '../component/HeaderWithIcons'
