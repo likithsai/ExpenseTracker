@@ -5,8 +5,8 @@ import Card from '../component/Card'
 import Icon from 'react-native-ionicons'
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import RBSheet from "react-native-raw-bottom-sheet"
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import DeviceInfo from 'react-native-device-info'
 
 const Settings = ({ navigation }) => {
     const refRBExport = useRef()

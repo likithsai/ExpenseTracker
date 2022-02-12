@@ -1,6 +1,6 @@
 // https://fxtop.com/en/countries-currencies.php
 
-import React, { useState } from 'react'
+import React from 'react'
 import { FlatList, Text, View, Image, Vibration, ToastAndroid, TextInput } from 'react-native'
 import Card from '../component/Card'
 import HeaderCompStart from '../component/HeaderCompStart'
@@ -72,6 +72,7 @@ const SelectCurrency = ({ navigation }) => {
         { countryId: 62, countryName: 'Ecuador', countryCurrency: 'USD', countryIcon: require('../../assets/flag/Ecuador.gif') },
         { countryId: 63, countryName: 'Egypt', countryCurrency: 'EGP', countryIcon: require('../../assets/flag/Egypt.gif') },
         { countryId: 64, countryName: 'El Salvador', countryCurrency: 'SVC', countryIcon: require('../../assets/flag/El-Salvador.gif') },
+
         { countryId: 65, countryName: 'Eritrea', countryCurrency: 'ERN', countryIcon: require('../../assets/flag/Eritrea.gif') },
         { countryId: 66, countryName: 'Estonia', countryCurrency: 'EUR', countryIcon: require('../../assets/flag/Estonia.gif') },
         { countryId: 67, countryName: 'Ethiopia', countryCurrency: 'ETB', countryIcon: require('../../assets/flag/Ethiopia.gif') },

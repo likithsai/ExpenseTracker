@@ -1,3 +1,25 @@
+// SELECT 
+// 	CASE strftime('%m', expense_date) 
+// 		when '01' then 'January' 
+// 		when '02' then 'Febuary' 
+// 		when '03' then 'March'
+// 		when '04' then 'April'
+// 		when '05' then 'May' 
+// 		when '06' then 'June' 
+// 		when '07' then 'July' 
+// 		when '08' then 'August' 
+// 		when '09' then 'September' 
+// 		when '10' then 'October' 
+// 		when '11' then 'November' 
+// 		when '12' then 'December' 
+// 		else '' 
+// end as 'Month' ,
+// TOTAL(CASE WHEN LOWER(expense_type) = 'income' THEN expense_amt END) as 'Income',
+// TOTAL(CASE WHEN LOWER(expense_type) = 'expense' THEN expense_amt END) as 'Expense'
+// FROM tbl_expense
+// WHERE strftime('%Y', expense_date) = '2022'
+// GROUP BY strftime('%m', expense_date)
+
 import React, { useState, useEffect } from 'react'
 import { Text, Vibration, ScrollView, processColor, RefreshControl, TouchableOpacity, View } from 'react-native'
 import HeaderWithIcons from '../component/HeaderWithIcons'
@@ -15,37 +37,58 @@ const DashboardScreen = ({ navigation }) => {
     const [ currentYear, setCurrentYear ] = useState(new Date().getFullYear())
     const [ annualIncome, setAnnualIncome ] = useState(0)
     const [ annualExpense, setAnnualExpense ] = useState(0)
-    const [annualBarChart, setAnnualBarChart] = useState([])
+    const [ annualBarChart, setAnnualBarChart ] = useState([])
     const [ categoryPieChartData, setCategoryPieChartData ] = useState([])
-    const [refreshing, setRefreshing] = useState(false)
+    const [ ChartMonth, setChartMonth ] = useState([])
+    const [ refreshing, setRefreshing ] = useState(false)
 
     const loadAnnualData = (currentYear) => {
-        let temp = [], income = 0, expense = 0
+        let temp = [], MonthLabels = [], income = 0, expense = 0
     
         db.transaction(tx => {
+            //     SELECT 
+            //     c.month_name as "Month",
+            //     TOTAL(CASE WHEN LOWER(expense_type) = 'income' THEN expense_amt END) as 'Income',
+            //     TOTAL(CASE WHEN LOWER(expense_type) = 'expense' THEN expense_amt END) as 'Expense'
+            //     FROM cte c LEFT JOIN tbl_expense e
+            //     ON strftime('%m', e.expense_date) = c.month
+            //     AND strftime('%Y', e.expense_date) = '${currentYear}'
+            //     GROUP BY c.month_name
+            //     ORDER BY c.month
             tx.executeSql(`
-                WITH cte(month, month_name) AS (VALUES
-                    ('01', 'JAN'), ('02', 'FEB'), ('03', 'MAR'), ('04', 'APR'), ('05', 'MAY'), ('06', 'JUN'), 
-                    ('07', 'JUL'), ('08', 'AUG'), ('09', 'SEP'), ('10', 'OCT'), ('11', 'NOV'), ('12', 'DEC')
-                )
                 SELECT 
-                c.month_name as "Month",
+                    CASE strftime('%m', expense_date) 
+                        when '01' then 'January' 
+                        when '02' then 'Febuary' 
+                        when '03' then 'March'
+                        when '04' then 'April'
+                        when '05' then 'May' 
+                        when '06' then 'June' 
+                        when '07' then 'July' 
+                        when '08' then 'August' 
+                        when '09' then 'September' 
+                        when '10' then 'October' 
+                        when '11' then 'November' 
+                        when '12' then 'December' 
+                        else '' 
+                end as 'Month' ,
                 TOTAL(CASE WHEN LOWER(expense_type) = 'income' THEN expense_amt END) as 'Income',
                 TOTAL(CASE WHEN LOWER(expense_type) = 'expense' THEN expense_amt END) as 'Expense'
-                FROM cte c LEFT JOIN tbl_expense e
-                ON strftime('%m', e.expense_date) = c.month
-                AND strftime('%Y', e.expense_date) = '${currentYear}'
-                GROUP BY c.month_name
-                ORDER BY c.month
+                FROM tbl_expense
+                WHERE strftime('%Y', expense_date) = '${currentYear}'
+                GROUP BY strftime('%m', expense_date)
             `, [], (tx, results) => {
                 for (let i = 0; i < results.rows.length; ++i) {
                     temp.push({ y: [ results.rows.item(i).Income, results.rows.item(i).Expense ] })
                     income = income + results.rows.item(i).Income
                     expense = expense + results.rows.item(i).Expense
+                    MonthLabels.push(results.rows.item(i).Month)
                     setAnnualIncome(income)
                     setAnnualExpense(expense)
                 }
                 setAnnualBarChart(temp)
+                setChartMonth(MonthLabels)
+                // console.log(JSON.stringify(MonthLabels))
             })
         })
     }
@@ -178,7 +221,7 @@ const DashboardScreen = ({ navigation }) => {
                             position: 'BOTTOM',
                             drawAxisLines: false,
                             drawGridLines: false,
-                            valueFormatter: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                            valueFormatter: ChartMonth,
                             granularityEnabled: true,
                             granularity : 1,
                             textColor: '#fff',
