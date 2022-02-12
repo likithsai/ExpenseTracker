@@ -6,7 +6,6 @@ import Card from '../component/Card'
 import Icon from 'react-native-ionicons'
 import { openDatabase } from 'react-native-sqlite-storage'
 
-
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
 })
