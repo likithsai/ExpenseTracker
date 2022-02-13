@@ -122,14 +122,14 @@ const DashboardScreen = ({ navigation }) => {
                 </View>
                 <View style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <TouchableOpacity style={{ marginRight: 20 }} onPress={() => {
-                        Vibration.vibrate(500)
+                        Vibration.vibrate(50)
                         setCurrentYear(currentYear - 1)
                     }}>
                         <Icon name="arrow-dropleft" color="#fff" size={35} />
                     </TouchableOpacity>
                     <Text style={{ color: '#fff', fontSize: 18 }}>{ currentYear }</Text>
                     <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => {
-                        Vibration.vibrate(500)
+                        Vibration.vibrate(50)
                         if((currentYear + 1) <= new Date().getFullYear()) {
                             setCurrentYear(currentYear + 1)
                         }
