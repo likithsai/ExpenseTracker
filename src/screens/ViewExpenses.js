@@ -68,7 +68,7 @@ const ViewExpenses = ({ route }) => {
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Amount</Text>
-                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ currencySelected + ' ' + route.params.list.expense_amt || '-' }</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ route.params.list.expense_amt + currencySelected || '-' }</Text>
                     </View>
                 </Card>
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>

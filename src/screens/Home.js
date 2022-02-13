@@ -135,9 +135,9 @@ const HomeScreen = ({ navigation }) => {
                         Vibration.vibrate(50)
                         openDatePicker()
                     }}
-                    incomeValue = {currencySelected + ' ' + income}
-                    expenseValue = {currencySelected + ' ' + expense}
-                    balanceValue = {currencySelected + ' ' + balance}
+                    incomeValue = {income + ' ' + currencySelected}
+                    expenseValue = {expense + ' ' + currencySelected} 
+                    balanceValue = {balance + ' ' + currencySelected}
                     dateText = { Utils.dateFormatter(new Date(selectedData)) }
                     onAddExpensesClicked = {() => {
                         Vibration.vibrate(50)

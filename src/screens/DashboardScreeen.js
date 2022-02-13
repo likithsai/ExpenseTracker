@@ -160,14 +160,14 @@ const DashboardScreen = ({ navigation }) => {
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 <View>
                                     <Text style={{ color: '#555', fontSize: 15 }}>Income</Text>
-                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ currencySelected + ' ' + annualIncome }</Text>
+                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ annualIncome + ' ' + currencySelected }</Text>
                                 </View>
                             </TouchableOpacity>
                             <View style={{ borderWidth: 1, height: 50, borderColor: '#ccc', marginHorizontal: 20 }} />
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 <View>
                                     <Text style={{ color: '#555', fontSize: 15 }}>Expense</Text>
-                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ currencySelected + ' ' + annualExpense }</Text>
+                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ annualExpense + ' ' + currencySelected }</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
