@@ -23,15 +23,6 @@ const DashboardScreen = ({ navigation }) => {
         let temp = [], MonthLabels = [], income = 0, expense = 0
     
         db.transaction(tx => {
-            //     SELECT 
-            //     c.month_name as "Month",
-            //     TOTAL(CASE WHEN LOWER(expense_type) = 'income' THEN expense_amt END) as 'Income',
-            //     TOTAL(CASE WHEN LOWER(expense_type) = 'expense' THEN expense_amt END) as 'Expense'
-            //     FROM cte c LEFT JOIN tbl_expense e
-            //     ON strftime('%m', e.expense_date) = c.month
-            //     AND strftime('%Y', e.expense_date) = '${currentYear}'
-            //     GROUP BY c.month_name
-            //     ORDER BY c.month
             tx.executeSql(`
                 SELECT CASE strftime('%m', expense_date) 
                     when '01' then 'Jan' 
@@ -110,19 +101,21 @@ const DashboardScreen = ({ navigation }) => {
                     navigation.navigate('Settings')
                 }}
             />
-            <Card style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#11998e', elevation: 10, paddingVertical: 15, borderWidth: 0 }}>
+            <Card style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#11998e', elevation: 10, paddingVertical: 15, borderWidth: 0 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Icon name="calendar" color="#fff" size={20} style={{ marginRight: 10 }} />
+                    {/* <Icon name="calendar" color="#fff" size={20} style={{ marginRight: 10 }} /> */}
                     <Text style={{ color: '#fff', fontSize: 18 }}>Year</Text>
                 </View>
                 <View style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <TouchableOpacity style={{ marginRight: 20 }} onPress={() => {
+                        Vibration.vibrate(500)
                         setCurrentYear(currentYear - 1)
                     }}>
                         <Icon name="arrow-dropleft" color="#fff" size={35} />
                     </TouchableOpacity>
                     <Text style={{ color: '#fff', fontSize: 18 }}>{ currentYear }</Text>
                     <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => {
+                        Vibration.vibrate(500)
                         if((currentYear + 1) <= new Date().getFullYear()) {
                             setCurrentYear(currentYear + 1)
                         }
