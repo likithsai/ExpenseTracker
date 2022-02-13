@@ -5,6 +5,7 @@ import { BarChart, PieChart } from 'react-native-charts-wrapper'
 import Card from '../component/Card'
 import Icon from 'react-native-ionicons'
 import { openDatabase } from 'react-native-sqlite-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
@@ -18,6 +19,16 @@ const DashboardScreen = ({ navigation }) => {
     const [ categoryPieChartData, setCategoryPieChartData ] = useState([])
     const [ AnnualChartMonth, setAnnualChartMonth ] = useState([])
     const [ refreshing, setRefreshing ] = useState(false)
+    const [ currencySelected, setCurrencySelected ] = useState('')
+
+    const getCurrency = async(key) => {
+        try {
+            const value = await AsyncStorage.getItem(key)
+            if(value !== null) {
+                setCurrencySelected(JSON.parse(value).isoName)
+            }
+        } catch(e) {}
+    }
 
     const loadAnnualData = (currentYear) => {
         let temp = [], MonthLabels = [], income = 0, expense = 0
@@ -92,6 +103,10 @@ const DashboardScreen = ({ navigation }) => {
         loadCategoryItem(currentYear)
     }, [refreshing, currentYear])
     
+    useEffect(() => {
+        getCurrency('SelectedCurrency')
+    })
+
     return (
         <>
             <HeaderWithIcons
@@ -101,9 +116,8 @@ const DashboardScreen = ({ navigation }) => {
                     navigation.navigate('Settings')
                 }}
             />
-            <Card style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#11998e', elevation: 10, paddingVertical: 15, borderWidth: 0 }}>
+            <Card style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#11998e', elevation: 10, paddingVertical: 15, borderWidth: 0 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {/* <Icon name="calendar" color="#fff" size={20} style={{ marginRight: 10 }} /> */}
                     <Text style={{ color: '#fff', fontSize: 18 }}>Year</Text>
                 </View>
                 <View style={{  flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -146,14 +160,14 @@ const DashboardScreen = ({ navigation }) => {
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 <View>
                                     <Text style={{ color: '#555', fontSize: 15 }}>Income</Text>
-                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ annualIncome}</Text>
+                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ currencySelected + ' ' + annualIncome }</Text>
                                 </View>
                             </TouchableOpacity>
                             <View style={{ borderWidth: 1, height: 50, borderColor: '#ccc', marginHorizontal: 20 }} />
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 <View>
                                     <Text style={{ color: '#555', fontSize: 15 }}>Expense</Text>
-                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ annualExpense }</Text>
+                                    <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 25 }}>{ currencySelected + ' ' + annualExpense }</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>

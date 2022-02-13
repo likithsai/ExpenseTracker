@@ -5,6 +5,7 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import { useNavigation } from '@react-navigation/native'
 import { openDatabase } from 'react-native-sqlite-storage'
 import FeatherIcons from 'react-native-vector-icons/Feather'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
@@ -12,13 +13,23 @@ var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
 
 const List = (props) => {
     const refRBSheet = useRef()
-    // const refCategorySheet = useRef()
     const [ selectedItem, setSelectedItem ] = useState([])
     const [ category, setCategory ] = useState([])
+    const [ currencySelected, setCurrencySelected ] = useState('')
     const navigation = useNavigation()
+
+    const getCurrency = async(key) => {
+        try {
+            const value = await AsyncStorage.getItem(key)
+            if(value !== null) {
+                setCurrencySelected(JSON.parse(value).isoName)
+            }
+        } catch(e) {}
+    }
 
     useEffect(() => {
         selectDataFromDatabase("SELECT * FROM tbl_category")
+        getCurrency('SelectedCurrency')
     })
 
     const getCategoryData = (type) => {
@@ -65,56 +76,6 @@ const List = (props) => {
 
     return (
         <>
-        {/* <RBSheet
-            ref={refCategorySheet}
-            height={200}
-            openDuration={250}
-            customStyles={{
-                container: {
-                    height: 300,
-                    backgroundColor: '#11998e'
-                }
-            }}>
-                <Text style={{ color: props.modalItemTextColor, fontSize: 20, fontWeight: 'bold', color: '#fff', paddingHorizontal: 20, marginTop: 20, marginBottom: 10 }}>Select Category</Text>
-                <View style={{ flex:1, flexDirection: 'column' }}>
-                    <ScrollView style={{ position: 'absolute', bottom: 0, width: '100%', height: '100%', backgroundColor: '#11998e', paddingHorizontal: 20, minHeight: '70%' }}>
-                        {
-                            category.map(item => (
-                                <TouchableOpacity 
-                                    key={item.category_id + ""}
-                                    onPress={() => {
-                                        executeSQLDB('UPDATE tbl_expense SET expense_category = ? WHERE expense_id = ?', [item.category_id, selectedItem.expense_id])
-                                        setSelectedItem(item)
-                                        refCategorySheet.current.close()
-                                    }} 
-                                    style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
-                                        <View>
-                                            <FeatherIcons name={item.category_icon} color="#fff" style={{ marginRight: 20 }} size={30}/>
-                                        </View>
-                                        <View>
-                                            <Text style={[styles.listItemText, { color: '#fff', fontSize: 18 }]}>{ item.category_name }</Text>
-                                            <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify', fontSize: 15 }]}>{ item.category_desc }</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                            ))
-                        }
-                        <TouchableOpacity 
-                            key="add_catgeory"
-                            onPress={() => {
-                                navigation.navigate("AddCategory", {})
-                            }} 
-                            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', paddingVertical: 20, borderBottomColor: '#ccc', borderBottomWidth: 0.5 }}>
-                                <View>
-                                    <FeatherIcons name="plus" color="#fff" style={{ marginRight: 20, elevation: 10 }} size={30}/>
-                                </View>
-                                <View>
-                                    <Text style={[styles.listItemText, { color: '#fff', fontSize: 18 }]}>Add Category</Text>
-                                    <Text style={[styles.listItemSubText, { color: '#fff', textAlign: 'justify', fontSize: 15 }]}>Add Transaction category</Text>
-                               </View>
-                        </TouchableOpacity>
-                    </ScrollView>
-                </View>
-        </RBSheet> */}
         <RBSheet
             ref={refRBSheet}
             height={200}
@@ -135,7 +96,7 @@ const List = (props) => {
                             <Text numberOfLines={2} style={[styles.listItemSubText, {color: '#fff', fontSize: 15}]}>{selectedItem.expense_desc}</Text>
                         </View>
                         <View>
-                            <Text style={ [styles.listItemAmt, {color: '#fff'}] }>{ selectedItem.expense_type === 'income' ? '+ ' + selectedItem.expense_amt : '- ' + selectedItem.expense_amt }</Text>
+                            <Text style={ [styles.listItemAmt, {color: '#fff'}] }>{ selectedItem.expense_type === 'income' ? '+ ' + currencySelected + ' ' + selectedItem.expense_amt : '- ' + currencySelected + ' ' + selectedItem.expense_amt }</Text>
                         </View>
                     </View>
                     <ScrollView style={{ marginTop: 20 }}>
@@ -172,7 +133,6 @@ const List = (props) => {
                                     }
                                 }])
                                 refRBSheet.current.close()
-                                // refCategorySheet.current.close()
                             }}>
                                 <Icon name="trash" size={20} color='#fff' style={{ marginRight: 20 }} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Delete</Text>
@@ -184,14 +144,6 @@ const List = (props) => {
                                 <Icon name="share" size={20} color='#fff' style={{ marginRight: 20 }} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Share</Text>
                             </TouchableOpacity>
-                            <View style={{ borderBottomWidth: 0.3, borderBottomColor: '#ccc', width: '100%' }}></View>
-                            {/* <TouchableOpacity style={{ width:'100%', paddingVertical: 15, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center' }} onPress={() => { 
-                                refRBSheet.current.close()
-                                refCategorySheet.current.open()
-                            }}>
-                                <Icon name="albums" size={20} color='#fff' style={{ marginRight: 20 }} />
-                                <Text style={{ fontWeight: 'bold', fontSize: 15, color: '#fff', fontSize: 15 }}>Add to category</Text>
-                            </TouchableOpacity> */}
                         </View>
                     </ScrollView>
                 </View>
@@ -200,13 +152,6 @@ const List = (props) => {
         <View style={{ flex: 1 }}>
             <FlatList
                 data={props.listData}
-                // ListHeaderComponent={()=> {
-                //     return (
-                //         <View style={{ marginVertical: 10 , paddingHorizontal: 20, fontSize: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                //             <Text style={{ fontSize: 15, color: '#555' }}>{props.topBarTitle}</Text>
-                //         </View>
-                //     )
-                // }}
                 ListEmptyComponent={() => {
                     return (
                         <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent:'center', paddingTop: '40%' }}>
@@ -234,14 +179,12 @@ const List = (props) => {
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                <Text style={ item.expense_type === 'income' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>{item.expense_type === 'income' ? '+ ' + item.expense_amt : '- ' + item.expense_amt }</Text>
+                                <Text style={ item.expense_type === 'income' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>{item.expense_type === 'income' ? '+ ' + currencySelected + ' ' + item.expense_amt : '- ' + currencySelected + ' ' + item.expense_amt }</Text>
                             </View>
                         </TouchableOpacity>
                     )
                 }
-                // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onListRefresh} />}
                 refreshControl={props.refreshControl}
-                // keyExtractor={item => item.expense_id} 
                 />
         </View>
         </>

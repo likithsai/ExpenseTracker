@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { FlatList, Text, View, TextInput, Vibration } from 'react-native'
 import Card from '../component/Card'
 import HeaderCompStart from '../component/HeaderCompStart'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SelectCurrency = ({ navigation }) => {
     const countries = [

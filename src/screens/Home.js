@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Feather'
 import CategoryScreens from './CategoryScreen'
 import DashboardScreen from './DashboardScreeen'
 import Utils from '../utils/Utils'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Tab = createBottomTabNavigator()
 
@@ -43,8 +44,8 @@ const HomeScreen = ({ navigation }) => {
     const [ expense, setExpense ] = useState(0.0)
     const [ balance, setBalance ] = useState(0.0)
     const [ DATA, setDATA ] = useState([])
-    const [refreshing, setRefreshing] = React.useState(true)
-
+    const [refreshing, setRefreshing] = useState(true)
+    const [ currencySelected, setCurrencySelected ] = useState('')
     const openDatePicker = () => {
         setShowDatePicker(true)
     }
@@ -56,6 +57,15 @@ const HomeScreen = ({ navigation }) => {
     const onConfirm = ( date ) => {
         setShowDatePicker(false)
         setSelectedDate(Utils.formatDate(date.toISOString()))
+    }
+
+    const getCurrency = async(key) => {
+        try {
+            const value = await AsyncStorage.getItem(key)
+            if(value !== null) {
+                setCurrencySelected(JSON.parse(value).isoName)
+            }
+        } catch(e) {}
     }
 
     // Setup database
@@ -74,6 +84,7 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         loadExpenseData()
+        getCurrency('SelectedCurrency')
     })
 
     const loadKPIS = (type) => {
@@ -130,9 +141,9 @@ const HomeScreen = ({ navigation }) => {
                         Vibration.vibrate(50)
                         openDatePicker()
                     }}
-                    incomeValue = {income}
-                    expenseValue = {expense}
-                    balanceValue = {balance}
+                    incomeValue = {currencySelected + ' ' + income}
+                    expenseValue = {currencySelected + ' ' + expense}
+                    balanceValue = {currencySelected + ' ' + balance}
                     dateText = { Utils.dateFormatter(new Date(selectedData)) }
                     onAddExpensesClicked = {() => {
                         Vibration.vibrate(50)

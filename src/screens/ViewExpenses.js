@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Vibration, Text, Button, ScrollView } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
@@ -6,10 +6,25 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-ionicons'
 import { useNavigation } from '@react-navigation/native'
 import QRCode from 'react-native-qrcode-svg'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const ViewExpenses = ({ route }) => {
     const navigation = useNavigation()
+    const [ currencySelected, setCurrencySelected ] = useState('')
 
+    const getCurrency = async(key) => {
+        try {
+            const value = await AsyncStorage.getItem(key)
+            if(value !== null) {
+                setCurrencySelected(JSON.parse(value).isoName)
+            }
+        } catch(e) {}
+    }
+
+    useEffect(() => {
+        getCurrency('SelectedCurrency') 
+    })
+    
     return (
         <View style={{ flex: 1 }}>
             <HeaderComp 
@@ -53,7 +68,7 @@ const ViewExpenses = ({ route }) => {
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Transaction Amount</Text>
-                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ route.params.list.expense_amt || '-' }</Text>
+                        <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ currencySelected + ' ' + route.params.list.expense_amt || '-' }</Text>
                     </View>
                 </Card>
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
