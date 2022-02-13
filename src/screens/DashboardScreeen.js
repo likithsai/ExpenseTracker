@@ -259,10 +259,15 @@ const DashboardScreen = ({ navigation }) => {
                                 config: {
                                     colors: [
                                         processColor('#11998eff'), 
+                                        processColor('#11998ee6'), 
                                         processColor('#11998ecc'), 
-                                        processColor('#11998e99'), 
+                                        processColor('#11998eb3'), 
+                                        processColor('#11998e99'),
+                                        processColor('#11998e80'), 
                                         processColor('#11998e66'), 
-                                        processColor('#11998e33')
+                                        processColor('#11998e4d'), 
+                                        processColor('#11998e33'), 
+                                        processColor('#11998e1a')
                                     ],
                                     valueTextSize: 15,
                                     valueTextColor: '#fff',
