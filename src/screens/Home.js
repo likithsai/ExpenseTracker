@@ -24,14 +24,8 @@ const shareItem = async (item) => {
             message: JSON.stringify(item),
         })
         if (result.action === Share.sharedAction) {
-            if (result.activityType) {
-                // shared with activity type of result.activityType
-            } else {
-                // shared
-            }
-        } else if (result.action === Share.dismissedAction) {
-            // dismissed
-        }
+            if (result.activityType) {} else {}
+        } else if (result.action === Share.dismissedAction) {}
     } catch (error) {
       console.log(error.message)
     }

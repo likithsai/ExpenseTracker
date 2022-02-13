@@ -21,6 +21,15 @@ const DashboardScreen = ({ navigation }) => {
     const [ refreshing, setRefreshing ] = useState(false)
     const [ currencySelected, setCurrencySelected ] = useState('')
 
+    useEffect(() => {
+        loadAnnualData(currentYear)
+        loadCategoryItem(currentYear)
+    }, [refreshing, currentYear])
+    
+    useEffect(() => {
+        getCurrency('SelectedCurrency')
+    })
+    
     const getCurrency = async(key) => {
         try {
             const value = await AsyncStorage.getItem(key)
@@ -98,15 +107,6 @@ const DashboardScreen = ({ navigation }) => {
         })
     }
 
-    useEffect(() => {
-        loadAnnualData(currentYear)
-        loadCategoryItem(currentYear)
-    }, [refreshing, currentYear])
-    
-    useEffect(() => {
-        getCurrency('SelectedCurrency')
-    })
-
     return (
         <>
             <HeaderWithIcons
@@ -116,7 +116,7 @@ const DashboardScreen = ({ navigation }) => {
                     navigation.navigate('Settings')
                 }}
             />
-            <Card style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#11998e', elevation: 10, paddingVertical: 15, borderWidth: 0 }}>
+            <Card style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#11998e', elevation: 10, paddingVertical: 10, borderWidth: 0 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ color: '#fff', fontSize: 18 }}>Year</Text>
                 </View>
