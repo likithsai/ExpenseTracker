@@ -39,7 +39,8 @@ const HomeScreen = ({ navigation }) => {
     const [ balance, setBalance ] = useState(0.0)
     const [ DATA, setDATA ] = useState([])
     const [refreshing, setRefreshing] = useState(true)
-    const [ currencySelected, setCurrencySelected ] = useState('')
+    const [ currencySelected, setCurrencySelected ] = useState('USD')
+    
     const openDatePicker = () => {
         setShowDatePicker(true)
     }

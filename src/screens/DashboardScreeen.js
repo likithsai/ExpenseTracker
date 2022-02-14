@@ -19,7 +19,7 @@ const DashboardScreen = ({ navigation }) => {
     const [ categoryPieChartData, setCategoryPieChartData ] = useState([])
     const [ AnnualChartMonth, setAnnualChartMonth ] = useState([])
     const [ refreshing, setRefreshing ] = useState(false)
-    const [ currencySelected, setCurrencySelected ] = useState('')
+    const [ currencySelected, setCurrencySelected ] = useState('USD')
 
     useEffect(() => {
         loadAnnualData(currentYear)

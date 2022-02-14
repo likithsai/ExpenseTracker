@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const ViewExpenses = ({ route }) => {
     const navigation = useNavigation()
-    const [ currencySelected, setCurrencySelected ] = useState('')
+    const [ currencySelected, setCurrencySelected ] = useState('USD')
 
     const getCurrency = async(key) => {
         try {

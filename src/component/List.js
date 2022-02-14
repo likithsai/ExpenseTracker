@@ -15,7 +15,7 @@ const List = (props) => {
     const refRBSheet = useRef()
     const [ selectedItem, setSelectedItem ] = useState([])
     const [ category, setCategory ] = useState([])
-    const [ currencySelected, setCurrencySelected ] = useState('')
+    const [ currencySelected, setCurrencySelected ] = useState('USD')
     const navigation = useNavigation()
 
     const getCurrency = async(key) => {
