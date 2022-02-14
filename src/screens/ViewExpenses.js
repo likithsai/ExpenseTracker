@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Vibration, Text, Button, ScrollView } from 'react-native'
+import { View, Vibration, Text, ScrollView } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -7,6 +7,7 @@ import Icon from 'react-native-ionicons'
 import { useNavigation } from '@react-navigation/native'
 import QRCode from 'react-native-qrcode-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Utils from '../utils/Utils'
 
 const ViewExpenses = ({ route }) => {
     const navigation = useNavigation()
@@ -87,6 +88,34 @@ const ViewExpenses = ({ route }) => {
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Date</Text>
                         <Text style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, marginTop: 5 }}>{ route.params.list.expense_date || '-' }</Text>
+                    </View>
+                </Card>
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>File Attachments</Text>
+                        </View>
+                        <ScrollView horizontal={true} style={{ flexDirection: 'row', marginTop: 15 }}>
+                            {
+                                (JSON.parse(route.params.list.expense_attachment).length > 0) ?
+                                    JSON.parse(route.params.list.expense_attachment).map((item, key) => (
+                                        <TouchableOpacity key={key} style={{ backgroundColor: '#11998e', padding: 10, borderRadius: 10, marginHorizontal: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 10 }}>
+                                            <View>
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 15 }}>{item.name ? item.name : ''}</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Text style={{ fontSize: 15 }}>{ item.size ? Utils.formatBytes(item.size) : '0 KB'}</Text>
+                                                </View>
+                                            </View>
+                                            <TouchableOpacity style={{ marginLeft: 20 }}>
+                                                <Icon name="close" color={"#fff"} style={{ marginRight: 10 }} />
+                                            </TouchableOpacity>
+                                        </TouchableOpacity>
+                                    ))
+                                : <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}><Text style={{ color: '#000', fontSize: 18 }}>No Receipt</Text></View>
+                            }
+                        </ScrollView>
                     </View>
                 </Card>
             </ScrollView>

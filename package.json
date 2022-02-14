@@ -22,6 +22,7 @@
     "react-native-chart": "^1.0.8-beta",
     "react-native-charts-wrapper": "^0.5.7",
     "react-native-device-info": "^8.4.9",
+    "react-native-document-picker": "^8.0.0",
     "react-native-gesture-handler": "^2.1.0",
     "react-native-ionicons": "^4.6.5",
     "react-native-neat-date-picker": "^1.1.4",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration } from 'react-native'
+import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList, StyleSheet, Vibration, ToastAndroid } from 'react-native'
 import HeaderComp from '../component/HeaderComp'
 import Card from '../component/Card'
 import DatePicker from 'react-native-neat-date-picker'
@@ -7,6 +7,8 @@ import { openDatabase } from 'react-native-sqlite-storage'
 import Utils from '../utils/Utils'
 import Dropdown from '../component/Dropdown'
 import Snackbar from 'react-native-snackbar'
+import Icon from 'react-native-ionicons'
+import DocumentPicker from 'react-native-document-picker'
 
 var db = openDatabase({ name: 'data.db' }, () => {}, (err) => {
     console.log('SQL Error : ' + err.message)
@@ -38,6 +40,7 @@ const AddExpense = ({ route, navigation }) => {
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
     const [ payee, setPayee ] = useState()
+    const [ attachments, setAttachments ] = useState([])
     const [ date, setDate] = useState(Utils.formatDate(new Date().toISOString()))
     const [ invoiceType, setInvoiceType ] = useState({ category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null })
     const [ transactionCategory, setTransactionCategory ] = useState([])
@@ -75,6 +78,7 @@ const AddExpense = ({ route, navigation }) => {
 
             setCategoryInvoice(route.params.data.expense_category)
             setPayee(route.params.data.expense_payee)
+            setAttachments(JSON.parse(route.params.data.expense_attachment))
             setDate(route.params.data.expense_date)
         }
     }, [])
@@ -101,8 +105,8 @@ const AddExpense = ({ route, navigation }) => {
         console.log(categoryInvoice)
         await db.transaction((tx) => {
             tx.executeSql(
-                'UPDATE tbl_expense SET expense_name = ?, expense_desc = ?, expense_type = ?, expense_amt = ?, expense_date = ?, expense_category = ?, expense_payee = ? WHERE expense_id = ?', 
-                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), date, categoryInvoice.category_id, payee, route.params.data.expense_id ], 
+                'UPDATE tbl_expense SET expense_name = ?, expense_desc = ?, expense_type = ?, expense_amt = ?, expense_date = ?, expense_category = ?, expense_payee = ?, expense_attachment = ? WHERE expense_id = ?', 
+                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), date, categoryInvoice.category_id, payee, JSON.stringify(attachments), route.params.data.expense_id ], 
                 (tx, results) => {
                     if(results.rowsAffected > 0) {
                         Snackbar.show({
@@ -124,8 +128,8 @@ const AddExpense = ({ route, navigation }) => {
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
             txn.executeSql(        
-                'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_category, expense_payee, expense_date) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), categoryInvoice.category_id, payee, date ],
+                'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_category, expense_payee, expense_attachment, expense_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), categoryInvoice.category_id, payee, JSON.stringify(attachments), date ],
                 (tx, results) => {               
                     if(results.rowsAffected > 0) {
                         Snackbar.show({
@@ -139,6 +143,9 @@ const AddExpense = ({ route, navigation }) => {
                         })
                         navigation.pop()
                     }
+                },
+                (e) => {
+                    console.log(e)
                 }
             )
         })
@@ -182,6 +189,34 @@ const AddExpense = ({ route, navigation }) => {
                     setAmount(amount + item.key)
                 }
                 break
+        }
+    }
+
+
+    const selectMultipleFile = async () => {
+        let temp = []
+
+        try {
+            const results = await DocumentPicker.pickMultiple({
+                type: [DocumentPicker.types.images],
+            });
+          
+            for (const res of results) {
+                temp.push({
+                    name: res.name,
+                    size: res.size,
+                    type: res.type,
+                    uri: res.uri
+                })
+            }
+
+            setAttachments(temp)
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+            } else {
+                alert('Unknown Error: ' + JSON.stringify(err));
+                throw err;
+            }
         }
     }
 
@@ -327,6 +362,37 @@ const AddExpense = ({ route, navigation }) => {
                             placeholder="Set Payee"
                         />
                     </View>
+                </Card>
+
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={selectMultipleFile}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>File Attachments</Text>
+                        </View>
+                        <ScrollView horizontal={true} style={{ flexDirection: 'row', marginTop: 15 }}>
+                            {
+                                (attachments.length > 0) ?
+                                    attachments.map((item, key) => (
+                                        <TouchableOpacity key={key} style={{ backgroundColor: '#11998e', padding: 10, borderRadius: 10, marginHorizontal: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 10 }}>
+                                            <View>
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 15 }}>{item.name ? item.name : ''}</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Text style={{ fontSize: 15 }}>{ item.size ? Utils.formatBytes(item.size) : '0 KB'}</Text>
+                                                </View>
+                                            </View>
+                                            <TouchableOpacity style={{ marginLeft: 20 }} onPress={() => {
+                                                attachments.splice(key, 1)
+                                            }}>
+                                                <Icon name="close" color={"#fff"} style={{ marginRight: 10 }} />
+                                            </TouchableOpacity>
+                                        </TouchableOpacity>
+                                    ))
+                                : <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}><Text style={{ color: '#555', fontSize: 18 }}>No Receipt, Click on this card to select files.</Text></View>
+                            }
+                        </ScrollView>
+                    </TouchableOpacity>
                 </Card>
 
                 <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }} onPress={() => {
