@@ -21,15 +21,6 @@ const DashboardScreen = ({ navigation }) => {
     const [ refreshing, setRefreshing ] = useState(false)
     const [ currencySelected, setCurrencySelected ] = useState('USD')
 
-    useEffect(() => {
-        loadAnnualData(currentYear)
-        loadCategoryItem(currentYear)
-    }, [refreshing, currentYear])
-    
-    useEffect(() => {
-        getCurrency('SelectedCurrency')
-    })
-    
     const getCurrency = async(key) => {
         try {
             const value = await AsyncStorage.getItem(key)
@@ -65,7 +56,7 @@ const DashboardScreen = ({ navigation }) => {
                 WHERE strftime('%Y', expense_date) = '${currentYear}'
                 GROUP BY strftime('%m', expense_date)
             `, [], (tx, results) => {
-                if(results.rows.length > 1) {
+                if(results.rows.length > 0) {
                     for (let i = 0; i < results.rows.length; ++i) {
                         temp.push({ y: [ results.rows.item(i).Income, results.rows.item(i).Expense ] })
                         income = income + results.rows.item(i).Income
@@ -87,6 +78,7 @@ const DashboardScreen = ({ navigation }) => {
         })
     }
 
+    
     const loadCategoryItem = (currentYear) => {
         let temp = []
     
@@ -106,6 +98,15 @@ const DashboardScreen = ({ navigation }) => {
             })
         })
     }
+
+    useEffect(() => {
+        loadAnnualData(currentYear)
+        loadCategoryItem(currentYear)
+    }, [currentYear])
+
+    useEffect(() => {
+        getCurrency('SelectedCurrency')
+    })
 
     return (
         <>
@@ -171,7 +172,7 @@ const DashboardScreen = ({ navigation }) => {
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        </View>
+                    </View>
                     <BarChart
                         extraOffsets={{
                             bottom: 20
@@ -215,8 +216,8 @@ const DashboardScreen = ({ navigation }) => {
                             valueFormatter: AnnualChartMonth,
                             granularityEnabled: true,
                             granularity : 1,
-                            textColor: '#fff',
-                            axisLineColor: '#fff',
+                            textColor: processColor('#fff'),
+                            axisLineColor: processColor('#fff'),
                             axisLineWidth: 0
                         }}
                         chartDescription={{
@@ -228,7 +229,7 @@ const DashboardScreen = ({ navigation }) => {
                         }}
                         legend={{
                             enabled: true,
-                            fontWeight: 'bold',
+                            // fontWeight: 'bold',
                             textSize: 12,
                             xEntrySpace: 10,
                             yEntrySpace: 5,
@@ -255,6 +256,7 @@ const DashboardScreen = ({ navigation }) => {
                         style={{ width: '100%', height: '80%', marginVertical: 20 }}
                         data={{
                             dataSets: [{
+                                label: '',
                                 values: categoryPieChartData,
                                 config: {
                                     colors: [
@@ -270,7 +272,7 @@ const DashboardScreen = ({ navigation }) => {
                                         processColor('#11998e1a')
                                     ],
                                     valueTextSize: 15,
-                                    valueTextColor: '#fff',
+                                    valueTextColor: processColor('#fff'),
                                     valueFormatter: "#.#'%'"
                                 }
                             }],
@@ -297,7 +299,7 @@ const DashboardScreen = ({ navigation }) => {
                             horizontalAlignment: "CENTER",
                             verticalAlignment: "BOTTOM",
                             wordWrapEnabled: true,
-                            fontWeight: 'bold',
+                            // fontWeight: 'bold',
                             textSize: 12,
                             // maxSizePercent: 0.5,
                             formToTextSpace: 10
