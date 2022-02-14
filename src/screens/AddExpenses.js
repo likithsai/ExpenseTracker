@@ -37,6 +37,7 @@ const AddExpense = ({ route, navigation }) => {
     const [ showDatePicker, setShowDatePicker] = useState(false)
     const [ title, setTitle ] = useState()
     const [ description, setDescription ] = useState()
+    const [ payee, setPayee ] = useState()
     const [ date, setDate] = useState(Utils.formatDate(new Date().toISOString()))
     const [ invoiceType, setInvoiceType ] = useState({ category_id: 10, category_name: 'Select Transaction Type', category_desc: 'Select Transaction Type', category_icon: null })
     const [ transactionCategory, setTransactionCategory ] = useState([])
@@ -73,6 +74,7 @@ const AddExpense = ({ route, navigation }) => {
             })
 
             setCategoryInvoice(route.params.data.expense_category)
+            setPayee(route.params.data.expense_payee)
             setDate(route.params.data.expense_date)
         }
     }, [])
@@ -99,8 +101,8 @@ const AddExpense = ({ route, navigation }) => {
         console.log(categoryInvoice)
         await db.transaction((tx) => {
             tx.executeSql(
-                'UPDATE tbl_expense SET expense_name = ?, expense_desc = ?, expense_type = ?, expense_amt = ?, expense_date = ?, expense_category = ? WHERE expense_id = ?', 
-                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), date, categoryInvoice.category_id, route.params.data.expense_id ], 
+                'UPDATE tbl_expense SET expense_name = ?, expense_desc = ?, expense_type = ?, expense_amt = ?, expense_date = ?, expense_category = ?, expense_payee = ? WHERE expense_id = ?', 
+                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), date, categoryInvoice.category_id, payee, route.params.data.expense_id ], 
                 (tx, results) => {
                     if(results.rowsAffected > 0) {
                         Snackbar.show({
@@ -122,8 +124,8 @@ const AddExpense = ({ route, navigation }) => {
     const insertDataToDatabase = () => {
         db.transaction(function(txn) {
             txn.executeSql(        
-                'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_category, expense_date) VALUES (?, ?, ?, ?, ?, ?)',
-                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), categoryInvoice.category_id, date ],
+                'INSERT INTO tbl_expense(expense_name, expense_desc, expense_type, expense_amt, expense_category, expense_payee, expense_date) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [ title, description, invoiceType.category_name.toString().toLowerCase(), eval(amount), categoryInvoice.category_id, payee, date ],
                 (tx, results) => {               
                     if(results.rowsAffected > 0) {
                         Snackbar.show({
@@ -259,7 +261,6 @@ const AddExpense = ({ route, navigation }) => {
                             modalItems = {[{ category_id: 1, category_name: 'Income', category_desc: 'Money is credited to the bank account', category_icon: 'credit-card' }, { category_id: 2, category_name: 'Expense', category_desc: 'Money is Debited from bank account', category_icon: 'dollar-sign' }]}
                             onItemSelected = {(item) => {
                                 setInvoiceType(item)
-                                // setInvoiceType(item.category_name.toString())
                                 console.log(invoiceType)
                             }}
                         />
@@ -310,6 +311,20 @@ const AddExpense = ({ route, navigation }) => {
                                     setCategoryInvoice(item)
                                 }
                             }}
+                        />
+                    </View>
+                </Card>
+
+                <Card style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 18, color: '#000', fontWeight: 'bold' }}>Payee</Text>
+                        <TextInput
+                            style={{ fontSize: 18, color: '#000', paddingHorizontal: 0, color: '#000' }}
+                            onChangeText={setPayee}
+                            value={payee}
+                            multiline={true}
+                            placeholderTextColor="#555"
+                            placeholder="Set Payee"
                         />
                     </View>
                 </Card>

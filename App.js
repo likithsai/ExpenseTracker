@@ -61,6 +61,7 @@ const ExpenseTracker = () => {
                 expense_amt DECIMAL(6.3) DEFAULT NULL, 
                 expense_date TIMESTAMP DEFAULT NULL, 
                 expense_category INTEGER DEFAULT NULL,
+                expense_payee VARCHAR(200) DEFAULT NULL,
                 expense_created_date timestamp DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (expense_category) REFERENCES tbl_category(category_id)
                 ON DELETE SET NULL
