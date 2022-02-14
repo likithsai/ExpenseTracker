@@ -96,7 +96,7 @@ const List = (props) => {
                             <Text numberOfLines={2} style={[styles.listItemSubText, {color: '#fff', fontSize: 15}]}>{selectedItem.expense_desc}</Text>
                         </View>
                         <View>
-                            <Text style={ [styles.listItemAmt, {color: '#fff'}] }>{ selectedItem.expense_type === 'income' ? '+ ' + selectedItem.expense_amt + ' ' + currencySelected : '- ' + selectedItem.expense_amt + ' ' + currencySelected }</Text>
+                            <Text style={ [styles.listItemAmt, {color: '#fff'}] }>{ selectedItem.expense_type === 'income' ? selectedItem.expense_amt + ' ' + currencySelected : selectedItem.expense_amt + ' ' + currencySelected }</Text>
                         </View>
                     </View>
                     <ScrollView style={{ marginTop: 20 }}>
@@ -179,7 +179,7 @@ const List = (props) => {
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                <Text style={ item.expense_type === 'income' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>{item.expense_type === 'income' ? '+ ' + ' ' + item.expense_amt + ' ' + currencySelected : '- ' + item.expense_amt + ' ' + currencySelected }</Text>
+                                <Text style={ item.expense_type === 'income' ? [styles.listItemAmt, styles.colorGreen] : [styles.listItemAmt, styles.colorRed] }>{item.expense_type === 'income' ? item.expense_amt + ' ' + currencySelected : item.expense_amt + ' ' + currencySelected }</Text>
                             </View>
                         </TouchableOpacity>
                     )
