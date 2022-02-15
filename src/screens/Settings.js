@@ -11,6 +11,7 @@ import DeviceInfo from 'react-native-device-info'
 const Settings = ({ navigation }) => {
     const refRBExport = useRef()
     const [ selectedCurrency, setSelectedCurrency ] = useState('USD')
+    const gotoWebsiteURL = 'https://github.com/likithsai/ExpenseTracker'
 
     const getCurrency = async(key) => {
         try {
@@ -149,7 +150,9 @@ const Settings = ({ navigation }) => {
                         [
                             {
                                 text: "Goto Website",
-                                onPress: () => console.log("Ask me later pressed")
+                                onPress: () => {
+                                    Linking.openURL(gotoWebsiteURL)
+                                }
                             },
                             {},
                             {
