@@ -108,9 +108,6 @@ const ViewExpenses = ({ route }) => {
                                                     <Text style={{ fontSize: 15 }}>{ item.size ? Utils.formatBytes(item.size) : '0 KB'}</Text>
                                                 </View>
                                             </View>
-                                            <TouchableOpacity style={{ marginLeft: 20 }}>
-                                                <Icon name="close" color={"#fff"} style={{ marginRight: 10 }} />
-                                            </TouchableOpacity>
                                         </TouchableOpacity>
                                     ))
                                 : <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}><Text style={{ color: '#000', fontSize: 18 }}>No Receipt</Text></View>
